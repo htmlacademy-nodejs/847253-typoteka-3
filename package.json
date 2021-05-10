@@ -1,0 +1,17 @@
+{
+  "name": "847253-typoteka-3",
+  "version": "1.0.0",
+  "description": "Типотека",
+  "main": "./src/service/service.js",
+  "scripts": {
+    "start": "node ./src/service/service.js",
+    "test": "npm run eslint",
+    "eslint": "eslint --ext .js src/"
+  },
+  "author": "Маклай Михаил",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "7.26.0",
+    "eslint-config-htmlacademy": "0.6.0"
+  }
+}
