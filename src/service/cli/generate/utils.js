@@ -2,6 +2,8 @@
 
 const fs = require(`fs`);
 
+const chalk = require(`chalk`);
+
 const {
   generateRandomNumber,
   getRandomArrayValue,
@@ -43,9 +45,14 @@ const generatePosts = (amount) => Array.from({length: amount}).map(() => generat
 const writeJsonToFile = (path, data) => {
   try {
     fs.writeFileSync(path, JSON.stringify(data));
-    console.info(`Данные успешно записаны в "/${path}"`);
+
+    console.info(
+      chalk.green(`Данные успешно записаны в "/${path}"`)
+    );
   } catch (error) {
-    console.error(`Не удалось произвести запись в "/${path}"\n\n${error}`);
+    console.error(
+      chalk.red(`Не удалось произвести запись в "/${path}"\n\n${error}`)
+    );
     throw error;
   }
 };
