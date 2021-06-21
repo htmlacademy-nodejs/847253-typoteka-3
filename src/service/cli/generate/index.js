@@ -8,7 +8,7 @@ const {generatePosts, writeJsonToFile} = require(`./utils`);
 
 module.exports = {
   name: `--generate`,
-  run(args) {
+  async run(args) {
     let [amount] = args;
     amount = Number.parseInt(amount, 10);
 
@@ -24,6 +24,6 @@ module.exports = {
       process.exit(ExitCode.error);
     }
 
-    writeJsonToFile(FILE_NAME, generatePosts(amount));
+    await writeJsonToFile(FILE_NAME, generatePosts(amount));
   }
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require(`fs`);
+const fs = require(`fs`).promises;
 
 const chalk = require(`chalk`);
 
@@ -42,9 +42,9 @@ const generatePost = () => ({
 
 const generatePosts = (amount) => Array.from({length: amount}).map(() => generatePost());
 
-const writeJsonToFile = (path, data) => {
+const writeJsonToFile = async (path, data) => {
   try {
-    fs.writeFileSync(path, JSON.stringify(data));
+    await fs.writeFile(path, JSON.stringify(data));
 
     console.info(
       chalk.green(`Данные успешно записаны в "/${path}"`)
@@ -53,6 +53,7 @@ const writeJsonToFile = (path, data) => {
     console.error(
       chalk.red(`Не удалось произвести запись в "/${path}"\n\n${error}`)
     );
+
     throw error;
   }
 };
