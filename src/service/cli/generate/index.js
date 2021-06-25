@@ -1,8 +1,8 @@
-'use strict';
+`use strict`;
 
 const chalk = require(`chalk`);
 
-const {ExitCode} = require(`../../../constants`);
+const {ExitCode} = require(`../constants`);
 const {
   FILE_NAME,
   POSTS_MIN_AMOUNT,

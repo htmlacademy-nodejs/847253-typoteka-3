@@ -1,4 +1,4 @@
-'use strict';
+`use strict`;
 
 const fs = require(`fs`).promises;
 
@@ -15,9 +15,6 @@ const {
   CREATE_DATE_MIN_UNIX_TIME_STAMP,
   TEXT_SENTENCES_MAX_AMOUNT,
   CATEGORIES_MAX_AMOUNT,
-  SENTENCES_FILE_PATH,
-  CATEGORIES_FILE_PATH,
-  TITLES_FILE_PATH,
 } = require(`./constants`);
 
 const writeJsonToFile = async (path, data) => {
