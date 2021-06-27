@@ -1,6 +1,8 @@
 'use strict';
 
-const fs = require(`fs`);
+const fs = require(`fs`).promises;
+
+const chalk = require(`chalk`);
 
 const {
   generateRandomNumber,
@@ -40,12 +42,18 @@ const generatePost = () => ({
 
 const generatePosts = (amount) => Array.from({length: amount}).map(() => generatePost());
 
-const writeJsonToFile = (path, data) => {
+const writeJsonToFile = async (path, data) => {
   try {
-    fs.writeFileSync(path, JSON.stringify(data));
-    console.info(`Данные успешно записаны в "/${path}"`);
+    await fs.writeFile(path, JSON.stringify(data));
+
+    console.info(
+      chalk.green(`Данные успешно записаны в "/${path}"`)
+    );
   } catch (error) {
-    console.error(`Не удалось произвести запись в "/${path}"\n\n${error}`);
+    console.error(
+      chalk.red(`Не удалось произвести запись в "/${path}"\n\n${error}`)
+    );
+
     throw error;
   }
 };

@@ -1,5 +1,7 @@
 'use strict';
 
+const chalk = require(`chalk`);
+
 module.exports = {
   name: `--help`,
   run() {
@@ -12,10 +14,12 @@ module.exports = {
     version, help, generate
 
     node service.js --version           показывает версию программы
-    node service.js --generate <amount> массив с тестовыми данными в количестве <amount> и сохраняет их в файл mocks.json в корневую директорию проекта
+    node service.js --generate <amount> массив с тестовыми данными в количестве <amount> и сохраняет их в файл mocks.json
     node service.js --help              показывает это сообщение
     `;
 
-    console.log(text);
+    console.info(
+      chalk.gray(text)
+    );
   }
 };
