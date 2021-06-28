@@ -8,39 +8,17 @@ const {
   generateRandomNumber,
   getRandomArrayValue,
   shuffleArray,
+  createAndFillArray,
 } = require(`../../../../src/utils`);
-
 const {
-  TITLES,
   CREATE_DATE_MAX_UNIX_TIME_STAMP,
   CREATE_DATE_MIN_UNIX_TIME_STAMP,
   TEXT_SENTENCES_MAX_AMOUNT,
-  TEXT_SENTENCES,
   CATEGORIES_MAX_AMOUNT,
-  CATEGORIES,
+  SENTENCES_FILE_PATH,
+  CATEGORIES_FILE_PATH,
+  TITLES_FILE_PATH,
 } = require(`./constants`);
-
-const generateText = () => shuffleArray(TEXT_SENTENCES)
-  .slice(0, TEXT_SENTENCES_MAX_AMOUNT)
-  .join(` `);
-
-const generateCategories = () => {
-  const shuffledCategories = shuffleArray(CATEGORIES);
-  const maxCategoriesAmount = Math.min(CATEGORIES.length, CATEGORIES_MAX_AMOUNT);
-  const randomCategoriesAmount = generateRandomNumber(1, maxCategoriesAmount);
-
-  return shuffledCategories.slice(0, randomCategoriesAmount);
-};
-
-const generatePost = () => ({
-  title: getRandomArrayValue(TITLES),
-  createDate: new Date(generateRandomNumber(CREATE_DATE_MIN_UNIX_TIME_STAMP, CREATE_DATE_MAX_UNIX_TIME_STAMP)),
-  announce: generateText(),
-  fullText: generateText(),
-  categories: generateCategories(),
-});
-
-const generatePosts = (amount) => Array.from({length: amount}).map(() => generatePost());
 
 const writeJsonToFile = async (path, data) => {
   try {
@@ -58,4 +36,42 @@ const writeJsonToFile = async (path, data) => {
   }
 };
 
-module.exports = {generatePosts, writeJsonToFile};
+const readFile = async (path) => {
+  try {
+    return (await fs.readFile(path))
+      .toString()
+      .split(`\n`)
+      .filter((line) => line.length > 0);
+  } catch (error) {
+    console.error(
+      chalk.red(`Не удалось прочитать файл "${path}"\n\n${error}`)
+    );
+
+    throw error;
+  }
+};
+
+const generateText = (sentences) => shuffleArray(sentences)
+  .slice(0, TEXT_SENTENCES_MAX_AMOUNT)
+  .join(` `);
+
+const generateCategories = (categories) => {
+  const shuffledCategories = shuffleArray(categories);
+  const maxCategoriesAmount = Math.min(categories.length, CATEGORIES_MAX_AMOUNT);
+  const randomCategoriesAmount = generateRandomNumber(1, maxCategoriesAmount);
+
+  return shuffledCategories.slice(0, randomCategoriesAmount);
+};
+
+const generatePost = (sentences, categories, titles) => ({
+  title: getRandomArrayValue(titles),
+  createDate: new Date(generateRandomNumber(CREATE_DATE_MIN_UNIX_TIME_STAMP, CREATE_DATE_MAX_UNIX_TIME_STAMP)),
+  announce: generateText(sentences),
+  fullText: generateText(sentences),
+  categories: generateCategories(categories),
+});
+
+const generatePosts = (amount, {sentences, categories, titles}) =>
+  createAndFillArray(amount, () => generatePost(sentences, categories, titles));
+
+module.exports = {generatePosts, writeJsonToFile, readFile};

@@ -3,8 +3,15 @@
 const chalk = require(`chalk`);
 
 const {ExitCode} = require(`../../../constants`);
-const {FILE_NAME, POSTS_MIN_AMOUNT, POSTS_MAX_AMOUNT} = require(`./constants`);
-const {generatePosts, writeJsonToFile} = require(`./utils`);
+const {
+  FILE_NAME,
+  POSTS_MIN_AMOUNT,
+  POSTS_MAX_AMOUNT,
+  SENTENCES_FILE_PATH,
+  CATEGORIES_FILE_PATH,
+  TITLES_FILE_PATH,
+} = require(`./constants`);
+const {generatePosts, writeJsonToFile, readFile} = require(`./utils`);
 
 module.exports = {
   name: `--generate`,
@@ -24,6 +31,10 @@ module.exports = {
       process.exit(ExitCode.error);
     }
 
-    await writeJsonToFile(FILE_NAME, generatePosts(amount));
+    const sentences = await readFile(SENTENCES_FILE_PATH);
+    const categories = await readFile(CATEGORIES_FILE_PATH);
+    const titles = await readFile(TITLES_FILE_PATH);
+
+    await writeJsonToFile(FILE_NAME, generatePosts(amount, {sentences, categories, titles}));
   }
 };

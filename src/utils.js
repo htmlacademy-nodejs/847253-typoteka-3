@@ -21,8 +21,17 @@ const shuffleArray = (array) => {
   return copiedArray;
 };
 
+const createAndFillArray = (length, fnOrValue) => {
+  if (typeof fnOrValue === 'function') {
+    return Array.from({length}).map(() => fnOrValue());
+  }
+
+  return Array.from({length}).fill(fnOrValue);
+};
+
 module.exports = {
   generateRandomNumber,
   getRandomArrayValue,
   shuffleArray,
+  createAndFillArray,
 };
