@@ -1,6 +1,6 @@
-'use strict';
+`use strict`;
 
-const FILE_NAME = `mocks.json`;
+const FILE_NAME = `./mocks.json`;
 
 const POSTS_MIN_AMOUNT = 1;
 
@@ -16,11 +16,11 @@ const TEXT_SENTENCES_MAX_AMOUNT = 5;
 
 const CATEGORIES_MAX_AMOUNT = 3;
 
-const SENTENCES_FILE_PATH = `../../data/sentences.txt`;
+const SENTENCES_FILE_PATH = `./data/sentences.txt`;
 
-const CATEGORIES_FILE_PATH = `../../data/categories.txt`;
+const CATEGORIES_FILE_PATH = `./data/categories.txt`;
 
-const TITLES_FILE_PATH = `../../data/titles.txt`;
+const TITLES_FILE_PATH = `./data/titles.txt`;
 
 module.exports = {
   FILE_NAME,

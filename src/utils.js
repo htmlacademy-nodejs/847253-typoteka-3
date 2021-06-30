@@ -1,4 +1,4 @@
-'use strict';
+`use strict`;
 
 const generateRandomNumber = (min, max) => {
   const roundedUpMin = Math.ceil(min);
@@ -22,7 +22,7 @@ const shuffleArray = (array) => {
 };
 
 const createAndFillArray = (length, fnOrValue) => {
-  if (typeof fnOrValue === 'function') {
+  if (typeof fnOrValue === `function`) {
     return Array.from({length}).map(() => fnOrValue());
   }
 
