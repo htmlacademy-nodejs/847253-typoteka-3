@@ -1,6 +1,6 @@
 `use strict`;
 
-const FILE_NAME = `mocks.json`;
+const FILE_NAME = `./mocks.json`;
 
 const POSTS_MIN_AMOUNT = 1;
 

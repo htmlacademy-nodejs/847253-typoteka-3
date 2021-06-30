@@ -22,11 +22,11 @@ const writeJsonToFile = async (path, data) => {
     await fs.writeFile(path, JSON.stringify(data));
 
     console.info(
-      chalk.green(`Данные успешно записаны в "/${path}"`)
+      chalk.green(`Данные успешно записаны в "${path}"`)
     );
   } catch (error) {
     console.error(
-      chalk.red(`Не удалось произвести запись в "/${path}"\n\n${error}`)
+      chalk.red(`Не удалось произвести запись в "${path}"\n\n${error}`)
     );
 
     throw error;
