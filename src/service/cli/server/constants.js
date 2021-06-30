@@ -7,11 +7,11 @@ const ROOT_URL = `/`;
 const FILE_NAME = `./mocks.json`;
 
 const HttpCode = {
-  ok: 200,
-  notFound: 404,
-  internalServerError: 500,
-  forbidden: 403,
-  unauthorized: 401,
+  OK: 200,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+  FORBIDDEN: 403,
+  UNAUTHORIZED: 401,
 };
 
 module.exports = {

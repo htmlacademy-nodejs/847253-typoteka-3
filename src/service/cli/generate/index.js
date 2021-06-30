@@ -23,12 +23,12 @@ module.exports = {
       console.error(
         chalk.red(`Параметр "amount" обязательный`)
       );
-      process.exit(ExitCode.error);
+      process.exit(ExitCode.ERROR);
     } else if (amount > POSTS_MAX_AMOUNT || amount < POSTS_MIN_AMOUNT) {
       console.error(
         chalk.red(`Параметр "amount" не может быть меньше ${POSTS_MIN_AMOUNT} или больше ${POSTS_MAX_AMOUNT}`)
       );
-      process.exit(ExitCode.error);
+      process.exit(ExitCode.ERROR);
     }
 
     const sentences = await readFile(SENTENCES_FILE_PATH);

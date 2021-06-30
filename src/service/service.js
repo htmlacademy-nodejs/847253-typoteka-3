@@ -15,7 +15,7 @@ const [command] = userArgs;
 
 if (userArgs.length === 0 || !Cli[command]) {
   Cli[DEFAULT_COMMAND].run();
-  process.exit(ExitCode.success);
+  process.exit(ExitCode.SUCCESS);
 }
 
 Cli[command].run(commandArgs);

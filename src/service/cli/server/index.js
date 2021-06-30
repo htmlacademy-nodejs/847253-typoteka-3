@@ -23,15 +23,15 @@ const requestListener = async (req, res) => {
 
         const postListTemplate = createPostListTemplate(posts);
 
-        sendResponse(HttpCode.ok, createMessageTemplate(postListTemplate));
+        sendResponse(HttpCode.OK, createMessageTemplate(postListTemplate));
       } catch (error) {
         console.error(chalk.red(error));
-        sendResponse(HttpCode.internalServerError, createMessageTemplate(`Internal server error`));
+        sendResponse(HttpCode.INTERNAL_SERVER_ERROR, createMessageTemplate(`Internal server error`));
       }
 
       break;
     default:
-      sendResponse(HttpCode.notFound, createMessageTemplate(`Not found`));
+      sendResponse(HttpCode.NOT_FOUND, createMessageTemplate(`Not found`));
       break;
   }
 };
