@@ -1,0 +1,16 @@
+.icon {
+  display: inline-flex;
+
+  vertical-align: middle;
+
+  img,
+  svg {
+    display: inherit;
+
+    vertical-align: inherit;
+  }
+}
+
+@import "_color";
+@import "_name";
+@import "_size";

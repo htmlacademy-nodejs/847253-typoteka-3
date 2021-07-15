@@ -1,0 +1,18 @@
+@import "@views/style/vars";
+
+$colors: (
+  "black": $color-black,
+  "black-20": $color-black-20,
+  "silver": $color-silver,
+  "burnt-sienna": $color-burnt-sienna,
+  "dove-gray": $color-dove-gray,
+  "white": $color-white,
+);
+
+.icon_color {
+  @each $key, $value in $colors {
+    &_#{"" + $key} {
+      color: $value;
+    }
+  }
+}

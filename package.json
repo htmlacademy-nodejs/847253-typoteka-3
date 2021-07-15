@@ -6,19 +6,34 @@
   "scripts": {
     "start": "node ./src/service/service.js",
     "server": "nodemon ./src/service/service.js --server",
+    "create-symlinks": "ln -s \"${PWD}/src/express/views\" \"@views\"",
     "start-front-server": "node ./src/express",
     "test": "npm run eslint",
-    "eslint": "eslint --ext .js src/"
+    "eslint": "eslint --ext .js src/",
+    "pug-lint": "pug-lint -c .pug-lintrc.json src/express/views"
   },
   "author": "Маклай Михаил",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "10.3.1",
     "eslint": "7.26.0",
     "eslint-config-htmlacademy": "0.6.0",
-    "nodemon": "2.0.7"
+    "gulp": "4.0.2",
+    "gulp-concat": "2.6.1",
+    "gulp-csso": "4.0.1",
+    "gulp-plumber": "1.2.1",
+    "gulp-postcss": "9.0.0",
+    "gulp-sass": "5.0.0",
+    "gulp-sourcemaps": "3.0.0",
+    "nodemon": "2.0.7",
+    "postcss": "8.3.5",
+    "pug-lint": "2.6.0",
+    "sass": "1.35.2",
+    "sourcemap": "0.1.0"
   },
   "dependencies": {
     "chalk": "4.1.1",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "pug": "2.0.4"
   }
 }

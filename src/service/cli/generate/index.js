@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const chalk = require(`chalk`);
 
@@ -21,12 +21,12 @@ module.exports = {
 
     if (Number.isNaN(amount)) {
       console.error(
-        chalk.red(`Параметр "amount" обязательный`)
+          chalk.red(`Параметр "amount" обязательный`)
       );
       process.exit(ExitCode.ERROR);
     } else if (amount > POSTS_MAX_AMOUNT || amount < POSTS_MIN_AMOUNT) {
       console.error(
-        chalk.red(`Параметр "amount" не может быть меньше ${POSTS_MIN_AMOUNT} или больше ${POSTS_MAX_AMOUNT}`)
+          chalk.red(`Параметр "amount" не может быть меньше ${POSTS_MIN_AMOUNT} или больше ${POSTS_MAX_AMOUNT}`)
       );
       process.exit(ExitCode.ERROR);
     }

@@ -1,0 +1,22 @@
+mixin Title
+  -
+    const {
+      color,
+      class: className,
+      size = '300',
+      tag = 'b',
+      visuallyHidden = false,
+      weight = 'bold',
+    } = attributes;
+
+    const titleClasses = [
+      'title',
+      color && `title_color_${color}`,
+      `title_size_${size}`,
+      `title_weight_${weight}`,
+      visuallyHidden && 'title_visually-hidden',
+      className,
+    ];
+
+  #{tag}(class=titleClasses)
+    block

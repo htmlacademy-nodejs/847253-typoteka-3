@@ -1,0 +1,47 @@
+include ../../components/title/title
+include ../../components/text/text
+include ../../components/link/index
+
+mixin PostCard
+  -
+    const {class: className, post = {
+      categories: [{name: 'Дизайн', url: 'posts/design'}, {name: 'Удалённая работа', url: 'posts/remote-work'}],
+      images: [{url: '/img/skyscraper@1x.jpg', size: '1x'}, {url: 'img/skyscraper@2x.jpg', size: '2x'}],
+      date: '2021-08-16T17:51:12.928Z',
+      title: 'Я ничего не понял',
+      previewText: 'Если вы сами пишете такие письма — почитайте Ильяхова. А в этой заметке я расскажу про заклинание, которое от таких писем помогает.',
+      commentsAmount: 25,
+      url: '/posts/1',
+    }} = attributes;
+    const {
+      categories,
+      images,
+      date,
+      title,
+      previewText,
+      commentsAmount,
+      url,
+    } = post;
+
+    const postCardImageSrcSet = images.map(({url, size}) => `${url} ${size}`).join(',');
+    const image = images[0];
+
+  article(class=['post-card', className])
+    ul.post-card__category-list
+      each category in categories
+        li.post-card__category-list-item
+          +LinkContainer.post-card__category-link(href=category.url, size='200', theme='royal-blue') #{category.name}
+    img.post-card__image(
+      src=image.url,
+      width=image.width,
+      srcSet=postCardImageSrcSet,
+      height=image.height,
+      alt=image.alt,
+    )
+    time.post-card__date(datetime=date) #{getUserFriendlyDateString(date)}
+    +Title.post-card__title(tag='h3')
+      +LinkContainer(href=url, size='450', theme='royal-blue') #{title}
+    +Text.post-card__preview-text(size='200') #{previewText}
+    +LinkContainer.post-card__post-comments-link(href=`${url}#comments`, size='200', theme='royal-blue')
+      | Комментарии 💬
+      | #{commentsAmount}

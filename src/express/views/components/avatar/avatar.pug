@@ -1,0 +1,41 @@
+mixin Avatar
+  -
+    const {
+      class: className,
+      size = '350',
+      src,
+      alt,
+    } = attributes;
+
+    const avatarClasses = [
+      'avatar',
+      `avatar_size_${size}`,
+      className,
+    ];
+
+    const avatarImageSizeBySize = {
+      100: 25,
+      150: 30,
+      200: 35,
+      250: 40,
+      300: 45,
+      350: 50,
+      400: 55,
+      450: 60,
+      500: 65,
+      550: 70,
+      600: 75,
+      700: 80,
+      800: 85,
+      1200: 90,
+    };
+
+  span(class=avatarClasses)
+    img.avatar__image(
+      src=src,
+      alt=alt,
+      width=avatarImageSizeBySize[size],
+      height=avatarImageSizeBySize[size]
+    )
+    script
+      include script.js

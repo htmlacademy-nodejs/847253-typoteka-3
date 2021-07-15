@@ -1,0 +1,12 @@
+@import "@views/style/vars";
+
+.button_theme_black {
+  &.button_view_filled {
+    color: $color-white;
+    background-color: $color-black;
+  }
+
+  &.button_view_outlined {
+    color: $color-black;
+  }
+}

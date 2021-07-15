@@ -1,0 +1,12 @@
+@import "@views/style/vars";
+
+.last-comment-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.last-comment-list__item:not(:last-child) {
+  margin-bottom: $indent-7;
+}

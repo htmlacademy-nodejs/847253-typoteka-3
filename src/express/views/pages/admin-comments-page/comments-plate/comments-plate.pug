@@ -1,0 +1,19 @@
+include ../../../components/plate/plate
+include ../../../components/title/title
+
+include comment-list/comment-list
+include no-comments-stub/no-comments-stub
+
+append style
+  include:sass style.scss
+
+mixin CommentsPlate
+  - const {class: className, comments} = attributes;
+
+  +Plate(class=['comments-plate', className])
+    div.comments-plate__inner
+      +Title.comments-plate__title(size='400', tag='h2', weight='medium') Комментарии
+      if comments && comments.length
+        +CommentList(comments=comments)
+      else
+        +NoCommentsStub.comments-plate__no-comments-stub

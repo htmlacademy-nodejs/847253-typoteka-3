@@ -1,0 +1,62 @@
+@use "sass:map";
+
+@import "@views/style/vars";
+@import "@views/style/mixins";
+
+.avatar-input {
+  display: inline-flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  width: fit-content;
+
+  vertical-align: top;
+}
+
+.avatar-input__avatar-preview {
+  margin-right: $indent-3;
+}
+
+.avatar-input__control {
+  @include visually-hidden;
+}
+
+.avatar-input__upload-button-label {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px $color-cornflower-blue-50;
+  }
+}
+
+.avatar-input__hint {
+  display: none;
+
+  margin-top: $indent-1;
+
+  color: $color-black-50;
+
+  font-size: map.get($font-size-by-size, "200");
+  line-height: map.get($line-height-by-size, "200");
+
+  &_visible {
+    display: inline;
+  }
+}
+
+.avatar-input__error {
+  display: none;
+
+  margin-top: $indent-1;
+
+  color: $color-burnt-sienna;
+
+  font-size: map.get($font-size-by-size, "200");
+  line-height: map.get($line-height-by-size, "200");
+
+  &_visible {
+    display: inline;
+  }
+}

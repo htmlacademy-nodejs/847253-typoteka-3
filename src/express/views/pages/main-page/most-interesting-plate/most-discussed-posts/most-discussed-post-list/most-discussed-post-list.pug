@@ -1,0 +1,12 @@
+include most-discussed-post-list-item/most-discussed-post-list-item
+
+append style
+  include:sass style.scss
+
+mixin MostDiscussedPostList
+  - const {class: className, mostDiscussedPosts} = attributes;
+
+  ul(class=['most-discussed-post-list', className])
+    each mostDiscussedPost in mostDiscussedPosts
+      li.most-discussed-post-list__item
+        +MostDiscussedPostListItem(mostDiscussedPost=mostDiscussedPost)

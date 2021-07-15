@@ -1,0 +1,29 @@
+include ../../../../components/title/title
+include ../../../../components/text/text
+
+mixin UserNavigation
+  -
+    const {class: className} = attributes;
+
+    const slots = {children: []};
+
+  mixin Slot(name)
+    -
+      if (name === 'children') {
+        slots[name].push(block);
+
+        return;
+      }
+
+      slots[name] = block;
+
+  - block();
+
+  nav(class=['user-navigation', className])
+    h2.user-navigation__title Пользовательская навигация
+    ul.user-navigation__child-list
+      li.user-navigation__child-list-item
+        +Text(weight='bold') #{user.name} #{user.surname}
+      each child in slots.children
+        li.user-navigation__child-list-item
+          - child();

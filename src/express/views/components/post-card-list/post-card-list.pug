@@ -1,0 +1,10 @@
+include ../post-card/post-card
+
+mixin PostCardList
+  - const {class: className, posts} = attributes;
+
+  div(class=['post-card-list', className])
+    ul.post-card-list__list
+      each post in posts
+        li.post-card-list__list-item
+          +PostCard(post=post)

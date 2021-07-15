@@ -1,0 +1,17 @@
+{
+  "disallowAttributeConcatenation": true,
+  "disallowAttributeInterpolation": true,
+  "disallowBlockExpansion": true,
+  "disallowDuplicateAttributes": true,
+  "disallowIdAttributeWithStaticValue": true,
+  "disallowIdLiteralsBeforeAttributes": true,
+  "disallowLegacyMixinCall": true,
+  "disallowMultipleLineBreaks": true,
+  "disallowTrailingSpaces": true,
+  "requireLineFeedAtFileEnd": true,
+  "requireLowerCaseTags": true,
+  "validateAttributeQuoteMarks": "'",
+  "validateIndentation": 2,
+  "validateLineBreaks": "LF",
+  "validateTemplateString": true
+}

@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const fs = require(`fs`).promises;
 
@@ -22,11 +22,11 @@ const writeJsonToFile = async (path, data) => {
     await fs.writeFile(path, JSON.stringify(data));
 
     console.info(
-      chalk.green(`Данные успешно записаны в "${path}"`)
+        chalk.green(`Данные успешно записаны в "${path}"`)
     );
   } catch (error) {
     console.error(
-      chalk.red(`Не удалось произвести запись в "${path}"\n\n${error}`)
+        chalk.red(`Не удалось произвести запись в "${path}"\n\n${error}`)
     );
 
     throw error;
@@ -41,7 +41,7 @@ const readFile = async (path) => {
       .filter((line) => line.length > 0);
   } catch (error) {
     console.error(
-      chalk.red(`Не удалось прочитать файл "${path}"\n\n${error}`)
+        chalk.red(`Не удалось прочитать файл "${path}"\n\n${error}`)
     );
 
     throw error;

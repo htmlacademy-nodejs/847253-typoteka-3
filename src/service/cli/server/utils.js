@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const createResponseSender = (res) => (statusCode, message) => {
   res.statusCode = statusCode;

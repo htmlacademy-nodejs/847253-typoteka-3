@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const fs = require(`fs`);
 const path = require(`path`);
@@ -10,8 +10,8 @@ const combinedRouter = new Router();
 const filenames = fs.readdirSync(path.resolve(__dirname));
 
 filenames
-  .filter((fileName) => fileName.endsWith('-router.js'))
-  .forEach((fileName, i, array)=> {
+  .filter((fileName) => fileName.endsWith(`-router.js`))
+  .forEach((fileName)=> {
     const probablyRouter = require(`./` + fileName);
 
     if (Object.getPrototypeOf(probablyRouter) !== Router) {

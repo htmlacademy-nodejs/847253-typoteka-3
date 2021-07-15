@@ -1,0 +1,15 @@
+@import "@views/style/vars";
+@import "@views/components/plate/style/plate";
+
+.search-form {
+  display: flex;
+  align-items: center;
+
+  padding: $indent-5 $indent-plate;
+
+  background-color: $color-concrete;
+}
+
+.search-form__input {
+  margin-right: $indent-5;
+}

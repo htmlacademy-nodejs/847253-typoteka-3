@@ -1,0 +1,12 @@
+@import "@views/style/vars";
+
+.most-discussed-post-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.most-discussed-post-list__item:not(:last-child) {
+  margin-bottom: $indent-7;
+}

@@ -1,0 +1,25 @@
+@import "@views/style/vars";
+
+.information-plate {
+  padding: $indent-4 - 2px $indent-5 $indent-5;
+
+  border-radius: 15px;
+
+  &_theme {
+    &_info {
+      background-color: $color-concrete;
+    }
+
+    &_error {
+      background-color: $color-fair-pink;
+
+      .information-plate__title {
+        color: $color-burnt-sienna;
+      }
+    }
+  }
+}
+
+.information-plate__title {
+  margin-bottom: $indent-2;
+}

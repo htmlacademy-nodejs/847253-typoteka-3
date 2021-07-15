@@ -1,0 +1,52 @@
+mixin Input
+  -
+    const {
+      class: className,
+      error,
+      hint,
+      id = Math.random().toString(32).slice(2),
+      label,
+      name,
+      placeholder = ' ',
+      required = false,
+      size = '300',
+      type = 'text',
+      value,
+      view,
+      visuallyHiddenLabel,
+      width,
+    } = attributes;
+
+    const inputClasses = [
+      'input',
+      `input_size_${size}`,
+      view && `input_view_${view}`,
+      className,
+    ];
+
+    const inputStyle = [
+            width && `width: ${width}`,
+    ].join(';');
+
+  span(class=inputClasses, style=inputStyle)
+    span.input__wrapper
+      input.input__control(
+        id=id,
+        name=name,
+        placeholder=placeholder,
+        required=required,
+        type=type,
+        value=value,
+        aria-label=label ? undefined : visuallyHiddenLabel
+      )
+      if label
+        label.input__label(for=id)
+          | #{label}
+    span(class=['input__error', error && 'input__error_visible'])
+      if error
+        | #{error}
+    span(class=['input__hint', hint && !error && 'input__hint_visible'])
+      if hint
+        | #{hint}
+    script
+      include script.js

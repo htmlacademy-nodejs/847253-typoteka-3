@@ -1,0 +1,11 @@
+@import "@views/style/vars";
+
+.button_view_outlined {
+  position: relative;
+
+  overflow: hidden;
+
+  transition: opacity $time-microinteraction;
+
+  border: 2px solid currentColor;
+}

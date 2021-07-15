@@ -1,0 +1,23 @@
+include ../../../../../components/icon/icon
+include ../../../../../components/link/index
+include ../../../../../components/title/title
+
+//- TODO: Сделать кнопку удаления и запрос на удаление комментария
+
+append style
+  include:sass style.scss
+
+mixin Post
+  -
+    const {class: className, post = {
+      date: '2021-08-16T18:33:24.821Z',
+      title: 'Huawei открыла в России предзаказ на смартфон Mate 30 Pro без сервисов Google',
+      url: '/posts/1',
+    }} = attributes;
+    const {date, title, url} = post;
+  div(class=['post', className])
+    +Icon.post__icon(color='silver', name='document', size='900')
+    div.post__wrapper
+      time.post__post-date(datetime=date) #{getUserFriendlyDateString(date)}
+      +LinkContainer.post__post-link(href=url, underlined=true)
+        +Title.post__post-title(size='50', tag='h3', weight='regular') #{title}

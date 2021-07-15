@@ -1,0 +1,67 @@
+include ../button/index
+include ../icon/icon
+
+//- TODO Доделать пагинацию, чтобы кнопка активной страницы была посередине
+
+mixin Paginator
+  -
+    const {
+      class: className,
+      pagesAmount,
+      page,
+      maxButtonsAmount = 5,
+    } = attributes;
+
+    const isPreviousPageButtonAvailable = page > 1;
+    let isNextPageButtonAvailable = page < pagesAmount;
+
+  if page <= pagesAmount
+    div(class=['paginator', className])
+      ul.paginator__button-list
+        li.paginator__button-list-item
+          +Button(
+            aria-label=isPreviousPageButtonAvailable && 'Предыдущая страница',
+            disabled=!isPreviousPageButtonAvailable,
+            href=isPreviousPageButtonAvailable && `?page=${page - 1}`,
+            shape='circle',
+            tag='a',
+            theme='gradient-scorpion',
+            view='outlined',
+          )
+            +Icon(name='arrow-left', size='350')
+        -
+
+          let buttonsLeft = maxButtonsAmount;
+          let isAllButtonsRendered = buttonsLeft === 0;
+          let buttonIndex = page - 1;
+
+        while !isAllButtonsRendered
+          -
+            const isCurrentPageButton = buttonIndex + 1 === page;
+
+          li.paginator__button-list-item
+            +Button(
+              aria-label=!isCurrentPageButton && `Страница ${buttonIndex + 1}`,
+              href=!isCurrentPageButton && `?page=${buttonIndex + 1}`,
+              shape='circle',
+              tag='a',
+              theme=isCurrentPageButton && 'gradient-scorpion',
+              view=isCurrentPageButton ? 'filled' : 'outlined',
+            )
+              | #{buttonIndex + 1}
+            -
+              --buttonsLeft;
+              isAllButtonsRendered = buttonsLeft === 0 || buttonIndex + 1 === pagesAmount;
+              ++buttonIndex;
+
+        li.paginator__button-list-item
+          +Button(
+            aria-label=isNextPageButtonAvailable && 'Следующая страница',
+            disabled=!isNextPageButtonAvailable,
+            href=isNextPageButtonAvailable && `?page=${page + 1}`,
+            shape='circle',
+            tag='a',
+            theme='black',
+            view='outlined',
+          )
+            +Icon(name='arrow-right', size='350')

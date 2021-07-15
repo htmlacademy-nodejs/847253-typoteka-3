@@ -1,0 +1,16 @@
+include ../../../components/plate/plate
+include ../../../components/link/index
+
+include last-comments/last-comments
+include most-discussed-posts/most-discussed-posts
+
+append style
+  include:sass style.scss
+
+mixin MostInterestingPlate
+  - const {class: className, mostDiscussedPosts, lastComments} = attributes;
+
+  +Plate(class=['most-interesting-plate', className])
+    +Title.most-interesting-plate__title(tag='h2', visuallyHidden=true) Самое интересное
+    +MostDiscussedPosts.most-interesting-plate__most-discussed-posts(mostDiscussedPosts=mostDiscussedPosts)
+    +LastComments.most-interesing-plate__last-comments(lastComments=lastComments)

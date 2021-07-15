@@ -1,0 +1,11 @@
+@import "@views/style/vars";
+
+.text {
+  margin: 0;
+
+  color: inherit;
+}
+
+@import "_align";
+@import "_size";
+@import "_weight";

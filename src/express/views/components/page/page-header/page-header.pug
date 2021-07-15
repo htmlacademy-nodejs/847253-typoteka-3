@@ -1,0 +1,49 @@
+include ../../../components/logo/logo
+include ../../../components/button/index
+include ../../../components/button/button
+include ../../../components/link/index
+include ../../../components/icon/icon
+include ../../../components/avatar/avatar
+
+include user-navigation/user-navigation
+include site-navigation/site-navigation
+
+mixin PageHeader
+  - const {class: className, error} = attributes;
+
+  header(class=['page-header', className])
+    +LinkContainer.page-header__logo(
+      href='/',
+      aria-label='Главную страница'
+    )
+      if error
+        +Logo #{error.code}
+      else
+        +Logo
+    if user
+      if user.role === 'Administrator'
+        +ButtonContainer.page-header__new-post-button(
+          href='/my/posts/new'
+          tag='a',
+          theme='gradient-blue-ribbon',
+          view='filled',
+          width='160px',
+        ) Новая запись
+        +SiteNavigation.page-header__site-navigation
+      else
+        +UserNavigation.page-header__user-navigation
+          +Slot('children')
+            +LinkContainer(href='/logout', weight='bold') Выйти
+        +Avatar.page-header__user-avatar(src=user.avatar, alt=`${user.name} ${user.surname}`)
+    else
+      +LinkContainer.page-header__registration-link(href='/sign-up', weight='bold') Регистрация
+      +LinkContainer.page-header__login-link(href='/sign-in', weight='bold') Вход с паролем
+    +ButtonContainer.page-header__search-button(
+      href='/search',
+      shape='circle',
+      tag='a',
+      theme='black-10',
+      aria-label='Поиск по сайту',
+      view='filled',
+    )
+      +Icon(color='black', name='loupe', size='350')

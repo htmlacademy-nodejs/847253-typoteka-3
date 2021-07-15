@@ -1,0 +1,11 @@
+include ../radio-input/radio-input
+include ../button/button
+
+include category-list/category-list
+
+mixin CategoriesNavigation
+  - const {class: className, categories, currentPath} = attributes;
+
+  nav(class=['categories-navigation', className])
+    h2.categories-navigation__title Категории записей
+    +CategoryList.categories-navigation__category-list(categories=categories)

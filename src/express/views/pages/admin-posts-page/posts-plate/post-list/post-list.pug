@@ -1,0 +1,12 @@
+include post/post
+
+append style
+  include:sass style.scss
+
+mixin PostList
+  - const {class: className, posts} = attributes;
+
+  ul(class=['post-list', className])
+    each post in posts
+      li.post-list__item
+        +Post(post=post)

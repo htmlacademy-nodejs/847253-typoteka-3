@@ -1,0 +1,62 @@
+@import "@views/style/vars";
+
+$indent-plate: $indent-8;
+$border-radius-plate: $indent-8;
+
+.plate {
+  position: relative;
+
+  padding: $indent-plate;
+
+  border-radius: $border-radius-plate;
+}
+
+.plate__tail {
+  position: absolute;
+
+  border: 20px solid currentColor;
+
+  &_side {
+    &_top {
+      top: 0;
+
+      transform: translateY(-100%);
+
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
+
+    &_right {
+      right: 0;
+
+      transform: translateX(100%);
+
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+    }
+
+    &_bottom {
+      bottom: 0;
+
+      transform: translateY(100%);
+
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+
+    &_left {
+      left: 0;
+
+      transform: translateX(-100%);
+
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+    }
+  }
+}
+
+@import "_fill";

@@ -1,0 +1,7 @@
+include ../../../../../components/button/button
+
+mixin CategoryInput
+  - const {class: className} = attributes;
+
+  div(class=['category-input', className])
+    +Button(shape='sausage', size='250', theme='black-50', view='outlined') Добавить категорию

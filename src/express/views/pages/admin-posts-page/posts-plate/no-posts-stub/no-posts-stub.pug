@@ -1,0 +1,12 @@
+include ../../../../components/stub/stub
+include ../../../../components/title/title
+include ../../../../components/text/text
+
+mixin NoPostsStub
+  - const {class: className} = attributes;
+
+  +Stub(class=['no-posts-stub', className])
+    +Slot('icon')
+      +Icon(name='sad-folder', size='1200')
+    +Slot('title')
+      +Title(size='100', weight='medium', align='center') Записей нет

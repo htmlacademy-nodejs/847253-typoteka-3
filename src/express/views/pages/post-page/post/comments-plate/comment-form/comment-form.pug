@@ -1,0 +1,28 @@
+include ../../../../../components/button/button
+include ../../../../../components/input/input
+
+append style
+  include:sass style.scss
+
+mixin CommentForm
+  -
+    const {class: className, user = {
+      name: `Грека`,
+      surname: `Река`,
+      avatar: `https://thispersondoesnotexist.com/image`,
+    }} = attributes;
+
+  form(class=['comment-form', className])
+    +Avatar.comment-form__avatar(src=user.avatar, alt=`${user.name} ${user.surname}`)
+    +Input.comment-form__comment-input(
+      label='Присоединиться к обсуждению',
+      name='comment',
+      size='400',
+      width='100%',
+    )
+    +Button.comment-form__submit-button(
+      theme='gradient-blue-ribbon',
+      type='submit',
+      view='filled',
+      width='160px',
+    ) Опубликовать

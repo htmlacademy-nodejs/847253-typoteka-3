@@ -1,0 +1,14 @@
+@import "@views/style/vars";
+
+.sign-up-form-error-information-plate__error-list {
+  margin: 0;
+  padding-left: $indent-5 - 2px;
+
+  list-style: disc;
+}
+
+.sign-up-form-error-information-plate__error-list-item {
+  &:not(:last-child) {
+    margin-bottom: $indent-1;
+  }
+}

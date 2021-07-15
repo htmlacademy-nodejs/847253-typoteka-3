@@ -1,0 +1,5 @@
+include categories-navigation
+
+mixin CategoriesNavigationContainer
+  +CategoriesNavigation(currentPath=router.path)&attributes(attributes)
+    block

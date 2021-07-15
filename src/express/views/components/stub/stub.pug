@@ -1,0 +1,22 @@
+include ../title/title
+
+mixin Stub
+  -
+    const {class: className} = attributes;
+
+    const slots = {};
+
+  mixin Slot(name)
+    - slots[name] = block;
+
+  - block();
+
+  div(class=['stub', className])
+    if slots.icon
+      div.stub__icon
+        - slots.icon();
+    div.stub__title
+      - slots.title();
+    if slots.text
+      div.stub__text
+        - slots.text();

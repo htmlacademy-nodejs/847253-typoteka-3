@@ -1,0 +1,9 @@
+include category-button/category-button
+
+mixin CategoryList
+  - const {class: className, categories} = attributes;
+
+  ul(class=['category-list', className])
+    each category in categories
+      li.category-list__item
+        +CategoryButton(category=category)

@@ -1,0 +1,55 @@
+@use "sass:map";
+
+@import "@views/style/vars";
+
+.date-input {
+  display: flex;
+  align-items: center;
+
+  width: fit-content;
+  height: fit-content;
+}
+
+.date-input__icon {
+  margin-right: $indent-3;
+}
+
+.date-input__wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.date-input__label {
+  font-size: map.get($font-size-by-size, "250");
+  line-height: map.get($line-height-by-size, "250");
+}
+
+.date-input__control {
+  position: relative;
+  left: -4px;
+
+  height: 18px;
+  width: 88px;
+  padding: 0;
+
+  text-align: center;
+
+  border: none;
+  border-bottom: 1px solid transparent;
+
+  font-weight: 700;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    border-bottom-color: $color-silver;
+  }
+
+  &::placeholder {
+    color: inherit;
+    font-weight: inherit;
+  }
+}

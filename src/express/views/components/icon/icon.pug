@@ -1,0 +1,41 @@
+mixin Icon
+  -
+    const {
+      class: className,
+      color,
+      name,
+      size = '250',
+    } = attributes;
+
+    const iconClasses = [
+      'icon',
+      color && `icon_color_${color}`,
+      size && `icon_size_${size}`,
+      name && `icon_name_${name}`,
+      className,
+    ];
+
+  span(class=iconClasses)
+    case name
+      when 'loupe'
+        include img/icon-loupe.svg
+      when 'burger'
+        include img/icon-burger.svg
+      when 'sad-folder'
+        include img/icon-sad-folder.svg
+      when 'sad-paper'
+        include img/icon-sad-paper.svg
+      when 'stapled-documents'
+        include img/icon-stapled-documents.svg
+      when 'cross'
+        include img/icon-cross.svg
+      when 'smile'
+        include img/icon-smile.svg
+      when 'document'
+        include img/icon-document.svg
+      when 'calendar'
+        include img/icon-calendar.svg
+      when 'arrow-left'
+        include img/icon-arrow-left.svg
+      when 'arrow-right'
+        include img/icon-arrow-right.svg

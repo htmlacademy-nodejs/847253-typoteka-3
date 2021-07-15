@@ -1,0 +1,30 @@
+include ../../../components/button/index
+include ../../../components/icon/icon
+include ../../../components/plate/plate
+include ../../../components/title/title
+
+include sign-up-form/sign-up-form
+
+append style
+  include:sass style.scss
+
+mixin SignUpPlate
+  - const {class: className} = attributes;
+
+  +Plate(class=['sign-up-plate', className], width='600px')
+    +Title.sign-up-plate__title(size='200', tag='h2') Регистрация
+    +SignUpForm.sign-up-plate__sign-up-form(
+      errors=[
+        'Пароль не может состоять из двух букв',
+        'Фамилия не должна быть смешной',
+      ]
+    )
+    +ButtonContainer.sign-up-plate__close-button(
+      aria-label='Главная страница',
+      href='/',
+      shape='circle',
+      tag='a',
+      theme='black-20',
+      view='outlined',
+    )
+      +Icon(color='black-20', name='cross', size='400')

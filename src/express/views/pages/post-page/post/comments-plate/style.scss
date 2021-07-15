@@ -1,0 +1,15 @@
+@import "@views/style/vars";
+
+@import "@views/components/plate/style/plate";
+
+.comments-plate__title {
+  margin-bottom: $indent-9;
+}
+
+.comments-plate__comment-list {
+  margin-bottom: $indent-8;
+}
+
+.comments-plate__comment-form {
+  margin: 0 -#{$indent-plate} -#{$indent-plate};
+}

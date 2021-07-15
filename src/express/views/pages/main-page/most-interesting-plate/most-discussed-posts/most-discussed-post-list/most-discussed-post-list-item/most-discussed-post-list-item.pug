@@ -1,0 +1,17 @@
+include ../../../../../../components/link/index
+
+append style
+  include:sass style.scss
+
+mixin MostDiscussedPostListItem
+  -
+    const {class: className, mostDiscussedPost = {
+      title: 'Билл Гейтс впервые за два года возглавил рейтинг самых богатых людей мира по версии Bloomberg',
+      url: '/posts/1',
+      commentsAmount: 12,
+    }} = attributes;
+    const {title, url, commentsAmount} = mostDiscussedPost;
+
+  span(class=['most-discussed-post-list-item', className])
+    +LinkContainer.most-discussed-post-list-item__link(href=url, size='200' theme='royal-blue') #{title}
+      sup.most-discussed-post-list-item__comments-amount  #{commentsAmount}
