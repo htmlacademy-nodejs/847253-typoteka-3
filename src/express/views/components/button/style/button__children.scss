@@ -1,0 +1,7 @@
+.button__children {
+  overflow: hidden;
+
+  pointer-events: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

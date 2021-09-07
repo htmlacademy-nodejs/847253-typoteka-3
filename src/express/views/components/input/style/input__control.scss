@@ -1,0 +1,41 @@
+.input__control {
+  position: relative;
+
+  display: inline-flex;
+
+  width: 100%;
+  padding: 0;
+
+  vertical-align: top;
+
+  color: inherit;
+  border: none;
+  background-color: transparent;
+
+  font: inherit;
+
+  &:focus,
+  &:not(:placeholder-shown) {
+    & + .input__label {
+      top: 0;
+
+      transform: translateY(0);
+    }
+  }
+
+  &:focus {
+    outline: none;
+
+    &::placeholder {
+      visibility: visible;
+    }
+  }
+
+  &::placeholder {
+    visibility: hidden;
+
+    color: inherit;
+
+    opacity: 0.2;
+  }
+}

@@ -1,0 +1,79 @@
+@use "sass:map";
+
+@import "@views/style/vars";
+
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter-Bold.woff2) format("woff2"), url(../fonts/Inter-Bold.woff) format("woff");
+  font-weight: 700;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter-SemiBold.woff2) format("woff2"), url(../fonts/Inter-SemiBold.woff) format("woff");
+  font-weight: 600;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter-Medium.woff2) format("woff2"), url(../fonts/Inter-Medium.woff) format("woff");
+  font-weight: 500;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter-Regular.woff2) format("woff2"), url(../fonts/Inter-Regular.woff) format("woff");
+  font-weight: 400;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "SFProDisplay";
+  src: url(../fonts/SFProDisplay-Bold.woff2) format("woff2"), url(../fonts/SFProDisplay-Bold.woff) format("woff");
+  font-weight: 700;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "SFProDisplay";
+  src: url(../fonts/SFProDisplay-Regular.woff2) format("woff2"), url(../fonts/SFProDisplay-Regular.woff) format("woff");
+  font-weight: 400;
+  font-style: normal
+}
+
+.page {
+  background-color: $color-tropical-blue;
+  background-image: url(../img/background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: map.get($font-size-by-size, "200");
+  line-height: map.get($line-height-by-size, "200");
+
+  &_no-background-image {
+    background-image: none;
+  }
+}
+
+.page__wrapper {
+  display: flex;
+  flex-direction: column;
+
+  width: 1000px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.page__main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.page__footer {
+  margin-top: auto;
+}

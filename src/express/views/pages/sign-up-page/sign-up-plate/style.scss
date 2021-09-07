@@ -1,0 +1,16 @@
+@import "@views/style/vars";
+
+.sign-up-plate {
+  position: relative;
+}
+
+.sign-up-plate__title {
+  margin-bottom: $indent-10;
+}
+
+.sign-up-plate__close-button {
+  position: absolute;
+
+  top: $indent-5;
+  right: $indent-5;
+}

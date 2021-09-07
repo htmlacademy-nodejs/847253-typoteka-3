@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const FILE_NAME = `./mocks.json`;
 

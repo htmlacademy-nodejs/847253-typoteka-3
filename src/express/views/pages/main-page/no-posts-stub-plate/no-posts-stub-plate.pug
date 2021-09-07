@@ -1,0 +1,11 @@
+include no-posts-stub/no-posts-stub
+
+mixin NoPostsStubPlate
+  - const {class: className} = attributes;
+
+  append style
+    include:sass style.scss
+
+  +Plate(class=['no-posts-stub-plate', className], fill='gallery')
+    div.no-posts-stub-plate__inner
+      +NoPostsStub.no-posts-stub-plate__no-posts-stub

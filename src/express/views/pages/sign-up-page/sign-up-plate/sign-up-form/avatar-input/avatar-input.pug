@@ -1,0 +1,34 @@
+append style
+  include:sass style.scss
+
+mixin AvatarInput
+  -
+    const {
+      class: className,
+      error,
+      hint,
+      id = Math.random().toString(32).slice(2),
+      name,
+      required = false,
+      value,
+    } = attributes;
+
+  span(class=['avatar-input', className])
+    span.avatar-input__wrapper
+      +Avatar.avatar-input__avatar-preview(src=value, alt='Ваш аватар')
+      input.avatar-input__control(accept='image/jpeg, image/png', id=id, name=name, required=required, type='file')
+      +Button.avatar-input__upload-button(
+        for=id,
+        shape='sausage',
+        theme='black-50',
+        tag='label',
+        view='outlined',
+      ) Загрузить фото профиля
+    span(class=['avatar-input__error', error && 'avatar-input__error_visible'])
+      if error
+        | #{error}
+    span(class=['avatar-input__hint', hint && !error && 'avatar-input__hint_visible'])
+      if hint
+        | #{hint}
+    script
+      include script.js

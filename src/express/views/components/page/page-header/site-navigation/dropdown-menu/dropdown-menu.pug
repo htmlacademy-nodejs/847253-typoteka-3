@@ -1,0 +1,27 @@
+//- TODO: Добавить скрытый заголовок и семантичный тег для меню
+
+mixin DropdownMenu
+  -
+    const {class: className, currentPath, items} = attributes;
+
+    const slots = {};
+
+  mixin Slot(name)
+    -
+      slots[name] = block;
+
+  -block();
+
+  div(class=['dropdown-menu', className])
+    div.dropdown-menu__button
+      - slots.button()
+      ul.dropdown-menu__item-list
+        each item in  items
+          - const isCurrentPath = item.url === currentPath;
+
+          li.dropdown-menu__item-list-item
+            a(
+              class=['dropdown-menu__link', isCurrentPath && 'dropdown-menu__link_current'],
+              href=!isCurrentPath && item.url
+            )
+              | #{item.name}

@@ -1,0 +1,17 @@
+mixin Logo
+  -
+    const {class: className, view = 'full'} = attributes;
+
+    const logoClasses = [
+      'logo',
+      `logo_view_${view}`,
+      className
+    ];
+
+  span(class=logoClasses)
+    span.logo__image
+      include img/logo.svg
+    +Text.logo__name(weight='bold') Типотека
+    if block
+      +Text.logo__children(size='250', weight='bold')
+        block

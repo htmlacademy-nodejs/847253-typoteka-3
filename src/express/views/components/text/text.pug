@@ -1,0 +1,26 @@
+mixin Text
+  -
+    const {
+      align = 'left',
+      class: className,
+      color,
+      size = '250',
+      weight = 'regular',
+      width,
+    } = attributes;
+
+    const textClasses = [
+      'text',
+      `text_align_${align}`,
+      color && `text_color_${color}`,
+      `text_size_${size}`,
+      `text_weight_${weight}`,
+      className,
+    ];
+
+    const textStyle = [
+       width && `width: ${width}`
+    ].join(';');
+
+  p(class=textClasses, style=textStyle)
+    block

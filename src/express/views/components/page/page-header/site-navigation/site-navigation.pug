@@ -1,0 +1,27 @@
+include ../../../../components/button/button
+include ../../../../components/icon/icon
+include ../../../../components/link/link
+include ../../../../components/title/title
+
+include dropdown-menu/index
+
+mixin SiteNavigation
+  - const {class: className} = attributes;
+
+  nav(class=['site-navigation', className])
+    h2.site-navigation__title Навигация по сайту
+    +DropdownMenuContainer(
+      items=[
+        {url: '/my/posts', name: 'Записи'},
+        {url: '/my/comments', name: 'Комментарии'},
+        {url: '/my/categories', name: 'Категории'},
+      ]
+    )
+      +Slot('button')
+        +Button.page-header__burger(
+          shape='circle',
+          theme='gradient-scorpion',
+          aria-label='Открыть меню',
+          view='filled',
+        )
+          +Icon(name='burger', color='white', size='450')

@@ -1,0 +1,17 @@
+@import "@views/style/vars";
+@import "@views/components/plate/style/plate";
+
+.comment-form {
+  display: flex;
+
+  padding: $indent-6 $indent-plate;
+
+  border-bottom-left-radius: $border-radius-plate;
+  border-bottom-right-radius: $border-radius-plate;
+  background-image: linear-gradient(180deg, $color-polar 0%, transparent 100%);
+}
+
+.comment-form__avatar,
+.comment-form__comment-input {
+  margin-right: $indent-5;
+}

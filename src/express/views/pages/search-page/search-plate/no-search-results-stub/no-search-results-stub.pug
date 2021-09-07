@@ -1,0 +1,14 @@
+include ../../../../components/stub/stub
+include ../../../../components/text/text
+include ../../../../components/title/title
+
+mixin NoSearchResultsStub
+  - const {class: className} = attributes;
+
+  +Stub(class=['no-search-results-stub', className])
+    +Slot('icon')
+      +Icon(name='sad-folder', size='1200')
+    +Slot('title')
+      +Title(size='100', weight='medium', align='center') Ничего не нашлось
+    +Slot('text')
+      +Text(align='center', color='dove-gray', size='250') Попробуйте изменить поисковый запрос

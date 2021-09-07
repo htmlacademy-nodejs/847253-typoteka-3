@@ -1,0 +1,17 @@
+.link_weight {
+  &_regular {
+    font-weight: 400;
+  }
+
+  &_medium {
+    font-weight: 500;
+  }
+
+  &_bold {
+    font-weight: 700;
+  }
+
+  &_bolder {
+    font-weight: 900;
+  }
+}

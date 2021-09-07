@@ -1,0 +1,50 @@
+@use "sass:map";
+
+@import "@views/style/vars";
+
+$indent-inner-grid: $indent-13;
+
+.post__back-button {
+  position: absolute;
+
+  left: 0;
+}
+
+.post__header {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  padding-left: $indent-inner-grid;
+}
+
+.post__date {
+  margin-bottom: $indent-2;
+
+  font-size: map.get($font-size-by-size, "200");
+  line-height: map.get($line-height-by-size, "200");
+}
+
+.post__title {
+  margin-bottom: $indent-7;
+}
+
+.post__image {
+  display: block;
+
+  width: 100%;
+  height: auto;
+  margin-bottom: $indent-10;
+
+  border-radius: 15px;
+}
+
+.post__text {
+  margin-left: $indent-inner-grid;
+}
+
+.post__comments-plate {
+  margin: $indent-10 0 0 $indent-inner-grid;
+}

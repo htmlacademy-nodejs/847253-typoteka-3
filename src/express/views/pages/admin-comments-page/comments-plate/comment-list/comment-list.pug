@@ -1,0 +1,12 @@
+include comment/comment
+
+append style
+  include:sass style.scss
+
+mixin CommentList
+  - const {class: className, comments} = attributes;
+
+  ul(class=['comment-list', className])
+    each comment in comments
+      li.comment-list__item
+        +Comment(comment=comment)

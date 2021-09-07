@@ -1,0 +1,24 @@
+@import "@views/style/vars";
+
+.post-plate {
+  position: relative;
+}
+
+.post-plate__inner {
+  $margin-to-close-button-top-edge: -12px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  min-height: 574px;
+  padding-bottom: $indent-10;
+  margin-top: $margin-to-close-button-top-edge;
+}
+
+.post-plate__close-button {
+  position: absolute;
+
+  top: $indent-5;
+  right: $indent-5;
+}

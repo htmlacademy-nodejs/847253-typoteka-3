@@ -1,0 +1,28 @@
+mixin Plate
+  -
+    const {
+      class: className,
+      fill = 'white',
+      width,
+      tail,
+    } = attributes;
+
+    const plateClasses = [
+      'plate',
+      `plate_fill_${fill}`,
+      className
+    ];
+
+    const plateStyle = [
+      width && `width: ${width}`,
+    ].join(';');
+
+    const tailStyle = tail && [
+      ...(tail.side === 'top' || tail.side === 'bottom' ? [`left: ${tail.position}`] : []),
+      ...(tail.side === 'left' || tail.side === 'right' ? [`top: ${tail.position}`] : []),
+    ].join(';');
+
+  div(class=plateClasses, style=plateStyle)
+    block
+    if tail
+      div(class=['plate__tail', `plate__tail_side_${tail.side}`], style=tailStyle)

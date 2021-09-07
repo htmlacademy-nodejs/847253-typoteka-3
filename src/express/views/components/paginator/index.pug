@@ -1,0 +1,9 @@
+include paginator
+
+mixin PaginatorContainer
+  - const {page} = attributes;
+
+  +Paginator(
+      page=router.query.page === undefined ? page : Number(router.query.page)
+    )&attributes(excludeAttributes(attributes, ['page']))
+    block

@@ -1,0 +1,19 @@
+include ../title/title
+
+mixin InformationPlate
+  -
+    const {class: className, theme = 'info'} = attributes;
+
+    const slots = {};
+
+  mixin Slot(name)
+    - slots[name] = block;
+
+  - block();
+
+  div(class=['information-plate', `information-plate_theme_${theme}`, className])
+    div.information-plate__title
+      - slots.title();
+    if slots.text
+      div.stub__text
+        - slots.text();

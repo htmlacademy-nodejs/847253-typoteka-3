@@ -1,0 +1,12 @@
+include search-result/search-result
+
+append style
+  include:sass style.scss
+
+mixin SearchResultList
+  - const {class: className, searchResults} = attributes;
+
+  ul(class=['search-result-list', className])
+    each searchResult in searchResults
+      li.search-result-list__item
+        +SearchResult(searchResult=searchResult)

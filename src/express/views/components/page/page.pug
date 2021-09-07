@@ -1,0 +1,32 @@
+include ../../components/title/title
+
+include utils
+include page-header/page-header
+include page-footer/page-footer
+
+- const isNoBackgroundPage = ['ERROR', 'SEARCH', 'ADMIN_CATEGORIES'].includes(page.id);
+
+doctype html
+html(class=['page', isNoBackgroundPage  && 'page_no-background-image'])
+  head
+    block head
+      meta(charset='utf-8')
+      meta(name='viewport' content='width=device-width,initial-scale=1')
+      meta(name='description' content='Личный блог Типотека')
+      meta(http-equiv='X-UA-Compatible' content='ie=edge')
+      title #{page.title} - Типотека
+      link(rel='preload' href='/fonts/Inter-Regular.woff2' as='font' crossorigin='anonymous')
+      link(rel='preload' href=' /fonts/Inter-Medium.woff2' as='font' crossorigin='anonymous')
+      link(rel='preload' href='/fonts/SFProDisplay-Regular.woff2' as='font' crossorigin='anonymous')
+      link(rel='stylesheet' href='/css/normalize.min.css')
+      link(rel='stylesheet' href='/css/style.min.css')
+      style
+        block style
+  body
+    +Title(tag='h1', visuallyHidden=true) #{page.title}
+    div.page__wrapper()
+      +PageHeader.page__header(error=error)
+      main.page__main
+        block main
+      +PageFooter.page__footer
+    block body-end-scripts

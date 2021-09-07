@@ -1,0 +1,12 @@
+include category/category
+
+append style
+  include:sass style.scss
+
+mixin CategoryList
+  - const {class: className, categories} = attributes;
+
+  ul(class=['category-list', className])
+    each category in categories
+      li.category-list__item
+        +Category(category=category)

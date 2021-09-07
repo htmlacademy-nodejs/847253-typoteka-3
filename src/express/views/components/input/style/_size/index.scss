@@ -1,0 +1,33 @@
+@use "sass:math";
+@use "sass:map";
+
+@import "@views/style/vars";
+
+@import "../vars";
+
+.input_size {
+  @each $size, $input-height in $input-height-by-size {
+    &_#{$size} {
+      width: map.get($input-width-by-size, $size);
+
+      .input__control {
+        height: $input-height;
+
+        font-size: map.get($font-size-by-size, $size);
+        line-height: map.get($line-height-by-size, $size);
+
+        &:focus,
+        &:not(:placeholder-shown) {
+          & + .input__label {
+            font-size: math.div(map.get($font-size-by-size, $size), 1.5);
+          }
+        }
+      }
+
+      .input__label {
+        font-size: map.get($font-size-by-size, $size);
+        line-height: 1;
+      }
+    }
+  }
+}

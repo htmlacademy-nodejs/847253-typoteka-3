@@ -1,0 +1,25 @@
+include ../../../components/button/index
+include ../../../components/icon/icon
+include ../../../components/plate/plate
+include ../../../components/title/title
+
+include sign-in-form/sign-in-form
+
+append style
+  include:sass style.scss
+
+mixin SignInPlate
+  - const {class: className} = attributes;
+
+  +Plate(class=['sign-in-plate', className], width='600px')
+    +Title.sign-in-plate__title(size='200', tag='h2') Вход с паролем
+    +SignInForm.sign-in-plate__sign-in-form
+    +ButtonContainer.sign-in-plate__close-button(
+      aria-label='Главная страница',
+      href='/',
+      shape='circle',
+      tag='a',
+      theme='black-20',
+      view='outlined',
+    )
+      +Icon(color='black-20', name='cross', size='400')

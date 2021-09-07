@@ -1,0 +1,7 @@
+@import "@views/style/vars";
+
+.most-interesting-plate {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: $indent-5;
+}

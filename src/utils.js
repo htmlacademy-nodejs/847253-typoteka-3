@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const generateRandomNumber = (min, max) => {
   const roundedUpMin = Math.ceil(min);

@@ -1,0 +1,24 @@
+@import "@views/style/vars";
+
+@import "@views/components/plate/style/plate";
+
+.categories-plate__inner {
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  min-height: 574px;
+  padding-bottom: $indent-10;
+}
+
+.categories-plate__title {
+  margin-bottom: $indent-5;
+}
+
+.categories-plate__add-category-form {
+  margin: 0 -#{$indent-plate} $indent-7;
+}
+
+.categories-plate__no-categories-stub {
+  margin: 0 auto;
+}
