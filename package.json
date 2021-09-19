@@ -2,15 +2,15 @@
   "name": "847253-typoteka-3",
   "version": "1.0.0",
   "description": "Типотека",
-  "main": "./src/service/service.js",
+  "main": "src/service/index.js",
   "scripts": {
-    "start": "node ./src/service/service.js",
-    "server": "nodemon ./src/service/service.js --server",
-    "create-symlinks": "ln -s \"${PWD}/src/express/views\" \"@views\"",
-    "start-front-server": "node ./src/express",
-    "test": "npm run eslint",
+    "start": "npm run start-app & npm run start-api",
+    "create-symlinks": "ln -s \"${PWD}/src/app/views\" \"@views\"",
+    "start-app": "node ./src/app",
+    "start-api": "node ./src/api",
+    "test": "npm run eslint && npm run pug-lint",
     "eslint": "eslint --ext .js src/",
-    "pug-lint": "pug-lint -c .pug-lintrc.json src/express/views"
+    "pug-lint": "pug-lint -c .pug-lintrc.json src/app/views"
   },
   "author": "Маклай Михаил",
   "license": "ISC",

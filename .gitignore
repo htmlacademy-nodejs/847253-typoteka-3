@@ -15,7 +15,7 @@ node_modules/
 build/
 
 # Файлы времени исполнения
-mocks.json
+src/api/mocks/**/*
 
 # Симлинки
 @views
