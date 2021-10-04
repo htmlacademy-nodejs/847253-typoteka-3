@@ -1,0 +1,16 @@
+@import "~@app/views/style/vars";
+
+.sign-in-plate {
+  position: relative;
+}
+
+.sign-in-plate__close-button {
+  position: absolute;
+
+  top: $indent-5;
+  right: $indent-5;
+}
+
+.sign-in-plate__title {
+  margin-bottom: $indent-10;
+}

@@ -1,0 +1,35 @@
+include ../../../../views/components/button/index
+include ../../../../views/components/visual-editor-content/visual-editor-content
+
+include comments-plate/comments-plate
+
+append style
+  include:sass style.scss
+
+mixin Post
+  -
+    const {class: className, post = {
+      title: 'AirPods в один клик',
+      date: '2021-08-18T16:12:32.805Z',
+      image: {src: '/img/sea-fullsize@1x.jpg', alt: 'asda'},
+      text: 'Бирюзовое довериеУ Apple иногда попадаются интерфейсы, за которые создателей хочется сильно поругать — ' +
+            'к примеру интерфейс публикации приложения в AppStore, для которого я уже неделю восстановливаю свой аккаунт' +
+            ' разработчика. Или интерфейс подключения AirPods на макбуке. Чтобы переключить наушники между телефоном и ' +
+            'компьютером, нужно сначала нажать на значок звука, затем дождаться, когда в списке устройств появятся ' +
+            'наушники, потом нажать на них и дождаться, пока случится вся магия подключения. Иногда по загадочным ' +
+            'причинам магия не случается, и операцию нужно повторить, выполняя все те же клики-ожидания-клики — бесит.'
+    }} = attributes;
+    const {title, date, image, text} = post;
+
+  div(class=['post', className])
+    div.post__header
+      +ButtonContainer.post__back-button Назад
+      time.post__date(datetime=date) #{getUserFriendlyDateString(date)}
+      +Title.post__title(size='600', tag='h2', weight='medium') #{title}
+      ul.post__category-list
+    img.post__image(src=image.src, alt=image.alt, width='1000', height='auto')
+    +VisualEditorContent.post__text
+      h2 Бирюзовое доверие
+      p У Apple иногда попадаются интерфейсы, за которые создателей хочется сильно поругать — к примеру интерфейс публикации приложения в AppStore, для которого я уже неделю восстановливаю свой аккаунт разработчика.
+      p Или интерфейс подключения AirPods на макбуке. Чтобы переключить наушники между телефоном и компьютером, нужно сначала нажать на значок звука, затем дождаться, когда в списке устройств появятся наушники, потом нажать на них и дождаться, пока случится вся магия подключения. Иногда по загадочным причинам магия не случается, и операцию нужно повторить, выполняя все те же клики-ожидания-клики — бесит.
+    +CommentsPlate.post__comments-plate(comments=Array.from({length: 5}))

@@ -1,6 +1,6 @@
 @use "sass:map";
 
-@import "@views/style/vars";
+@import "~@app/views/style/vars";
 
 $button-height-by-size: (
   "100": 25px,

@@ -1,4 +1,4 @@
-@import "@views/style/vars";
+@import "~@app/views/style/vars";
 
 @mixin button-theme-gradient-view-filled($background-color, $hovered-background-color, $start-gradient-color, $end-gradient-color, $hovered-box-shadow-color) {
   transition: opacity $time-microinteraction, background-color $time-microinteraction, box-shadow $time-microinteraction;

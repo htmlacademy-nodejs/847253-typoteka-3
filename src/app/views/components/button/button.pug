@@ -5,11 +5,11 @@ mixin Button
     const {
       class: className,
       'aria-label': ariaLabel,
-      currentPath,
+      currentHref,
       disabled,
       for: inputId,
       href,
-      pressed = attributes.tag === 'a' ? attributes.currentPath === attributes.href : undefined,
+      pressed = attributes.tag === 'a' ? attributes.currentHref === attributes.href : undefined,
       shape = 'rounded',
       size = '350',
       tag,
@@ -33,7 +33,7 @@ mixin Button
       width && `width: ${width}`
     ].join(';');
 
-    const isCurrentPath = href === currentPath;
+    const isCurrentHref = href === currentHref;
 
   case tag
     when 'a'
@@ -42,9 +42,9 @@ mixin Button
           ...buttonClasses,
           disabled && 'button_disabled'
         ],
-        href=!isCurrentPath && href,
+        href=!isCurrentHref && href,
         style=buttonStyle
-        aria-label=!isCurrentPath && ariaLabel
+        aria-label=!isCurrentHref && ariaLabel
       )
         if block
           +ButtonContent

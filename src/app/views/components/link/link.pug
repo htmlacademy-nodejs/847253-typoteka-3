@@ -3,7 +3,7 @@ mixin Link
     const {
       'aria-label': ariaLabel,
       class: className,
-      currentPath,
+      currentHref,
       href,
       size = '250',
       theme,
@@ -11,13 +11,13 @@ mixin Link
       weight = '500',
     } = attributes;
 
-    const isCurrentPath = href === currentPath;
+    const isCurrentHref = href === currentHref;
 
     const linkClasses = [
       'link',
       `link_size_${size}`,
       `link_weight_${weight}`,
-      isCurrentPath && 'link_current',
+      isCurrentHref && 'link_current',
       underlined && 'link_underlined',
       theme && `link_theme_${theme}`,
       className
@@ -25,7 +25,7 @@ mixin Link
 
   a(
     class=linkClasses,
-    href=!isCurrentPath && href,
-    aria-label=!isCurrentPath && ariaLabel
+    href=!isCurrentHref && href,
+    aria-label=!isCurrentHref && ariaLabel
   )
     block

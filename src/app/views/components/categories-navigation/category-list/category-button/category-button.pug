@@ -9,7 +9,7 @@ mixin CategoryButton
     }} = attributes;
     const {name, postsAmount, id} = category;
 
-  +ButtonContainer.category(view='outlined', shape='sausage', theme='blue-ribbon', tag='a', href=`/posts/${id}`)
+  +ButtonContainer.category(view='outlined', shape='sausage', theme='blue-ribbon', tag='a', href=`/posts/category/${id}`)
     | #{name}
     sup.category__posts-amount
       |

@@ -1,0 +1,14 @@
+@import "~@app/views/style/vars";
+
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-in-form__input + .sign-in-form__input {
+  margin-top: $indent-2;
+}
+
+.sign-in-form__submit-button {
+  margin-top: $indent-8;
+}

@@ -1,0 +1,10 @@
+extends ../../views/components/page/page
+
+include sign-in-plate/sign-in-plate
+
+append style
+  include:sass style.scss
+
+block main
+  div.sign-in-page
+    +SignInPlate.sign-in-page__sign-in-plate

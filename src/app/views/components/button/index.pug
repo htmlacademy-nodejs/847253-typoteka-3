@@ -1,5 +1,5 @@
 include button
 
 mixin ButtonContainer
-  +Button(currentPath=router.path)&attributes(attributes)
+  +Button(currentHref=router.href)&attributes(attributes)
     block

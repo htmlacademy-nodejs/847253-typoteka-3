@@ -1,4 +1,4 @@
-@import "@views/style/mixins";
+@import "~@app/views/style/mixins";
 
 .site-navigation__title {
   @include visually-hidden;

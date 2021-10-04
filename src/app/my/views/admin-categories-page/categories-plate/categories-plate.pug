@@ -1,0 +1,21 @@
+include ../../../../views/components/plate/plate
+include ../../../../views/components/title/title
+
+include add-category-form/add-category-form
+include category-list/category-list
+include no-categories-stub/no-categories-stub
+
+append style
+  include:sass style.scss
+
+mixin CategoriesPlate
+  - const {class: className, categories} = attributes;
+
+  +Plate(class=['categories-plate', className])
+    div.categories-plate__inner
+      +Title.categories-plate__title(size='400', tag='h2', weight='medium') Категории
+      +AddCategoryForm.categories-plate__add-category-form
+      if categories && categories.length
+        +CategoryList.categories-plate__category-list(categories=categories)
+      else
+        +NoCategoriesStub.categories-plate__no-categories-stub

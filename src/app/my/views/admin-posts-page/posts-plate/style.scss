@@ -1,0 +1,19 @@
+@import "~@app/views/style/vars/index";
+
+.posts-plate__inner {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  min-height: 574px;
+  padding-bottom: $indent-10;
+}
+
+.posts-plate__title {
+  margin-bottom: $indent-10;
+}
+
+.posts-plate__no-posts-stub {
+  margin: auto;
+}

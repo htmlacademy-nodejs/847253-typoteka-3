@@ -1,5 +1,5 @@
 include link
 
 mixin LinkContainer
-  +Link(currentPath=router.path)&attributes(attributes)
+  +Link(currentHref=router.href)&attributes(attributes)
     block

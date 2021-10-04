@@ -1,0 +1,24 @@
+'use strict';
+
+/**
+ * @readonly
+ * @type {object<string, string>}
+ */
+const PageId = {
+  ERROR: `ERROR`,
+  MAIN: `MAIN`,
+  SEARCH: `SEARCH`,
+  SIGN_IN: `SIGN_IN`,
+  SIGN_UP: `SIGN_UP`,
+  POST: `POST`,
+  POSTS_BY_CATEGORY: `POSTS_BY_CATEGORY`,
+  ADMIN_CATEGORIES: `ADMIN_CATEGORIES`,
+  ADMIN_COMMENTS: `ADMIN_COMMENTS`,
+  ADMIN_NEW_POST: `ADMIN_NEW_POST`,
+  ADMIN_EDIT_POST: `ADMIN_EDIT_POST`,
+  ADMIN_POSTS: `ADMIN_POSTS`,
+  NOT_FOUND_ERROR: `NOT_FOUND_ERROR`,
+  INTERNAL_SERVER_ERROR: `INTERNAL_SERVER_ERROR`,
+};
+
+module.exports = {PageId};

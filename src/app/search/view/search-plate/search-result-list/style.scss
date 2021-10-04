@@ -1,0 +1,14 @@
+@import "~@app/views/style/vars";
+
+.search-result-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.search-result-list__item {
+  &:not(:last-child) {
+    margin-bottom: $indent-9;
+  }
+}

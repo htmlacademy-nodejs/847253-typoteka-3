@@ -1,0 +1,18 @@
+@import "~@app/views/style/vars/index";
+
+.comments-plate__inner {
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  min-height: 574px;
+  padding-bottom: $indent-10;
+}
+
+.comments-plate__title {
+  margin-bottom: $indent-10;
+}
+
+.comments-plate__no-comments-stub {
+  margin: auto;
+}

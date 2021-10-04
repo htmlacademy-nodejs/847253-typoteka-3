@@ -1,6 +1,6 @@
 @use "sass:map";
 
-@import "@views/style/vars";
+@import "~@app/views/style/vars";
 
 .visual-editor-content {
   font-size: map.get($font-size-by-size, "350");

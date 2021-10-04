@@ -1,0 +1,9 @@
+@import "~@app/views/style/vars";
+
+.most-discussed-post-list-item {
+  display: flex;
+}
+
+.most-discussed-post-list-item__comments-amount {
+  color: $color-guardsman-red;
+}

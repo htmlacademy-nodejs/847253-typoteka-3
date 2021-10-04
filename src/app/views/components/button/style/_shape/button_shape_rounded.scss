@@ -1,6 +1,6 @@
 @use "sass:math";
 
-@import "@views/style/vars";
+@import "~@app/views/style/vars";
 
 $border-radius-by-size: (
   "100": 4px,

@@ -1,0 +1,22 @@
+@import "~@app/views/style/vars/index";
+
+.post {
+  display: flex;
+  align-items: center;
+}
+
+.post__icon {
+  margin-right: $indent-5;
+}
+
+.post__wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.post__post-date {
+  color: $color-silver;
+
+  font-size: map-get($font-size-by-size, "200");
+}

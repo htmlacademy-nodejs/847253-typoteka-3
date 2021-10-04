@@ -2,7 +2,7 @@
 
 mixin DropdownMenu
   -
-    const {class: className, currentPath, items} = attributes;
+    const {class: className, currentHref, items} = attributes;
 
     const slots = {};
 
@@ -17,11 +17,11 @@ mixin DropdownMenu
       - slots.button()
       ul.dropdown-menu__item-list
         each item in  items
-          - const isCurrentPath = item.url === currentPath;
+          - const isCurrentHref = item.url === currentHref;
 
           li.dropdown-menu__item-list-item
             a(
-              class=['dropdown-menu__link', isCurrentPath && 'dropdown-menu__link_current'],
-              href=!isCurrentPath && item.url
+              class=['dropdown-menu__link', isCurrentHref && 'dropdown-menu__link_current'],
+              href=!isCurrentHref && item.url
             )
               | #{item.name}
