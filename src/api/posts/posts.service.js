@@ -1,5 +1,3 @@
-'use strict';
-
 const PostsRepository = require(`./posts.repository`);
 
 class PostsService {
@@ -30,7 +28,7 @@ class PostsService {
    * @public
    * @return {Post[]}
    */
-  getPosts = () => {
+  getPosts() {
     return this.postsRepository.getPosts();
   }
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 const chalk = require(`chalk`);
 
 class LoggedError extends Error {

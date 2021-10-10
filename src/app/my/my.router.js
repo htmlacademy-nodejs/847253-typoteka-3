@@ -1,5 +1,3 @@
-'use strict';
-
 const {Router} = require(`express`);
 
 const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);

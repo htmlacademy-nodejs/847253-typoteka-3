@@ -1,5 +1,3 @@
-'use strict';
-
 const sass = require(`sass`);
 
 const {createNodeSassAliasImporter} = require(`@root/src/utils/node-sass`);

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @readonly
  * @type {object<string, number>}

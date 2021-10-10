@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require(`path`);
 
 const {Router} = require(`express`);
@@ -28,12 +26,12 @@ const MAIN_PAGE_ID = PageId.MAIN;
 
 class RootRouter extends Router {
   /**
-   * @type {RootRouter || null}
+   * @type {RootRouter | null}
    */
   static instance = null;
 
   /**
-   * @return {RootRouter || void}
+   * @return {RootRouter | null}
    */
   constructor() {
     if (RootRouter.instance !== null) {
@@ -54,11 +52,10 @@ class RootRouter extends Router {
    * @return {void}
    */
   getMainPage = (req, res) => {
-    throw new Error();
     res.render(MAIN_PAGE_VIEW_PATH, {
       router: {
         href: req.originalUrl,
-        query: req.query || {}, // TODO
+        query: req.query ?? {},
       },
       page: {
         id: MAIN_PAGE_ID,

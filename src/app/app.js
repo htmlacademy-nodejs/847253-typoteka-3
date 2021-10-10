@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require(`path`);
 
 const express = require(`express`);
@@ -139,7 +137,7 @@ class App {
    * @return {void}
    */
   start = () => {
-    this.express.listen(CONFIG.APP_PORT, this.handleExpressListen)
+    this.express.listen(CONFIG.APP_PORT, this.handleExpressListen);
   }
 }
 

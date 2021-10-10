@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @param {function} middleware
  * @return {function}

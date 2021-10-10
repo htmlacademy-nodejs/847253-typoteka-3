@@ -1,5 +1,3 @@
-'use strict';
-
 const App = require(`@api/app`);
 
 /**

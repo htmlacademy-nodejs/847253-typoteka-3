@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require(`path`);
 
 const {shuffleArray, getRandomArrayValue, createAndFillArray} = require(`@root/src/utils/arrays`);

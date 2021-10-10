@@ -1,5 +1,3 @@
-'use strict';
-
 const mocks = require(`./mocks`);
 const help = require(`./help`);
 const version = require(`./version`);

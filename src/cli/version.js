@@ -1,5 +1,3 @@
-'use strict';
-
 const chalk = require(`chalk`);
 
 const packageJsonFile = require(`@root/package.json`);

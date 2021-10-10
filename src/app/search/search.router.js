@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require(`path`);
 
 const {Router} = require(`express`);
@@ -39,7 +37,7 @@ class SearchRouter extends Router {
   static instance = null;
 
   /**
-   * @return {SearchRouter || void}
+   * @return {SearchRouter | void}
    */
   constructor() {
     if (SearchRouter.instance !== null) {

@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require(`express`);
 const chalk = require(`chalk`);
 
@@ -47,7 +45,7 @@ class App {
    * @return {void}
    */
   start() {
-    this.expressApplication.listen(CONFIG.API_PORT, this.handleExpressListen)
+    this.expressApplication.listen(CONFIG.API_PORT, this.handleExpressListen);
   }
 
   /**
