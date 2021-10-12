@@ -1,0 +1,15 @@
+include ../../../../../views/components/plate/plate
+
+include comment-form/comment-form
+include comment-list/comment-list
+
+append style
+  include:sass style.scss
+
+mixin CommentsPlate
+  - const {class: className, comments} = attributes;
+
+  +Plate(class=['comments-plate', className])
+    +Title.comments-plate__title(size='150', tag='h3') Комментарии
+    +CommentList.comments-plate__comment-list(comments=comments)
+    +CommentForm.comments-plate__comment-form

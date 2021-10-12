@@ -1,0 +1,42 @@
+@import "~@app/views/style/vars";
+@import "~@app/views/style/mixins";
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+
+  transition: all $time-microinteraction ease;
+  vertical-align: top;
+
+  &_view {
+    &_full {
+      .logo__image {
+        margin-right: $indent-3;
+      }
+    }
+
+    &_short {
+      .logo__name {
+        @include visually-hidden;
+      }
+    }
+  }
+}
+
+.logo__image,
+.logo__image svg {
+  display: inherit;
+
+  vertical-align: inherit;
+}
+
+.logo__children {
+  position: relative;
+  top: 0;
+
+  &::before {
+    content: " / ";
+
+    white-space: pre;
+  }
+}

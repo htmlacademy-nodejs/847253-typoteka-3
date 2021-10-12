@@ -1,9 +1,0 @@
-@import "@views/style/mixins";
-
-.radio-input__control {
-  @include visually-hidden;
-}
-
-.radio-input__button {
-  display: inline-flex;
-}

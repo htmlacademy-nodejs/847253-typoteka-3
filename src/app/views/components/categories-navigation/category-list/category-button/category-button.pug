@@ -1,0 +1,16 @@
+include ../../../button/index
+
+mixin CategoryButton
+  -
+    const {class: className, category = {
+      name: 'Автомобили',
+      postsAmount: 13,
+      id: 'auto',
+    }} = attributes;
+    const {name, postsAmount, id} = category;
+
+  +ButtonContainer.category(view='outlined', shape='sausage', theme='blue-ribbon', tag='a', href=`/posts/category/${id}`)
+    | #{name}
+    sup.category__posts-amount
+      |
+      | #{postsAmount}

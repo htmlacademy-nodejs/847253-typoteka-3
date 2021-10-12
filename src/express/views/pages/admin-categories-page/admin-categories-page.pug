@@ -1,7 +1,0 @@
-extends ../../components/page/page
-
-include categories-plate/categories-plate
-
-block main
-  div.admin-categories-page
-    +CategoriesPlate.admin-categories-page__categories-plate(categories=Array.from({length: 3}))

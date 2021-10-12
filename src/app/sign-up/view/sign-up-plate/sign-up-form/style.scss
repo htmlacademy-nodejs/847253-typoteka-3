@@ -1,0 +1,25 @@
+@import "~@app/views/style/vars";
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-up-form__input-list {
+  margin: 0 0 $indent-8;
+  padding: 0;
+
+  list-style: none;
+}
+
+.sign-up-form__input-list-item:not(:last-child) {
+  margin-bottom: $indent-2;
+}
+
+.sign-up-form__error-information-plate {
+  margin-bottom: $indent-8;
+}
+
+.sign-up-form__submit-button {
+  margin-top: $indent-8;
+}

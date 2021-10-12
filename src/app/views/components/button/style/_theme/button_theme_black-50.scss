@@ -1,0 +1,7 @@
+@import "~@app/views/style/vars";
+
+.button_theme_black-50 {
+  &.button_view_outlined {
+    color: $color-black-50;
+  }
+}

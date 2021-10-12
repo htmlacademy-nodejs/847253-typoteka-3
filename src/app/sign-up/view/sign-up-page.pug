@@ -1,0 +1,10 @@
+extends ../../views/components/page/page
+
+include sign-up-plate/sign-up-plate
+
+append style
+  include:sass style.scss
+
+block main
+  div.sign-up-page
+    +SignUpPlate.sign-up-page__sign-up-plate

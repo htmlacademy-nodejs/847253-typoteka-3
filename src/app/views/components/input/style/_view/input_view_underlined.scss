@@ -1,0 +1,19 @@
+@import "~@app/views/style/vars";
+
+.input_view_underlined {
+  .input__control {
+    border-bottom: 1px solid $color-black-50;
+
+    &:not(:focus) + .input__label {
+      opacity: 0.5;
+    }
+  }
+
+  .input__label {
+    transition: top $time-microinteraction,
+                left $time-microinteraction,
+                font-size $time-microinteraction,
+                transform $time-microinteraction,
+                opacity $time-microinteraction;
+  }
+}

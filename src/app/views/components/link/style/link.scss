@@ -1,0 +1,51 @@
+@import "~@app/views/style/vars";
+
+.link {
+  display: inline-block;
+
+  cursor: auto;
+  transition: opacity $time-microinteraction;
+  vertical-align: top;
+  text-decoration: none;
+
+  color: inherit;
+
+  &[href] {
+    cursor: pointer;
+  }
+
+  &[href]:hover,
+  &:focus-visible {
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    position: relative;
+    z-index: 0;
+
+    box-shadow: 0 0 0 2px $color-cornflower-blue-50;
+  }
+
+  &_current {
+    font-weight: 400;
+  }
+
+  &_underlined {
+    text-decoration: underline;
+  }
+
+  img,
+  svg {
+    display: inherit;
+
+    vertical-align: inherit;
+  }
+}
+
+@import "_size";
+@import "_theme";
+@import "_weight";

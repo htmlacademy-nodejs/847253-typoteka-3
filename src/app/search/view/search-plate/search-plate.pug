@@ -1,0 +1,27 @@
+include ../../../views/components/plate/plate
+include ../../../views/components/title/title
+
+include no-search-results-stub/no-search-results-stub
+include search-form/search-form
+include search-result-list/search-result-list
+
+append style
+  include:sass style.scss
+
+mixin SearchPlate
+  - const {class: className, searchResults} = attributes;
+
+  +Plate(class=['search-plate', className])
+    div.search-plate__inner
+      +Title.search-plate__title(size='400', tag='h2', weight='medium') Поиск
+      +SearchForm.search-plate__search-form
+      //-
+        Используются три состояния searchResults:
+          1. searchResults === undefined - пользователь ещё ничего не пытался найти, отображается только форма поиска;
+          2. searchResults.length > 0 - пользователь воспользовался поиском, есть результаты, отображается список результатов;
+          3. searchResults.length === 0 - пользователь воспользовался поиском, результаты отсутствуют, отображается заглушка.
+      if searchResults
+        if searchResults.length
+          +SearchResultList.search-plate__search-result-list(searchResults=searchResults)
+        else
+          +NoSearchResultsStub.search-plate__no-search-results-stub

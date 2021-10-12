@@ -1,0 +1,29 @@
+@import "~@app/views/style/vars/index";
+
+.error-page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+
+  height: 100%;
+}
+
+.error-page__error-stub-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error-page__error-stub {
+  margin-bottom: $indent-7;
+}
+
+.error-page__title {
+  margin: 0 0 $indent-7;
+}
+
+.error-page__text {
+  margin: 0 0 $indent-13;
+}

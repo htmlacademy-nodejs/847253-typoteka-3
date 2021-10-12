@@ -1,0 +1,10 @@
+@import "~@app/views/style/vars";
+
+@import "mixins";
+
+.button_theme_gradient-scorpion {
+  &.button_view_filled {
+    @include button-theme-gradient-view-filled($color-scorpion, $color-dove-gray, $color-scorpion, $color-god-gray, $color-scorpion);
+  }
+}
+

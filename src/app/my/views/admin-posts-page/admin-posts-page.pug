@@ -1,0 +1,7 @@
+extends ../../../views/components/page/page
+
+include posts-plate/posts-plate
+
+block main
+  div.admin-posts-page
+    +PostsPlate.admin-posts-page__posts-plate(posts=Array.from({length: 3}))

@@ -1,9 +1,0 @@
-@import "@views/style/vars";
-
-@import "mixins";
-
-.button_theme_gradient-blue-ribbon {
-  &.button_view_filled {
-    @include button-theme-gradient-view-filled($color-blue-ribbon, $color-dodger-blue, $color-blue-ribbon, $color-cobalt, $color-blue-ribbon-50);
-  }
-}

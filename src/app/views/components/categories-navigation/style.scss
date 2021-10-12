@@ -1,0 +1,5 @@
+@import "~@app/views/style/mixins";
+
+.categories-navigation__title {
+  @include visually-hidden;
+}

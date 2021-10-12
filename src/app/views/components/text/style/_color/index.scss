@@ -1,0 +1,14 @@
+@import "~@app/views/style/vars";
+
+$colors: (
+  "black": $color-black,
+  "dove-gray": $color-dove-gray,
+);
+
+.text_color {
+  @each $key, $value in $colors {
+    &_#{"" + $key} {
+      color: $value;
+    }
+  }
+}

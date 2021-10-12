@@ -1,0 +1,12 @@
+@import "~@app/views/style/vars";
+
+.icon_size {
+  @each $key, $value in $font-size-by-size {
+    &_#{$key} {
+      svg {
+        width: $value;
+        height: $value;
+      }
+    }
+  }
+}

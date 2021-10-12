@@ -1,3 +1,5 @@
+parser: 'babel-eslint'
+
 parserOptions:
   ecmaVersion: 2018
 
@@ -5,4 +7,11 @@ env:
   es6: true
   node: true
 
-extends: 'htmlacademy/node'
+plugins:
+  - babel
+
+rules:
+  no-invalid-this: 0
+  babel/no-invalid-this: 1
+
+extends: htmlacademy/node

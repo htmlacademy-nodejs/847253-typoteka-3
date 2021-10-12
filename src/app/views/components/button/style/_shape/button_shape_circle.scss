@@ -1,0 +1,19 @@
+@use "sass:math";
+
+@import "~@app/views/style/vars";
+@import "../vars";
+
+.button_shape_circle {
+  padding: 0;
+
+  border-radius: 50%;
+
+  &.button_size {
+    @each $size, $button-height in $button-height-by-size {
+      &_#{$size} {
+        width: $button-height;
+        height: $button-height;
+      }
+    }
+  }
+}

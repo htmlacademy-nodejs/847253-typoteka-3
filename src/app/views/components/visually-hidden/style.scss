@@ -1,0 +1,5 @@
+@import "~@app/views/style/mixins";
+
+.visually-hidden {
+  @include visually-hidden;
+}

@@ -1,0 +1,31 @@
+mixin Link
+  -
+    const {
+      'aria-label': ariaLabel,
+      class: className,
+      currentHref,
+      href,
+      size = '250',
+      theme,
+      underlined = false,
+      weight = '500',
+    } = attributes;
+
+    const isCurrentHref = href === currentHref;
+
+    const linkClasses = [
+      'link',
+      `link_size_${size}`,
+      `link_weight_${weight}`,
+      isCurrentHref && 'link_current',
+      underlined && 'link_underlined',
+      theme && `link_theme_${theme}`,
+      className
+    ];
+
+  a(
+    class=linkClasses,
+    href=!isCurrentHref && href,
+    aria-label=!isCurrentHref && ariaLabel
+  )
+    block

@@ -1,0 +1,19 @@
+@import "~@app/views/style/vars";
+
+.plate_fill {
+  &_white {
+    background-color: $color-white;
+
+    .plate__tail {
+      color: $color-white;
+    }
+  }
+
+  &_gallery {
+    background-color: $color-gallery;
+
+    .plate__tail {
+      color: $color-gallery;
+    }
+  }
+}

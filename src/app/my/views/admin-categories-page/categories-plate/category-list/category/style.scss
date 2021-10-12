@@ -1,0 +1,14 @@
+@import "~@app/views/style/vars/index";
+
+.category {
+  display: flex;
+}
+
+.category__input {
+  flex-grow: 1;
+}
+
+.category__input,
+.category__save-button {
+  margin-right: $indent-3;
+}

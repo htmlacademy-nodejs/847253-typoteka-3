@@ -1,0 +1,22 @@
+include ../../../../views/components/plate/plate
+
+include post-form/post-form
+
+append style
+  include:sass style.scss
+
+mixin PostPlate
+  - const {class: className} = attributes;
+
+  +Plate(class=['post-plate', className], tail={side: 'top', position: '76%'})
+    div.post-plate__inner
+      +PostForm.post-plate__post-form
+    +ButtonContainer.post-plate__close-button(
+      aria-label='Главная страница',
+      href='/',
+      shape='circle',
+      tag='a',
+      theme='black-20',
+      view='outlined',
+    )
+      +Icon(color='black-20', name='cross', size='400')

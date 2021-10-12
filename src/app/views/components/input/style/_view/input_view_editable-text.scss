@@ -1,0 +1,14 @@
+@import "~@app/views/style/vars";
+
+.input_view_editable-text {
+  .input__control {
+    transition: border-bottom-color $time-microinteraction;
+
+    border-bottom: 2px solid transparent;
+
+    &:hover,
+    &:focus-visible {
+      border-bottom-color: $color-silver;
+    }
+  }
+}

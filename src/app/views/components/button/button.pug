@@ -1,0 +1,82 @@
+include button-content/button-content
+
+mixin Button
+  -
+    const {
+      class: className,
+      'aria-label': ariaLabel,
+      currentHref,
+      disabled,
+      for: inputId,
+      href,
+      pressed = attributes.tag === 'a' ? attributes.currentHref === attributes.href : undefined,
+      shape = 'rounded',
+      size = '350',
+      tag,
+      theme,
+      type = 'button',
+      view,
+      width,
+    } = attributes;
+
+    const buttonClasses = [
+      'button',
+      `button_shape_${shape}`,
+      `button_size_${size}`,
+      pressed && 'button_pressed',
+      theme && `button_theme_${theme}`,
+      view && `button_view_${view}`,
+      className,
+    ];
+
+    const buttonStyle = [
+      width && `width: ${width}`
+    ].join(';');
+
+    const isCurrentHref = href === currentHref;
+
+  case tag
+    when 'a'
+      a(
+        class=[
+          ...buttonClasses,
+          disabled && 'button_disabled'
+        ],
+        href=!isCurrentHref && href,
+        style=buttonStyle
+        aria-label=!isCurrentHref && ariaLabel
+      )
+        if block
+          +ButtonContent
+            block
+        else
+          +ButtonContent
+
+    when 'label'
+      label(
+        class=buttonClasses,
+        style=buttonStyle,
+        for=inputId,
+      )
+        if block
+          +ButtonContent
+            block
+        else
+          +ButtonContent
+    when 'span'
+      span(
+        class=buttonClasses,
+        style=buttonStyle,
+      )
+        if block
+          +ButtonContent
+            block
+        else
+          +ButtonContent
+    default
+      button(class=buttonClasses, aria-label=ariaLabel, disabled=disabled, style=buttonStyle, type=type, )
+        if block
+          +ButtonContent
+            block
+        else
+          +ButtonContent

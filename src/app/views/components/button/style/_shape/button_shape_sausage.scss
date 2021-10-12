@@ -1,0 +1,15 @@
+@use "sass:math";
+
+@import "~@app/views/style/vars";
+
+@import "../vars";
+
+.button_shape_sausage {
+  &.button_size {
+    @each $size, $button-height in $button-height-by-size {
+      &_#{$size} {
+        border-radius: math.floor(math.div($button-height, 2));
+      }
+    }
+  }
+}

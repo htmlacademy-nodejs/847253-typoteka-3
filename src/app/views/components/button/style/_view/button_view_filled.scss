@@ -1,0 +1,12 @@
+@import "~@app/views/style/vars";
+
+.button_view_filled {
+  background-color: currentColor;
+
+  &:not([class*="theme"]) {
+    .button__children {
+      filter: invert(1);
+    }
+  }
+}
+

@@ -1,0 +1,19 @@
+@use "sass:map";
+
+@import "~@app/views/style/vars";
+
+@import "../vars";
+
+.button_size {
+  @each $size, $button-height in $button-height-by-size {
+    &_#{$size} {
+      height: $button-height;
+
+      font-size: map.get($button-font-size-by-size, $size);
+      line-height: map.get($button-line-height-by-size, $size);
+    }
+  }
+}
+
+
+

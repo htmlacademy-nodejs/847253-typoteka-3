@@ -1,0 +1,25 @@
+@import "~@app/views/style/vars";
+
+.main-page {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  padding-top: $indent-13;
+}
+
+.main-page__welcome-text {
+  margin-bottom: $indent-13;
+}
+
+.main-page__categories-menu {
+  margin-bottom: $indent-10;
+}
+
+.main-page__comments-plate {
+  margin-bottom: $indent-5;
+}
+
+.main-page__paginator {
+  margin: $indent-7 auto 0;
+}

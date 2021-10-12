@@ -1,0 +1,5 @@
+include dropdown-menu
+
+mixin DropdownMenuContainer
+  +DropdownMenu(currentHref=router.href)&attributes(attributes)
+    block

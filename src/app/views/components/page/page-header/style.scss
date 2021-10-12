@@ -1,0 +1,22 @@
+@import "~@app/views/style/vars";
+
+.page-header {
+  display: flex;
+  align-items: center;
+
+  min-height: 50px;
+  padding: $indent-10 0;
+}
+
+.page-header__logo {
+  margin-right: auto;
+}
+
+.page-header__registration-link,
+.page-header__login-link,
+.page-header__user-avatar,
+.page-header__new-post-button,
+.page-header__user-navigation,
+.page-header__site-navigation {
+  margin-right: $indent-5;
+}

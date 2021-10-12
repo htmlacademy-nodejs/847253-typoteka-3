@@ -1,0 +1,11 @@
+@import "~@app/views/style/vars";
+
+.comment__user {
+  display: flex;
+
+  margin-bottom: $indent-2;
+}
+
+.comment__user-avatar {
+  margin-right: $indent-2;
+}
