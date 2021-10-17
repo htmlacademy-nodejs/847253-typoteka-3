@@ -1,6 +1,6 @@
 /**
  * @readonly
- * @type {object<string, number>}
+ * @type {Object<string, number>}
  */
 const HttpStatusCode = {
   CONTINUE: 100,
@@ -74,11 +74,19 @@ const HttpStatusCode = {
 
 /**
  * @readonly
- * @type {object<string, string>}
+ * @type {Object<string, string>}
  */
 const Environment = {
   DEVELOPMENT: `development`,
   PRODUCTION: `production`,
 };
 
-module.exports = {HttpStatusCode, Environment};
+/**
+ * Максимальная длина идентификатора, генерируемого модулем nanoid
+ *
+ * @readonly
+ * @type {number}
+ */
+const NANOID_ID_MAX_LENGTH = 6;
+
+module.exports = {HttpStatusCode, Environment, NANOID_ID_MAX_LENGTH};

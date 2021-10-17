@@ -2,7 +2,7 @@
  * Пользователь
  *
  * @typedef User
- * @type {object}
+ * @type Object
  * @property {string} id Идентификатор
  * @property {string} name Имя
  * @property {string} surname Фамилия

@@ -2,7 +2,7 @@
  * Локальные переменные приложения
  *
  * @typedef ExpressApplicationLocals
- * @type {object}
+ * @type Object
  *
  * @example
  * console.dir(app.locals.title);

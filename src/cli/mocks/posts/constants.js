@@ -1,3 +1,5 @@
+const path = require(`path`);
+
 /**
  * Верхняя граница даты создания записи
  *
@@ -23,12 +25,28 @@ const ONE_MONTH_UNIX_TIME_STAMP = 2670658033;
 const DATE_MIN_UNIX_TIME_STAMP = DATE_MAX_UNIX_TIME_STAMP - ONE_MONTH_UNIX_TIME_STAMP * 3;
 
 /**
+ * Минимальное количество предложений в тексте записи
+ *
+ * @readonly
+ * @type {number}
+ */
+const TEXT_SENTENCES_MIN_AMOUNT = 5;
+
+/**
  * Максимальное количество предложений в тексте записи
  *
  * @readonly
  * @type {number}
  */
 const TEXT_SENTENCES_MAX_AMOUNT = 5;
+
+/**
+ * Минимальное количество категорий у записи
+ *
+ * @readonly
+ * @type {number}
+ */
+const CATEGORIES_MIN_AMOUNT = 1;
 
 /**
  * Максимальное количество категорий у записи
@@ -39,20 +57,28 @@ const TEXT_SENTENCES_MAX_AMOUNT = 5;
 const CATEGORIES_MAX_AMOUNT = 3;
 
 /**
- * Путь до файла с исходными данными для текста записи
+ * Минимальное количество комментариев у записи
  *
  * @readonly
  * @type {number}
  */
-const SENTENCES_FILE_PATH = `./sentences.txt`;
+const COMMENTS_MIN_AMOUNT = 0;
 
 /**
- * Путь до файла с исходными данными для категорий записи
+ * Максимальное количество комментариев у записи
+ *
+ * @readonly
+ * @type {number}
+ */
+const COMMENTS_MAX_AMOUNT = 5;
+
+/**
+ * Путь до файла с исходными данными для текста записи
  *
  * @readonly
  * @type {string}
  */
-const CATEGORIES_FILE_PATH = `./categories.txt`;
+const TEXT_SENTENCES_PATH = path.resolve(__dirname, `./text-sentences.txt`);
 
 /**
  * Путь до файла с исходными данными для заголовка записи
@@ -60,14 +86,17 @@ const CATEGORIES_FILE_PATH = `./categories.txt`;
  * @readonly
  * @type {string}
  */
-const TITLES_FILE_PATH = `./titles.txt`;
+const TITLES_PATH = path.resolve(__dirname, `./titles.txt`);
 
 module.exports = {
   DATE_MAX_UNIX_TIME_STAMP,
   DATE_MIN_UNIX_TIME_STAMP,
+  TEXT_SENTENCES_MIN_AMOUNT,
   TEXT_SENTENCES_MAX_AMOUNT,
+  CATEGORIES_MIN_AMOUNT,
   CATEGORIES_MAX_AMOUNT,
-  SENTENCES_FILE_PATH,
-  CATEGORIES_FILE_PATH,
-  TITLES_FILE_PATH,
+  COMMENTS_MIN_AMOUNT,
+  COMMENTS_MAX_AMOUNT,
+  TEXT_SENTENCES_PATH,
+  TITLES_PATH,
 };

@@ -19,14 +19,14 @@
  * В противном случае это свойство идентично {@link ExpressApplication.locals локальным переменным приложения}.
  *
  * @typedef ExpressResponseLocals
- * @type {object}
+ * @type Object
  */
 
 /**
  * @function
  * @name ExpressResponse#send
  *
- * @param {Buffer | string | object | boolean | array} [body]
+ * @param {Buffer | string | Object | boolean | Array} [body]
  * @return {ExpressResponse}
  */
 
@@ -43,6 +43,6 @@
  * @name ExpressResponse#render
  *
  * @param {string} view
- * @param {object} [locals]
+ * @param Object [locals]
  * @param {function(error: Error, html: string): void} callback
  */

@@ -6,14 +6,16 @@ const {
   MOCKS_MAX_AMOUNT,
 } = require(`./constants`);
 const {writeJsonToFile} = require(`./utils`);
+const generateCategories = require(`./categories`);
 const generatePosts = require(`./posts`);
 
 /**
  * @readonly
- * @type {object<string, function(number): object>}
+ * @type {Object<string, function(number): Object>}
  */
 const generatorByType = {
-  post: generatePosts,
+  categories: generateCategories,
+  posts: generatePosts,
 };
 
 /**
@@ -33,7 +35,7 @@ const commandHandler = {
   async run(args) {
     let [type, amount, savePath] = args;
 
-    if (!type) {
+    if (type === undefined) {
       console.error(
           chalk.red(`Параметр "type" обязательный`)
       );
@@ -42,11 +44,12 @@ const commandHandler = {
 
     /**
      * @readonly
-     * @type {function(number): object}
+     * @type {function(number): Object}
      */
     const generator = generatorByType[type];
 
-    if (!generator) {
+
+    if (generator === undefined) {
       console.error(
           chalk.red(`Отсутствует генератор для типа "${type}"`)
       );
@@ -70,14 +73,14 @@ const commandHandler = {
       process.exit(ExitCode.ERROR);
     }
 
-    if (!savePath) {
+    if (savePath === undefined) {
       console.error(
           chalk.red(`Параметр "savePath" обязательный`)
       );
       process.exit(ExitCode.ERROR);
     }
 
-    await writeJsonToFile(savePath, await generatePosts(amount));
+    await writeJsonToFile(savePath, await generator(amount));
   }
 };
 
