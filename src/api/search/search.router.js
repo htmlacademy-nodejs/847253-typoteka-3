@@ -1,12 +1,11 @@
 const {Router} = require(`express`);
 
 const {HttpStatusCode} = require(`@root/src/constants`);
+const {JsonSchemaValidator, JsonSchemaValidatorValidationError} = require(`@root/src/utils/json-schema-validator`);
 const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);
-const LoggedError = require(`@root/src/utils/logged-error`);
 
 const SearchService = require(`./search.service`);
-
-class SearchRouterInvalidRequestQueryParameterError extends LoggedError {}
+const searchRequestSchema = require(`./search-request.schema.json`);
 
 /**
  * @readonly
@@ -33,6 +32,13 @@ class SearchRouter extends Router {
     /**
      * @private
      * @readonly
+     * @type {JsonSchemaValidator}
+     */
+    this.jsonSchemaValidator = new JsonSchemaValidator();
+
+    /**
+     * @private
+     * @readonly
      * @type {SearchService}
      */
     this.searchService = new SearchService();
@@ -50,15 +56,17 @@ class SearchRouter extends Router {
    */
   search = (req, res) => {
     try {
-      if (req.query?.q === undefined) {
-        throw new SearchRouterInvalidRequestQueryParameterError(`Must have required query parameter 'q'`);
+      this.jsonSchemaValidator.validate(searchRequestSchema, req);
+
+      res.send(this.searchService.search(req.query.q));
+    } catch (error) {
+      if (error instanceof JsonSchemaValidatorValidationError) {
+        res.status(HttpStatusCode.BAD_REQUEST).send({code: error.constructor.name, message: error.message});
+
+        return;
       }
 
-      res.send(this.searchService.search(req.query?.q));
-    } catch (error) {
-      if (error instanceof SearchRouterInvalidRequestQueryParameterError) {
-        res.status(HttpStatusCode.BAD_REQUEST).send({code: error.constructor.name, message: error.message});
-      }
+      throw error;
     }
   }
 }

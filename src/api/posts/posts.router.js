@@ -6,8 +6,9 @@ const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);
 
 const PostsService = require(`./posts.service`);
 const {PostsRepositoryPostNotFoundError, PostsRepositoryCommentNotFoundError} = require(`./posts.repository`);
-const postDataSchema = require(`./schemas/post-data-schema.json`);
-const commentDataSchema = require(`./schemas/comment-data-schema.json`);
+const createPostCommentRequestSchema = require(`./create-post-comment-request.schema.json`);
+const createPostRequestSchema = require(`./create-post-request.schema.json`);
+const updatePostRequestSchema = require(`./update-post-request.schema.json`);
 
 /**
  * @readonly
@@ -52,16 +53,16 @@ class PostsRouter extends Router {
     /**
      * @private
      * @readonly
-     * @type {PostsService}
+     * @type {JsonSchemaValidator}
      */
-    this.postsService = new PostsService();
+    this.jsonSchemaValidator = new JsonSchemaValidator();
 
     /**
      * @private
      * @readonly
-     * @type {JsonSchemaValidator}
+     * @type {PostsService}
      */
-    this.jsonSchemaValidator = new JsonSchemaValidator();
+    this.postsService = new PostsService();
 
     this.post(POSTS_ROUTE, handleMiddlewarePromiseRejection(this.createPost));
     this.post(POST_COMMENTS, handleMiddlewarePromiseRejection(this.createPostComment));
@@ -83,7 +84,7 @@ class PostsRouter extends Router {
    */
   createPost = (req, res) => {
     try {
-      this.jsonSchemaValidator.validate(postDataSchema, req.body);
+      this.jsonSchemaValidator.validate(createPostRequestSchema, req);
 
       res.status(HttpStatusCode.CREATED).send(this.postsService.createPost({
         categories: req.body.categories,
@@ -111,7 +112,7 @@ class PostsRouter extends Router {
    */
   createPostComment = (req, res) => {
     try {
-      this.jsonSchemaValidator.validate(commentDataSchema, req.body);
+      this.jsonSchemaValidator.validate(createPostCommentRequestSchema, req);
 
       res.status(HttpStatusCode.CREATED).send(this.postsService.createPostComment(req.params.postId, {
         user: req.body.user,
@@ -137,12 +138,22 @@ class PostsRouter extends Router {
 
   /**
    * @private
-   * @param {ExpressRequest} _
+   * @param {ExpressRequest} req
    * @param {ExpressResponse} res
    * @return {void}
    */
-  readPosts = (_, res) => {
-    res.send(this.postsService.readPosts());
+  readPosts = (req, res) => {
+    try {
+      res.send(this.postsService.readPosts());
+    } catch (error) {
+      if (error instanceof JsonSchemaValidatorValidationError) {
+        res.status(HttpStatusCode.BAD_REQUEST).send({code: error.constructor.name, message: error.message});
+
+        return;
+      }
+
+      throw error;
+    }
   }
 
   /**
@@ -185,7 +196,7 @@ class PostsRouter extends Router {
    */
   updatePost = (req, res) => {
     try {
-      this.jsonSchemaValidator.validate(postDataSchema, req.body);
+      this.jsonSchemaValidator.validate(updatePostRequestSchema, req);
 
       res.send(this.postsService.updatePost(req.params.postId, {
         categories: req.body.categories,

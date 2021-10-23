@@ -7,8 +7,6 @@ const LoggedError = require(`@root/src/utils/logged-error`);
 
 const {NANOID_ID_MAX_LENGTH} = require(`@root/src/constants`);
 
-const generateUser = require(`@cli/mocks/posts/comments/user`);
-
 class PostsRepositoryReadFileError extends LoggedError {}
 class PostsRepositoryPostNotFoundError extends LoggedError {}
 class PostsRepositoryCommentNotFoundError extends LoggedError {}
@@ -49,7 +47,7 @@ class PostsRepositoryCommentNotFoundError extends LoggedError {}
  * @property {string} title Заголовок
  * @property {string} previewText Текст для предпросмотра
  * @property {string} text Текст
- * @property {Comment[]} comments Комментарии
+ * @property {PostComment[]} comments Комментарии
  */
 
 /**
@@ -128,7 +126,7 @@ class PostsRepository {
     const comment = {
       text,
       id: nanoid(NANOID_ID_MAX_LENGTH),
-      user: {...generateUser(), id: user},
+      user,
       date: new Date().toISOString(),
     };
 

@@ -5,8 +5,6 @@ const {getRandomArrayValue, createAndFillArray} = require(`@root/src/utils/array
 const {generateRandomNumber} = require(`@root/src/utils/generators`);
 
 const {generateText} = require(`../utils`);
-const generateCategories = require(`../categories`);
-const generateComments = require(`./comments`);
 
 const {
   DATE_MAX_UNIX_TIME_STAMP,
@@ -49,8 +47,14 @@ const generatePost = () => ({
   date: new Date(generateRandomNumber(DATE_MIN_UNIX_TIME_STAMP, DATE_MAX_UNIX_TIME_STAMP)).toISOString(),
   previewText: generateText(textSentences, generateRandomNumber(TEXT_SENTENCES_MIN_AMOUNT, TEXT_SENTENCES_MAX_AMOUNT)),
   text: generateText(textSentences, generateRandomNumber(TEXT_SENTENCES_MIN_AMOUNT, TEXT_SENTENCES_MAX_AMOUNT)),
-  categories: generateCategories(generateRandomNumber(CATEGORIES_MIN_AMOUNT, CATEGORIES_MAX_AMOUNT)),
-  comments: generateComments(generateRandomNumber(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT)),
+  categories: createAndFillArray(
+      generateRandomNumber(CATEGORIES_MIN_AMOUNT, CATEGORIES_MAX_AMOUNT),
+      () => nanoid(NANOID_ID_MAX_LENGTH)
+  ),
+  comments: createAndFillArray(
+      generateRandomNumber(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT),
+      () => nanoid(NANOID_ID_MAX_LENGTH)
+  ),
 });
 
 /**
@@ -61,7 +65,7 @@ const generatePost = () => ({
  */
 const generatePosts = (amount) => createAndFillArray(
     amount,
-    () => generatePost(textSentences, titles)
+    generatePost
 );
 
 module.exports = generatePosts;

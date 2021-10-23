@@ -8,7 +8,7 @@
  * Примечание: {@link ExpressRequest.app} идентично свойству {@link ExpressResponse.app} в объекте ответа
  *
  * @property baseUrl
- * @property body
+ * @property {Object} body
  * @property cookies
  * @property fresh
  * @property hostname

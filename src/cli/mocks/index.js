@@ -7,7 +7,9 @@ const {
 } = require(`./constants`);
 const {writeJsonToFile} = require(`./utils`);
 const generateCategories = require(`./categories`);
+const generateComments = require(`./comments`);
 const generatePosts = require(`./posts`);
+const generateUsers = require(`./users`);
 
 /**
  * @readonly
@@ -15,7 +17,9 @@ const generatePosts = require(`./posts`);
  */
 const generatorByType = {
   categories: generateCategories,
+  comments: generateComments,
   posts: generatePosts,
+  users: generateUsers,
 };
 
 /**

@@ -1,9 +1,9 @@
 const {nanoid} = require(`nanoid`);
 
 const {NANOID_ID_MAX_LENGTH} = require(`@root/src/constants`);
-const {getRandomArrayValue} = require(`@root/src/utils/arrays`);
+const {getRandomArrayValue, createAndFillArray} = require(`@root/src/utils/arrays`);
 
-const {readFile} = require(`../../../utils`);
+const {readFile} = require(`../utils`);
 const {NAMES_PATH, SURNAMES_PATH, AVATARS_URLS_PATH, ROLES_PATH} = require(`./constants`);
 
 /**
@@ -51,4 +51,15 @@ const generateUser = () => ({
   role: getRandomArrayValue(roles),
 });
 
-module.exports = generateUser;
+/**
+ * Генерирует пользователей в заданном количестве
+ *
+ * @param {number} amount Количество пользователей
+ * @return {Object[]} Пользователи
+ */
+const generateUsers = (amount) => createAndFillArray(
+    amount,
+    generateUser
+);
+
+module.exports = generateUsers;
