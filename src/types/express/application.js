@@ -141,7 +141,7 @@
  * @name ExpressApplication#render
  *
  * @param {string} view
- * @param Object [options]
+ * @param {Object} [options]
  * @param {function(err: Error, html: string): void} callback
  * @return {void}
  */

@@ -43,6 +43,6 @@
  * @name ExpressResponse#render
  *
  * @param {string} view
- * @param Object [locals]
+ * @param {Object} [locals]
  * @param {function(error: Error, html: string): void} callback
  */

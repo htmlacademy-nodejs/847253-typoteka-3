@@ -1,6 +1,6 @@
 /**
  * @readonly
- * @type Object
+ * @type {Object}
  */
 const CONFIG = {
   /**
