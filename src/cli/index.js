@@ -10,7 +10,7 @@ const {
 
 /**
  * @readonly
- * @type {object<string, CommandHandler>}
+ * @type {Object<string, CommandHandler>}
  */
 const Cli = {
   [mocks.name]: mocks,

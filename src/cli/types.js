@@ -2,7 +2,7 @@
  * Объект-обработчик команды
  *
  * @typedef CommandHandler
- * @type {object}
+ * @type {Object}
  *
  * @property {function} run Запускает обработку команды
  * @property {string} name Имя команды

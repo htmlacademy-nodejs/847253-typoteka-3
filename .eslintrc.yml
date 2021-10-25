@@ -9,9 +9,17 @@ env:
 
 plugins:
   - babel
+  - jsdoc
 
 rules:
   no-invalid-this: 0
   babel/no-invalid-this: 1
 
-extends: htmlacademy/node
+extends:
+  - htmlacademy/node
+  - plugin:jsdoc/recommended
+
+settings:
+  jsdoc:
+    tagNamePreference:
+      returns: return

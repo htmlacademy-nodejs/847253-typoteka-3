@@ -2,14 +2,28 @@ const express = require(`express`);
 const chalk = require(`chalk`);
 
 const {HttpStatusCode} = require(`@root/src/constants`);
+const LoggedError = require(`@root/src/utils/logged-error`);
 
 const CONFIG = require(`@api/config`);
 
+const CategoriesRouter = require(`./categories/categories.router`);
+const CommentsRouter = require(`./comments/comments.router`);
 const PostsRouter = require(`./posts/posts.router`);
+const SearchRouter = require(`./search/search.router`);
+const UsersRouter = require(`./users/users.router`);
+
+/**
+ * @readonly
+ * @type {string}
+ */
+const NOT_FOUND_ERROR_ROUTE = `*`;
+
+class AppRouterNotFoundError extends LoggedError {}
+class AppInternalServerError extends LoggedError {}
 
 class App {
   /**
-   * @type {App}
+   * @type {App | null}
    */
   static instance = null;
 
@@ -23,12 +37,18 @@ class App {
 
     /**
      * @private
+     * @readonly
      * @type {ExpressApplication}
      */
     this.expressApplication = express();
 
     this.expressApplication.use(express.json());
+    this.expressApplication.use(new CategoriesRouter());
+    this.expressApplication.use(new CommentsRouter());
     this.expressApplication.use(new PostsRouter());
+    this.expressApplication.use(new SearchRouter());
+    this.expressApplication.use(new UsersRouter());
+    this.expressApplication.use(NOT_FOUND_ERROR_ROUTE, this.handleNotFoundError);
     this.expressApplication.use(this.handleInternalServerError);
   }
 
@@ -50,18 +70,30 @@ class App {
 
   /**
    * @private
-   * @param {Error} error
+   * @param {Error} _error
    * @param {ExpressRequest} _
    * @param {ExpressResponse} res
    * @param {ExpressMiddlewareNextFunction} next
+   * @return {*}
+   */
+  handleInternalServerError = (_error, _, res, next) => {
+    const error = _error instanceof LoggedError ? _error : new AppInternalServerError(_error.message);
+
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({code: error.constructor.name, message: error.message});
+
+    return next();
+  }
+
+  /**
+   * @private
+   * @param {ExpressRequest} req
+   * @param {ExpressResponse} res
    * @return {void}
    */
-  handleInternalServerError = (error, _, res, next) => {
-    if (error) {
-      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({code: error.constructor.name, message: error.message});
-    }
+  handleNotFoundError = (req, res) => {
+    const error = new AppRouterNotFoundError(`Resource with baseUrl '${req.baseUrl}' not found`);
 
-    next();
+    res.status(HttpStatusCode.NOT_FOUND).send({code: error.constructor.name, message: error.message});
   }
 }
 

@@ -1,18 +1,20 @@
-const fs = require(`fs`).promises;
+const fs = require(`fs`);
 
 const chalk = require(`chalk`);
+
+const {shuffleArray} = require(`@root/src/utils/arrays`);
+const {generateRandomNumber} = require(`@root/src/utils/generators`);
 
 /**
  * Записывает JSON в файл
  *
  * @param {string} path Путь, включая имя файла и его расширение
  * @param {string} data Данные, подлежащие сохранению
- * @return {Promise<void>}
- * @throws {Error} Ошибка из {@link fs.writeFile}
+ * @return {void}
  */
-const writeJsonToFile = async (path, data) => {
+const writeJsonToFile = (path, data) => {
   try {
-    await fs.writeFile(path, JSON.stringify(data));
+    fs.writeFileSync(path, JSON.stringify(data));
 
     console.info(
         chalk.green(`Данные успешно записаны в "${path}"`)
@@ -30,12 +32,11 @@ const writeJsonToFile = async (path, data) => {
  * Читает файл
  *
  * @param {string} path Путь, включая имя файла и его расширение
- * @return {Promise<string[]>} Содержимое файла
- * @throws {Error} Ошибка из {@link fs.readFile}
+ * @return {string[]} Содержимое файла
  */
-const readFile = async (path) => {
+const readFile = (path) => {
   try {
-    return (await fs.readFile(path))
+    return fs.readFileSync(path)
       .toString()
       .split(`\n`)
       .filter((line) => line.length > 0);
@@ -48,4 +49,29 @@ const readFile = async (path) => {
   }
 };
 
-module.exports = {writeJsonToFile, readFile};
+/**
+ * Генерирует сплошной текст на основе исходного массива с предложениями
+ *
+ * @param {string[]} sentences
+ * @param {number} sentencesMaxAmount
+ * @return {string}
+ */
+const generateText = (sentences, sentencesMaxAmount) => {
+  /**
+   * @readonly
+   * @type {number}
+   */
+  const clampedSentencesMaxAmount = Math.min(sentences.length, sentencesMaxAmount);
+
+  /**
+   * @readonly
+   * @type {number}
+   */
+  const textSentencesRandomAmount = generateRandomNumber(1, clampedSentencesMaxAmount);
+
+  return shuffleArray(sentences)
+    .slice(0, textSentencesRandomAmount)
+    .join(` `);
+};
+
+module.exports = {writeJsonToFile, readFile, generateText};

@@ -1,9 +1,54 @@
 const fs = require(`fs`);
 const path = require(`path`);
 
+const {nanoid} = require(`nanoid`);
+
 const LoggedError = require(`@root/src/utils/logged-error`);
 
+const {NANOID_ID_MAX_LENGTH} = require(`@root/src/constants`);
+
 class PostsRepositoryReadFileError extends LoggedError {}
+class PostsRepositoryPostNotFoundError extends LoggedError {}
+class PostsRepositoryCommentNotFoundError extends LoggedError {}
+
+/**
+ * Пользователь
+ *
+ * @typedef User
+ * @type Object
+ * @property {string} id Идентификатор
+ * @property {string} name Имя
+ * @property {string} surname Фамилия
+ * @property {string} avatar Аватар
+ * @property {string} role Роль
+ */
+
+
+/**
+ * Комментарий
+ *
+ * @typedef Comment
+ * @type Object
+ * @property {string} id Идентификатор
+ * @property {User} user Пользователь
+ * @property {ISODateString} date Дата публикации
+ * @property {string} text Текст
+ */
+
+/**
+ * Запись
+ *
+ * @typedef Post
+ * @type Object
+ * @property {string} id Идентификатор
+ * @property {string[]} categories Категории
+ * @property {string} image Изображение
+ * @property {ISODateString} date Дата публикации
+ * @property {string} title Заголовок
+ * @property {string} previewText Текст для предпросмотра
+ * @property {string} text Текст
+ * @property {PostComment[]} comments Комментарии
+ */
 
 /**
  * @readonly
@@ -29,29 +74,268 @@ class PostsRepository {
      * @private
      * @type {Post[] | null}
      */
-    this.posts = null;
+    this._posts = null;
 
     PostsRepository.instance = this;
   }
 
   /**
    * @public
+   * @param {{categories: string[], image: string, title: string, previewText: string, text: string}} data
+   * @return {Post}
+   */
+  createPost({
+    categories,
+    image,
+    title,
+    previewText,
+    text,
+  }) {
+    /**
+     * @readonly
+     * @type {Post}
+     */
+    const post = {
+      id: nanoid(NANOID_ID_MAX_LENGTH),
+      categories,
+      image,
+      date: new Date().toISOString(),
+      title,
+      previewText,
+      text,
+      comments: [],
+    };
+
+    this.posts.push(post);
+
+    return post;
+  }
+
+  /**
+   * @param {string} postId
+   * @param {{user: string, text: string}} commentData
+   * @return {Comment}
+   */
+  createPostComment(postId, {user, text}) {
+    const post = this.readPost(postId);
+
+    /**
+     * @readonly
+     * @type {Comment}
+     */
+    const comment = {
+      text,
+      id: nanoid(NANOID_ID_MAX_LENGTH),
+      user,
+      date: new Date().toISOString(),
+    };
+
+    post.comments.push(comment);
+
+    return comment;
+  }
+
+  /**
+   * @public
+   * @return {Post[]}
+   */
+  readPosts = () => {
+    return this.posts;
+  }
+
+  /**
+   * @public
+   * @param {string} postId
+   * @return {Post}
+   * @throws {PostsRepositoryPostNotFoundError}
+   */
+  readPost = (postId) => {
+    /**
+     * @readonly
+     * @type {Post}
+     */
+    const post = this.posts.find(
+        /**
+         * @param {Post} post
+         * @return {boolean}
+         */
+        ({id: currentPostId}) => currentPostId === postId
+    );
+
+    if (post === undefined) {
+      throw new PostsRepositoryPostNotFoundError(`Post with ID '${postId}' not found`);
+    }
+
+    return post;
+  }
+
+  /**
+   * @public
+   * @param {string} postId
+   * @param {{categories: string[], image: string, title: string, previewText: string, text: string}} postData
+   * @return {Post}
+   */
+  updatePost = (postId, {
+    categories,
+    image,
+    title,
+    previewText,
+    text,
+  }) => {
+    const post = this.readPost(postId);
+
+    post.categories = categories;
+    post.image = image;
+    post.title = title;
+    post.previewText = previewText;
+    post.text = text;
+
+    return post;
+  }
+
+
+  /**
+   * @public
+   * @param {string} postId
+   * @return {boolean}
+   */
+  deletePost = (postId) => {
+    /**
+     * @type {Post[]}
+     */
+    const posts = [];
+    /**
+     * @readonly
+     * @type {Post | null}
+     */
+    let postToDelete = null;
+
+    this.posts.forEach(
+        /**
+         * @param {Post} post
+         * @return {void}
+         */
+        (post) => {
+          const {id: currentPostId} = post;
+
+          if (currentPostId === postId) {
+            postToDelete = post;
+
+            return;
+          }
+
+          posts.push(post);
+        }
+    );
+
+    if (postToDelete === null) {
+      throw new PostsRepositoryPostNotFoundError(`Post with ID '${postId}' not found`);
+    }
+
+    this.posts = posts;
+
+    return true;
+  }
+
+  /**
+   * @public
+   * @param {string} postId
+   * @param {string} commentId
+   * @return {boolean}
+   */
+  deletePostComment = (postId, commentId) => {
+    /**
+     * @type {Post}
+     */
+    const post = this.readPost(postId);
+
+    /**
+     * @type {Comment[]}
+     */
+    const comments = [];
+
+    /**
+     * @readonly
+     * @type {Comment | null}
+     */
+    let commentToDelete = null;
+
+    post.comments.forEach(
+        /**
+         * @param {Comment} comment
+         * @return {void}
+         */
+        (comment) => {
+          const {id: currentCommentId} = comment;
+
+          if (currentCommentId === commentId) {
+            commentToDelete = comment;
+
+            return;
+          }
+
+          comments.push(comment);
+        }
+    );
+
+    if (commentToDelete === null) {
+      throw new PostsRepositoryCommentNotFoundError(`Comment with ID '${commentId}' not found`);
+    }
+
+    post.comments = comments;
+
+    return true;
+  }
+
+  /**
+   * @param {string} query
+   * @return {Post[]}
+   */
+  searchPostsByTitle = (query) => {
+    const words = query.split(` `);
+
+    return this.posts.filter(
+        /**
+         * @param {Post} post
+         * @return {boolean}
+         */
+        ({title}) => words.some(
+            /**
+             * @param {string} word
+             * @return {boolean}
+             */
+            (word) => title.includes(word)
+        )
+    );
+  }
+
+  /**
+   * @private
    * @return {Post[]}
    * @throws {PostsRepositoryReadFileError}
    */
-  getPosts() {
-    if (this.posts === null) {
+  get posts() {
+    if (this._posts === null) {
       try {
         const buffer = fs.readFileSync(MOCKS_PATH);
 
-        this.posts = JSON.parse(buffer.toString());
+        this._posts = JSON.parse(buffer.toString());
       } catch {
-        throw new PostsRepositoryReadFileError(`При чтении файла с тестовыми данными произошла ошибка`);
+        throw new PostsRepositoryReadFileError(`Failed to read file with test data`);
       }
     }
 
-    return this.posts;
+    return this._posts;
+  }
+
+  /**
+   * @private
+   * @param {Post[] | null} posts
+   * @return {void}
+   */
+  set posts(posts) {
+    this._posts = posts;
   }
 }
 
-module.exports = PostsRepository;
+module.exports = {PostsRepository, PostsRepositoryPostNotFoundError, PostsRepositoryCommentNotFoundError};

@@ -1,80 +1,71 @@
-const path = require(`path`);
+const {nanoid} = require(`nanoid`);
 
-const {shuffleArray, getRandomArrayValue, createAndFillArray} = require(`@root/src/utils/arrays`);
+const {NANOID_ID_MAX_LENGTH} = require(`@root/src/constants`);
+const {getRandomArrayValue, createAndFillArray} = require(`@root/src/utils/arrays`);
 const {generateRandomNumber} = require(`@root/src/utils/generators`);
 
+const {generateText} = require(`../utils`);
+
 const {
-  SENTENCES_FILE_PATH,
-  CATEGORIES_FILE_PATH,
-  TITLES_FILE_PATH,
-  TEXT_SENTENCES_MAX_AMOUNT,
-  CATEGORIES_MAX_AMOUNT,
   DATE_MAX_UNIX_TIME_STAMP,
   DATE_MIN_UNIX_TIME_STAMP,
+  TEXT_SENTENCES_MIN_AMOUNT,
+  TEXT_SENTENCES_MAX_AMOUNT,
+  CATEGORIES_MIN_AMOUNT,
+  CATEGORIES_MAX_AMOUNT,
+  TEXT_SENTENCES_PATH,
+  COMMENTS_MIN_AMOUNT,
+  COMMENTS_MAX_AMOUNT,
+  TITLES_PATH,
 } = require(`./constants`);
 const {readFile} = require(`../utils`);
 
 /**
- * Генерирует сплошной текст на основе исходного массива с предложениями
+ * Предложения, из которых будет сформирован текст и текст для предпросмотра
  *
- * @param {string[]} sentences
- * @return {string}
+ * @readonly
+ * @type {string[]}
  */
-const generateText = (sentences) => shuffleArray(sentences)
-  .slice(0, TEXT_SENTENCES_MAX_AMOUNT)
-  .join(` `);
+const textSentences = readFile(TEXT_SENTENCES_PATH);
 
 /**
- * Генерирует массив случайных категорий на основе исходного массива категорий
+ * Заголовки
  *
- * @template T
- * @param {T[]} categories
- * @return {T[]}
+ * @readonly
+ * @type {string[]}
  */
-const generateCategories = (categories) => {
-  const shuffledCategories = shuffleArray(categories);
-  const maxCategoriesAmount = Math.min(categories.length, CATEGORIES_MAX_AMOUNT);
-  const randomCategoriesAmount = generateRandomNumber(1, maxCategoriesAmount);
-
-  return shuffledCategories.slice(0, randomCategoriesAmount);
-};
+const titles = readFile(TITLES_PATH);
 
 /**
- * Генерирует запись на основе передаваемых исходных данных
+ * Генерирует запись
  *
- * @param {string[]} sentences Предложения, из которых будет сформирован текст и текст для предпросмотра
- * @param {string[]} categories Названия категорий, из которых случайным образом будут выбранные некоторые
- * @param {string[]} titles Заголовки, их которых случайным образом будет выбран один
- * @return {Post} Запись
+ * @return {Object} Запись
  */
-const generatePost = (sentences, categories, titles) => ({
+const generatePost = () => ({
+  id: nanoid(NANOID_ID_MAX_LENGTH),
   title: getRandomArrayValue(titles),
-  date: new Date(generateRandomNumber(DATE_MIN_UNIX_TIME_STAMP, DATE_MAX_UNIX_TIME_STAMP)),
-  previewText: generateText(sentences),
-  text: generateText(sentences),
-  categories: generateCategories(categories),
+  date: new Date(generateRandomNumber(DATE_MIN_UNIX_TIME_STAMP, DATE_MAX_UNIX_TIME_STAMP)).toISOString(),
+  previewText: generateText(textSentences, generateRandomNumber(TEXT_SENTENCES_MIN_AMOUNT, TEXT_SENTENCES_MAX_AMOUNT)),
+  text: generateText(textSentences, generateRandomNumber(TEXT_SENTENCES_MIN_AMOUNT, TEXT_SENTENCES_MAX_AMOUNT)),
+  categories: createAndFillArray(
+      generateRandomNumber(CATEGORIES_MIN_AMOUNT, CATEGORIES_MAX_AMOUNT),
+      () => nanoid(NANOID_ID_MAX_LENGTH)
+  ),
+  comments: createAndFillArray(
+      generateRandomNumber(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT),
+      () => nanoid(NANOID_ID_MAX_LENGTH)
+  ),
 });
 
 /**
  * Генерирует записи в заданном количестве
  *
  * @param {number} amount Количество записей
- * @param {{sentences: string[], categories: string[], titles: string[]}} data
- * @return {Post[]} Записи
+ * @return {Object[]} Записи
  */
-const generatePosts = (amount, {sentences, categories, titles}) =>
-  createAndFillArray(amount, () => generatePost(sentences, categories, titles));
+const generatePosts = (amount) => createAndFillArray(
+    amount,
+    generatePost
+);
 
-/**
- * Читает исходные данные из текстовых файлов и передает их в {@link generatePosts}
- *
- * @param {number} amount Количество записей
- * @return {Post[]} Записи
- */
-module.exports = async (amount) => {
-  const sentences = await readFile(path.resolve(__dirname, SENTENCES_FILE_PATH));
-  const categories = await readFile(path.resolve(__dirname, CATEGORIES_FILE_PATH));
-  const titles = await readFile(path.resolve(__dirname, TITLES_FILE_PATH));
-
-  return generatePosts(amount, {sentences, categories, titles});
-};
+module.exports = generatePosts;

@@ -1,6 +1,6 @@
 /**
  * @typedef ExpressApplicationSettings
- * @type {object}
+ * @type Object
  *
  * @property case sensitive routing
  * @property env

@@ -1,6 +1,6 @@
 /**
  * @readonly
- * @type {object<string, string>}
+ * @type {Object<string, string>}
  */
 const PageId = {
   ERROR: `ERROR`,

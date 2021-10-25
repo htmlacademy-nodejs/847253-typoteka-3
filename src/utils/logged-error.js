@@ -20,7 +20,7 @@ class LoggedError extends Error {
    * @return {void}
    */
   log() {
-    this.logger.error(chalk.red(this.message));
+    this.logger.error(chalk.red(`${this.constructor.name}: ${this.message}`));
   }
 }
 

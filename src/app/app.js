@@ -23,6 +23,7 @@ require(`./pug`);
  * @type {string}
  */
 const VIEW_ENGINE = `pug`;
+
 /**
  * @readonly
  * @type {string}
