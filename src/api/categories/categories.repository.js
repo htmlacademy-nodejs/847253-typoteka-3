@@ -70,6 +70,14 @@ class CategoriesRepository {
 
     return this._categories;
   }
+
+  /**
+   * @param {Category[] | null} categories
+   * @return {void}
+   */
+  set categories(categories) {
+    this._categories = categories;
+  }
 }
 
 module.exports = CategoriesRepository;

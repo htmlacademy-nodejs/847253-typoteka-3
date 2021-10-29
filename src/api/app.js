@@ -40,7 +40,13 @@ class App {
      * @readonly
      * @type {ExpressApplication}
      */
-    this.expressApplication = express();
+    this._expressApplication = express();
+
+    /**
+     * @private
+     * @type {Server | null}
+     */
+    this.server = null;
 
     this.expressApplication.use(express.json());
     this.expressApplication.use(new CategoriesRouter());
@@ -64,8 +70,18 @@ class App {
    * @public
    * @return {void}
    */
-  start() {
-    this.expressApplication.listen(CONFIG.API_PORT, this.handleExpressListen);
+  start = () => {
+    this.server = this.expressApplication.listen(CONFIG.API_PORT, this.handleExpressListen);
+  }
+
+  /**
+   * @public
+   * @return {void}
+   */
+  stop = () => {
+    console.info(chalk.green(`The API has been successfully stopped`));
+    this.server.close();
+    this.server = null;
   }
 
   /**
@@ -94,6 +110,14 @@ class App {
     const error = new AppRouterNotFoundError(`Resource with baseUrl '${req.baseUrl}' not found`);
 
     res.status(HttpStatusCode.NOT_FOUND).send({code: error.constructor.name, message: error.message});
+  }
+
+  /**
+   * @public
+   * @return {ExpressApplication}
+   */
+  get expressApplication() {
+    return this._expressApplication;
   }
 }
 

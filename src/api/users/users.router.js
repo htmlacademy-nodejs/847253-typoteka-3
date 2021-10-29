@@ -57,22 +57,12 @@ class UsersRouter extends Router {
 
   /**
    * @private
-   * @param {ExpressRequest} req
+   * @param {ExpressRequest} _
    * @param {ExpressResponse} res
    * @return {void}
    */
-  readUsers = (req, res) => {
-    try {
-      res.send(this.usersService.readUsers());
-    } catch (error) {
-      if (error instanceof JsonSchemaValidatorValidationError) {
-        res.status(HttpStatusCode.BAD_REQUEST).send({code: error.constructor.name, message: error.message});
-
-        return;
-      }
-
-      throw error;
-    }
+  readUsers = (_, res) => {
+    res.send(this.usersService.readUsers());
   }
 
   /**

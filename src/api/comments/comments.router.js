@@ -4,6 +4,7 @@ const {HttpStatusCode} = require(`@root/src/constants`);
 const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);
 const {JsonSchemaValidator, JsonSchemaValidatorValidationError} = require(`@root/src/utils/json-schema-validator`);
 
+const {CommentsRepositoryCommentNotFoundError} = require(`./comments.repository`);
 const CommentsService = require(`./comments.service`);
 
 /**
@@ -81,7 +82,17 @@ class CommentsRouter extends Router {
    * @return {void}
    */
   deleteComment = (req, res) => {
-    res.send(this.commentsService.deleteComment(req.params.commentId));
+    try {
+      res.send(this.commentsService.deleteComment(req.params.commentId));
+    } catch (error) {
+      if (error instanceof CommentsRepositoryCommentNotFoundError) {
+        res.status(HttpStatusCode.NOT_FOUND).send({code: error.constructor.name, message: error.message});
+
+        return;
+      }
+
+      throw error;
+    }
   }
 }
 

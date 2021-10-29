@@ -86,13 +86,7 @@ class PostsRouter extends Router {
     try {
       this.jsonSchemaValidator.validate(createPostRequestSchema, req);
 
-      res.status(HttpStatusCode.CREATED).send(this.postsService.createPost({
-        categories: req.body.categories,
-        image: req.body.image,
-        title: req.body.title,
-        previewText: req.body.previewText,
-        text: req.body.text,
-      }));
+      res.status(HttpStatusCode.CREATED).send(this.postsService.createPost(req.body));
     } catch (error) {
       if (error instanceof JsonSchemaValidatorValidationError) {
         res.status(HttpStatusCode.BAD_REQUEST).send({code: error.constructor.name, message: error.message});
@@ -198,13 +192,7 @@ class PostsRouter extends Router {
     try {
       this.jsonSchemaValidator.validate(updatePostRequestSchema, req);
 
-      res.send(this.postsService.updatePost(req.params.postId, {
-        categories: req.body.categories,
-        image: req.body.image,
-        title: req.body.title,
-        previewText: req.body.previewText,
-        text: req.body.text,
-      }));
+      res.send(this.postsService.updatePost(req.params.postId, req.body));
     } catch (error) {
       switch (error.constructor) {
         case JsonSchemaValidatorValidationError:
@@ -231,9 +219,7 @@ class PostsRouter extends Router {
    */
   deletePost = (req, res) => {
     try {
-      this.postsService.deletePost(req.params.postId);
-
-      res.send();
+      res.send(this.postsService.deletePost(req.params.postId));
     } catch (error) {
       if (error instanceof PostsRepositoryPostNotFoundError) {
         res.status(HttpStatusCode.NOT_FOUND).send({code: error.constructor.name, message: error.message});

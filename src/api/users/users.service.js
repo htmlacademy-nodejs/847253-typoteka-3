@@ -21,7 +21,9 @@ class UsersService {
      */
     this.usersRepository = new UsersRepository();
 
-    UsersRepository.instance = this;
+    UsersService.instance = this;
+
+    return UsersService.instance;
   }
 
   /**

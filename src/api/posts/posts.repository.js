@@ -81,12 +81,13 @@ class PostsRepository {
 
   /**
    * @public
-   * @param {{categories: string[], image: string, title: string, previewText: string, text: string}} data
+   * @param {{categories: string[], image: string, date: string, title: string, previewText: string, text: string}} data
    * @return {Post}
    */
   createPost({
     categories,
     image,
+    date,
     title,
     previewText,
     text,
@@ -99,7 +100,7 @@ class PostsRepository {
       id: nanoid(NANOID_ID_MAX_LENGTH),
       categories,
       image,
-      date: new Date().toISOString(),
+      date,
       title,
       previewText,
       text,
@@ -108,7 +109,7 @@ class PostsRepository {
 
     this.posts.push(post);
 
-    return post;
+    return true;
   }
 
   /**
@@ -172,25 +173,27 @@ class PostsRepository {
   /**
    * @public
    * @param {string} postId
-   * @param {{categories: string[], image: string, title: string, previewText: string, text: string}} postData
-   * @return {Post}
+   * @param {{[categories]: string[], [image]: string, [date]: string, [title]: string, [previewText]: string, [text]: string}} postData
+   * @return {boolean}
    */
   updatePost = (postId, {
     categories,
     image,
+    date,
     title,
     previewText,
     text,
   }) => {
     const post = this.readPost(postId);
 
-    post.categories = categories;
-    post.image = image;
-    post.title = title;
-    post.previewText = previewText;
-    post.text = text;
+    post.categories = categories ?? post.categories;
+    post.image = image ?? post.image;
+    post.date = date ?? post.date;
+    post.title = title ?? post.title;
+    post.previewText = previewText ?? post.previewText;
+    post.text = text ?? post.text;
 
-    return post;
+    return true;
   }
 
 
@@ -292,7 +295,7 @@ class PostsRepository {
    * @return {Post[]}
    */
   searchPostsByTitle = (query) => {
-    const words = query.split(` `);
+    const words = query.split(` `).map((word) => word.toLowerCase());
 
     return this.posts.filter(
         /**
@@ -304,7 +307,7 @@ class PostsRepository {
              * @param {string} word
              * @return {boolean}
              */
-            (word) => title.includes(word)
+            (word) => title.toLowerCase().includes(word)
         )
     );
   }

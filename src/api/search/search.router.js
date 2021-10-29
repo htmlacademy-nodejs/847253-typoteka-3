@@ -46,6 +46,8 @@ class SearchRouter extends Router {
     this.get(SEARCH_ROUTE, handleMiddlewarePromiseRejection(this.search));
 
     SearchRouter.instance = this;
+
+    return this;
   }
 
   /**
@@ -61,6 +63,7 @@ class SearchRouter extends Router {
       res.send(this.searchService.search(req.query.q));
     } catch (error) {
       if (error instanceof JsonSchemaValidatorValidationError) {
+        console.log(error.message);
         res.status(HttpStatusCode.BAD_REQUEST).send({code: error.constructor.name, message: error.message});
 
         return;

@@ -49,6 +49,14 @@ class CommentsRepository {
 
   /**
    * @public
+   * @return {PostComment[]}
+   */
+  readComments = () => {
+    return this.comments;
+  }
+
+  /**
+   * @public
    * @param {string} commentId
    * @return {boolean}
    * @throws {CommentsRepositoryCommentNotFoundError}
@@ -69,15 +77,15 @@ class CommentsRepository {
       throw new CommentsRepositoryCommentNotFoundError(`Comment with ID '${commentId}' not found`);
     }
 
-    return true;
-  }
+    this.comments = this.comments.filter(
+        /**
+         * @param {PostComment} comment
+        * @return {boolean}
+         */
+        ({id: currentCommentId}) => currentCommentId !== commentId
+    );
 
-  /**
-   * @public
-   * @return {PostComment[]}
-   */
-  readComments = () => {
-    return this.comments;
+    return true;
   }
 
   /**

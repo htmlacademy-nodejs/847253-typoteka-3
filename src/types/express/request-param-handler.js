@@ -5,7 +5,7 @@
  * @param {ExpressRequest} req
  * @param {ExpressResponse} res
  * @param {ExpressMiddlewareNextFunction} next
- * @param {any} value
+ * @param {*} value
  * @param {string} name
  * @return {void}
  */

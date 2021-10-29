@@ -37,8 +37,7 @@
           "minLength": 1,
           "maxLength": 1000
         }
-      },
-      "required": ["categories", "date","title", "previewText"]
+      }
     }
   },
   "required": ["body"]

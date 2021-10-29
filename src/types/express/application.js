@@ -61,7 +61,7 @@
  * @function
  * @name ExpressApplicationEngineCallback
  *
- * @param {any} e
+ * @param {*} e
  * @param {string} [rendered]
  * @return {void}
  */
@@ -80,7 +80,7 @@
  * @name ExpressApplication#get
  *
  * @param {string} name
- * @return {any}
+ * @return {*}
  */
 
 /**
@@ -159,7 +159,7 @@
  * @name ExpressApplication#set
  *
  * @param {string} name
- * @param {any} value
+ * @param {*} value
  * @return {ExpressApplication}
  */
 
