@@ -3,13 +3,11 @@ const path = require(`path`);
 
 const {nanoid} = require(`nanoid`);
 
-const LoggedError = require(`@root/src/utils/logged-error`);
-
 const {NANOID_ID_MAX_LENGTH} = require(`@root/src/constants`);
 
-class PostsRepositoryReadFileError extends LoggedError {}
-class PostsRepositoryPostNotFoundError extends LoggedError {}
-class PostsRepositoryCommentNotFoundError extends LoggedError {}
+class PostsRepositoryReadFileError extends Error {}
+class PostsRepositoryPostNotFoundError extends Error {}
+class PostsRepositoryCommentNotFoundError extends Error {}
 
 /**
  * Пользователь
@@ -54,7 +52,7 @@ class PostsRepositoryCommentNotFoundError extends LoggedError {}
  * @readonly
  * @type {string}
  */
-const MOCKS_PATH = path.resolve(__dirname, `./posts.mocks.json`);
+const FIXTURES_PATH = path.resolve(__dirname, `./posts.repository.fixtures.json`);
 
 class PostsRepository {
   /**
@@ -170,6 +168,7 @@ class PostsRepository {
     return post;
   }
 
+  // eslint-disable-next-line valid-jsdoc
   /**
    * @public
    * @param {string} postId
@@ -320,11 +319,11 @@ class PostsRepository {
   get posts() {
     if (this._posts === null) {
       try {
-        const buffer = fs.readFileSync(MOCKS_PATH);
+        const buffer = fs.readFileSync(FIXTURES_PATH);
 
         this._posts = JSON.parse(buffer.toString());
       } catch {
-        throw new PostsRepositoryReadFileError(`Failed to read file with test data`);
+        throw new PostsRepositoryReadFileError(`Failed to read file with fixtures`);
       }
     }
 

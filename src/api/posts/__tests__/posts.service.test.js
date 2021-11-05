@@ -1,8 +1,6 @@
 const {PostsRepository} = require(`../posts.repository`);
 const PostsService = require(`../posts.service`);
 
-jest.mock(`@root/src/utils/logged-error`);
-
 jest.mock(`../posts.repository`);
 
 describe(`PostsService`, () => {

@@ -4,8 +4,9 @@ const {JsonSchemaValidator, JsonSchemaValidatorValidationError} = require(`@root
 const SearchRouter = require(`../search.router`);
 const SearchService = require(`../search.service`);
 
+jest.mock(`pino`);
+
 jest.mock(`@root/src/utils/json-schema-validator`);
-jest.mock(`@root/src/utils/logged-error`);
 
 jest.mock(`../search.service`);
 

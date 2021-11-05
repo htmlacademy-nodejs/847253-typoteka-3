@@ -29,8 +29,8 @@ const generatorByType = {
  * @type {CommandHandler}
  */
 const commandHandler = {
-  name: `mocks`,
-  help: `node index.js --mocks <type> <amount> <savePath>  - создает массив с тестовыми данными вида <type> в количестве <amount> и сохраняет их в <savePath>`,
+  name: `fixtures`,
+  help: `node index.js --fixtures <type> <amount> <savePath>  - создает массив с фикстурами вида <type> в количестве <amount> и сохраняет их в <savePath>`,
 
   /**
    * @param {[string, string, string]} args

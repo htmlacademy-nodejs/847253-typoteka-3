@@ -1,8 +1,11 @@
 const {Router} = require(`express`);
+const pino = require(`pino`);
 
-const {HttpStatusCode} = require(`@root/src/constants`);
+const {HttpStatusCode, Environment} = require(`@root/src/constants`);
 const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);
-const {JsonSchemaValidator, JsonSchemaValidatorValidationError} = require(`@root/src/utils/json-schema-validator`);
+const {JsonSchemaValidator} = require(`@root/src/utils/json-schema-validator`);
+
+const CONFIG = require(`@api/config`);
 
 const {UsersRepositoryUserNotFoundError} = require(`./users.repository`);
 const UsersService = require(`./users.service`);
@@ -49,6 +52,16 @@ class UsersRouter extends Router {
      */
     this.usersService = new UsersService();
 
+    /**
+     * @private
+     * @type {pino.Logger}
+     */
+    this.logger = pino({
+      name: `Api/UsersRouter`,
+      level: CONFIG.LOG_LEVEL,
+      prettyPrint: true,
+    }, CONFIG.ENV === Environment.PRODUCTION ? pino.destination(CONFIG.LOGGER_OUTPUT_PATH) : process.stdout);
+
     this.get(USERS_ROUTE, handleMiddlewarePromiseRejection(this.readUsers));
     this.get(USER_BY_ID_ROUTE, handleMiddlewarePromiseRejection(this.readUser));
 
@@ -76,6 +89,8 @@ class UsersRouter extends Router {
       res.send(this.usersService.readUser(req.params.userId));
     } catch (error) {
       if (error instanceof UsersRepositoryUserNotFoundError) {
+        this.logger.error(error);
+
         res.status(HttpStatusCode.NOT_FOUND).send({code: error.constructor.name, message: error.message});
 
         return;

@@ -2,20 +2,12 @@ const request = require(`supertest`);
 
 const {HttpStatusCode} = require(`@root/src/constants`);
 
-const App = require(`@api/app`);
+const Api = require(`@api/api`);
 
 const {CommentsRepository} = require(`../comments.repository`);
 
 describe(`CommentsRouter`, () => {
-  const app = new App();
-
-  beforeAll(() => {
-    app.start();
-  });
-
-  afterAll(() => {
-    app.stop();
-  });
+  const api = new Api();
 
   describe(`GET /api/comments`, () => {
     test(`Возвращает код 200 и пустую коллекцию комментариев`, async () => {
@@ -25,7 +17,7 @@ describe(`CommentsRouter`, () => {
 
       commentsRepository.comments = EXPECTED_COMMENTS;
 
-      const response = await request(app.expressApplication).get(`/api/comments`);
+      const response = await request(api.express).get(`/api/comments`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_COMMENTS);
@@ -43,7 +35,7 @@ describe(`CommentsRouter`, () => {
 
       commentsRepository.comments = EXPECTED_COMMENTS;
 
-      const response = await request(app.expressApplication).get(`/api/comments`);
+      const response = await request(api.express).get(`/api/comments`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_COMMENTS);
@@ -63,7 +55,7 @@ describe(`CommentsRouter`, () => {
         text: `Совсем немного...`
       }];
 
-      const response = await request(app.expressApplication).delete(`/api/comments/${COMMENT_ID}`);
+      const response = await request(api.express).delete(`/api/comments/${COMMENT_ID}`);
 
       expect(response.statusCode).toBe(HttpStatusCode.NOT_FOUND);
       expect(response.body).toEqual({
@@ -84,12 +76,12 @@ describe(`CommentsRouter`, () => {
         text: `Совсем немного...`
       }];
 
-      const deleteCommentResponse = await request(app.expressApplication).delete(`/api/comments/${COMMENT_ID}`);
+      const deleteCommentResponse = await request(api.express).delete(`/api/comments/${COMMENT_ID}`);
 
       expect(deleteCommentResponse.statusCode).toBe(HttpStatusCode.OK);
       expect(deleteCommentResponse.body).toEqual(true);
 
-      const readCommentsResponse = await request(app.expressApplication).get(`/api/comments`);
+      const readCommentsResponse = await request(api.express).get(`/api/comments`);
 
       expect(readCommentsResponse.statusCode).toBe(HttpStatusCode.OK);
       expect(readCommentsResponse.body).toEqual([]);

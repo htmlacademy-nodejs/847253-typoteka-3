@@ -1,7 +1,5 @@
 const {PostsRepository, PostsRepositoryPostNotFoundError} = require(`../posts.repository`);
 
-jest.mock(`@root/src/utils/logged-error`);
-
 describe(`PostsRepository`, () => {
   test(`Реализует шаблон проектирования "Одиночка"`, () => {
     expect(new PostsRepository()).toBe(new PostsRepository());

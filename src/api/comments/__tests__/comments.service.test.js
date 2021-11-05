@@ -1,8 +1,6 @@
 const {CommentsRepository} = require(`../comments.repository`);
 const CommentsService = require(`../comments.service`);
 
-jest.mock(`@root/src/utils/logged-error`);
-
 jest.mock(`../comments.repository`);
 
 describe(`CommentsService`, () => {

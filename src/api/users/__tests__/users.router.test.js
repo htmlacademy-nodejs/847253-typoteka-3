@@ -4,7 +4,7 @@ const UsersRouter = require(`../users.router`);
 const UsersService = require(`../users.service`);
 const {UsersRepositoryUserNotFoundError} = require(`../users.repository`);
 
-jest.mock(`@root/src/utils/logged-error`);
+jest.mock(`pino`);
 
 jest.mock(`../users.repository`);
 jest.mock(`../users.service`);

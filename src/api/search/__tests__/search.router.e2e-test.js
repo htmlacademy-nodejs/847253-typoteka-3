@@ -2,23 +2,15 @@ const request = require(`supertest`);
 
 const {HttpStatusCode} = require(`@root/src/constants`);
 
-const App = require(`@api/app`);
+const Api = require(`@api/api`);
 const {PostsRepository} = require(`@api/posts/posts.repository`);
 
 describe(`SearchRouter`, () => {
-  const app = new App();
-
-  beforeAll(() => {
-    app.start();
-  });
-
-  afterAll(() => {
-    app.stop();
-  });
+  const api = new Api();
 
   describe(`GET /api/search`, () => {
     test(`Возвращает код 400 и ошибку, если поисковый запрос пуст`, async () => {
-      const emptyQueryResponse = await request(app.expressApplication).get(`/api/search`);
+      const emptyQueryResponse = await request(api.express).get(`/api/search`);
 
       expect(emptyQueryResponse.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
       expect(emptyQueryResponse.body).toEqual({
@@ -26,7 +18,7 @@ describe(`SearchRouter`, () => {
         message: expect.any(String),
       });
 
-      const emptyQueryQResponse = await request(app.expressApplication).get(`/api/search?q=`);
+      const emptyQueryQResponse = await request(api.express).get(`/api/search?q=`);
 
       expect(emptyQueryQResponse.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
       expect(emptyQueryQResponse.body).toEqual({
@@ -52,7 +44,7 @@ describe(`SearchRouter`, () => {
         ],
       }];
 
-      const response = await request(app.expressApplication).get(`/api/search?q=${encodeURI(`месяц`)}`);
+      const response = await request(api.express).get(`/api/search?q=${encodeURI(`месяц`)}`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual([]);
@@ -77,7 +69,7 @@ describe(`SearchRouter`, () => {
 
       postsRepository.posts = EXPECTED_POSTS;
 
-      const response = await request(app.expressApplication).get(`/api/search?q=${encodeURI(`год`)}`);
+      const response = await request(api.express).get(`/api/search?q=${encodeURI(`год`)}`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_POSTS);

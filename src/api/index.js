@@ -1,9 +1,9 @@
-const App = require(`@api/app`);
+const Api = require(`@api/api`);
 
 /**
  * @readonly
- * @type {App}
+ * @type {Api}
  */
-const app = new App();
+const api = new Api();
 
-app.start();
+api.start();

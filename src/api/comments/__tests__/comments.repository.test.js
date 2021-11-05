@@ -1,7 +1,5 @@
 const {CommentsRepository, CommentsRepositoryCommentNotFoundError} = require(`../comments.repository`);
 
-jest.mock(`@root/src/utils/logged-error`);
-
 describe(`CommentsRepository`, () => {
   test(`Реализует шаблон проектирования "Одиночка"`, () => {
     expect(new CommentsRepository()).toBe(new CommentsRepository());

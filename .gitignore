@@ -8,11 +8,10 @@ Thumbs.db
 .vscode
 
 # Вспомогательные файлы
-*.log*
+*.log
+*.fixtures.*
+logs
 node_modules/
 
 # Папка с собранными файлами проекта
 build/
-
-# Файлы времени исполнения
-*.mocks.*

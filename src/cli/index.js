@@ -1,4 +1,4 @@
-const mocks = require(`./mocks`);
+const fixtures = require(`./fixtures`);
 const help = require(`./help`);
 const version = require(`./version`);
 const {
@@ -13,7 +13,7 @@ const {
  * @type {Object<string, CommandHandler>}
  */
 const Cli = {
-  [mocks.name]: mocks,
+  [fixtures.name]: fixtures,
   [help.name]: help,
   [version.name]: version,
 };

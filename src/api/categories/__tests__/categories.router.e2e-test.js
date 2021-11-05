@@ -2,20 +2,12 @@ const request = require(`supertest`);
 
 const {HttpStatusCode} = require(`@root/src/constants`);
 
-const App = require(`@api/app`);
+const Api = require(`@api/api`);
 
 const CategoriesRepository = require(`../categories.repository`);
 
 describe(`CategoriesRouter`, () => {
-  const app = new App();
-
-  beforeAll(() => {
-    app.start();
-  });
-
-  afterAll(() => {
-    app.stop();
-  });
+  const api = new Api();
 
   describe(`GET /api/categories`, () => {
     test(`Возвращает код 200 и пустую коллекцию категорий`, async () => {
@@ -25,7 +17,7 @@ describe(`CategoriesRouter`, () => {
 
       categoriesRepository.categories = EXPECTED_CATEGORIES;
 
-      const response = await request(app.expressApplication).get(`/api/categories`);
+      const response = await request(api.express).get(`/api/categories`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_CATEGORIES);
@@ -38,7 +30,7 @@ describe(`CategoriesRouter`, () => {
 
       categoriesRepository.categories = EXPECTED_CATEGORIES;
 
-      const response = await request(app.expressApplication).get(`/api/categories`);
+      const response = await request(api.express).get(`/api/categories`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_CATEGORIES);

@@ -1,7 +1,5 @@
 const {UsersRepository, UsersRepositoryUserNotFoundError} = require(`../users.repository`);
 
-jest.mock(`@root/src/utils/logged-error`);
-
 describe(`UsersRepository`, () => {
   test(`Реализует шаблон проектирования "Одиночка"`, () => {
     expect(new UsersRepository()).toBe(new UsersRepository());

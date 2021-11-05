@@ -1,6 +1,8 @@
 const CategoriesRouter = require(`../categories.router`);
 const CategoriesService = require(`../categories.service`);
 
+jest.mock(`pino`);
+
 jest.mock(`../categories.service`);
 
 describe(`CategoriesRouter`, () => {

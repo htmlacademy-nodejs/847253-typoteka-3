@@ -5,6 +5,8 @@ const PostsRouter = require(`../posts.router`);
 const PostsService = require(`../posts.service`);
 const {PostsRepositoryPostNotFoundError} = require(`../posts.repository`);
 
+jest.mock(`pino`);
+
 jest.mock(`@root/src/utils/json-schema-validator`);
 
 jest.mock(`../posts.repository`);

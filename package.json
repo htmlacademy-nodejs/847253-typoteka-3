@@ -5,21 +5,17 @@
   "main": "src/app/index.js",
   "scripts": {
     "start": "npm run start-app & npm run start-api",
-    "start:api": "node ./src/api",
+    "start:api": "LOG_LEVEL=error node ./src/api",
+    "start:api:dev": "LOG_LEVEL=debug nodemon ./src/api",
     "start:app": "node ./src/app",
-
     "build:app": "pushd $PWD && cd src/app && gulp style && popd",
     "watch:app": "pushd $PWD && cd src/app && gulp watch && popd",
-
     "test": "jest",
-
     "lint": "npm run eslint && npm run pug-lint",
     "lint:js": "eslint --ext .js src/",
     "lint:pug": "pug-lint -c .pug-lintrc.json src/app/views",
-
     "create:symlinks": "bash ./scripts/create-symlinks.sh",
-    "create:mocks": "bash ./scripts/create-mocks.sh",
-
+    "create:fixtures": "bash scripts/create-fixtures.sh",
     "cli": "node ./src/cli/index.js"
   },
   "author": "Маклай Михаил",
@@ -51,6 +47,8 @@
     "chalk": "4.1.1",
     "express": "4.17.1",
     "nanoid": "3.1.29",
+    "pino": "7.0.5",
+    "pino-pretty": "7.1.0",
     "pug": "2.0.4"
   }
 }

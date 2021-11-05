@@ -8,6 +8,7 @@ const {Environment} = require(`@root/src/constants`);
 const CONFIG = require(`@app/config`);
 const {PageId} = require(`@app/constants`);
 
+const contentSecurityPolicy = require(`./content-security-policy`);
 const MyRouter = require(`./my/my.router`);
 const NotFoundErrorRouter = require(`./not-found-error/not-found-error.router`);
 const PostsRouter = require(`./posts/posts.router`);
@@ -70,6 +71,7 @@ class App {
 
     this.express.use(express.json());
     this.express.use(express.static(PUBLIC_PATH));
+    this.express.use(this.setContentSecurityPolicy);
     this.express.use(new MyRouter());
     this.express.use(new PostsRouter());
     this.express.use(new RootRouter());
@@ -100,7 +102,6 @@ class App {
 
   /**
    * @todo Очень не нравится, что эта логика в классе App, нужно её отсюда выпилить
-   *
    * @private
    * @param {Error} error
    * @param {ExpressRequest} req
@@ -139,6 +140,14 @@ class App {
    */
   start = () => {
     this.express.listen(CONFIG.APP_PORT, this.handleExpressListen);
+  }
+
+  setContentSecurityPolicy = (_, res, next) => {
+    res.setHeader(
+        `Content-Security-Policy`,
+        contentSecurityPolicy,
+    );
+    next();
   }
 }
 

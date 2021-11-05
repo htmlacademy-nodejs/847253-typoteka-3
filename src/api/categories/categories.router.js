@@ -1,6 +1,10 @@
 const {Router} = require(`express`);
+const pino = require(`pino`);
 
+const {Environment} = require(`@root/src/constants`);
 const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);
+
+const CONFIG = require(`@api/config`);
 
 const CategoriesService = require(`./categories.service`);
 
@@ -32,6 +36,16 @@ class CategoriesRouter extends Router {
      * @type {CategoriesService}
      */
     this.categoriesService = new CategoriesService();
+
+    /**
+     * @private
+     * @type {pino.Logger}
+     */
+    this.logger = pino({
+      name: `Api/CategoriesRouter`,
+      level: CONFIG.LOG_LEVEL,
+      prettyPrint: true,
+    }, CONFIG.ENV === Environment.PRODUCTION ? pino.destination(CONFIG.LOGGER_OUTPUT_PATH) : process.stdout);
 
     this.get(CATEGORIES_ROUTE, handleMiddlewarePromiseRejection(this.readCategories));
 

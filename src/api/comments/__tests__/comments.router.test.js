@@ -4,6 +4,8 @@ const CommentsRouter = require(`../comments.router`);
 const CommentsService = require(`../comments.service`);
 const {CommentsRepositoryCommentNotFoundError} = require(`../comments.repository`);
 
+jest.mock(`pino`);
+
 jest.mock(`../comments.repository`);
 jest.mock(`../comments.service`);
 

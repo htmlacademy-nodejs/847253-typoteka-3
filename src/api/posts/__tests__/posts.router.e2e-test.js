@@ -2,24 +2,16 @@ const request = require(`supertest`);
 
 const {HttpStatusCode} = require(`@root/src/constants`);
 
-const App = require(`@api/app`);
+const Api = require(`@api/api`);
 
 const {PostsRepository} = require(`../posts.repository`);
 
 describe(`PostsRouter`, () => {
-  const app = new App();
-
-  beforeAll(() => {
-    app.start();
-  });
-
-  afterAll(() => {
-    app.stop();
-  });
+  const api = new Api();
 
   describe(`POST /api/posts`, () => {
     test(`Возвращает код 400 и ошибку, если получены некорректные данные записи`, async () => {
-      const response = await request(app.expressApplication).post(`/api/posts`).send({date: 2});
+      const response = await request(api.express).post(`/api/posts`).send({date: 2});
 
       expect(response.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
       expect(response.body).toEqual({
@@ -42,7 +34,7 @@ describe(`PostsRouter`, () => {
         text: 'Брось это дело!',
       };
 
-      const response = await request(app.expressApplication).post(`/api/posts`).send(POST_DATA);
+      const response = await request(api.express).post(`/api/posts`).send(POST_DATA);
 
       expect(response.statusCode).toBe(HttpStatusCode.CREATED);
       expect(response.body).toEqual(true);
@@ -57,7 +49,7 @@ describe(`PostsRouter`, () => {
 
       postsRepository.posts = EXPECTED_POSTS;
 
-      const response = await request(app.expressApplication).get(`/api/posts`);
+      const response = await request(api.express).get(`/api/posts`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_POSTS);
@@ -84,7 +76,7 @@ describe(`PostsRouter`, () => {
 
       postsRepository.posts = EXPECTED_POSTS;
 
-      const response = await request(app.expressApplication).get(`/api/posts`);
+      const response = await request(api.express).get(`/api/posts`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_POSTS);
@@ -113,7 +105,7 @@ describe(`PostsRouter`, () => {
         ],
       }];
 
-      const response = await request(app.expressApplication).get(`/api/posts/${POST_ID}`);
+      const response = await request(api.express).get(`/api/posts/${POST_ID}`);
 
       expect(response.status).toBe(HttpStatusCode.NOT_FOUND);
       expect(response.body).toEqual({
@@ -145,7 +137,7 @@ describe(`PostsRouter`, () => {
 
       postsRepository.posts = [EXPECTED_POST];
 
-      const response = await request(app.expressApplication).get(`/api/posts/${EXPECTED_POST_ID}`);
+      const response = await request(api.express).get(`/api/posts/${EXPECTED_POST_ID}`);
 
       expect(response.status).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_POST);
@@ -154,7 +146,7 @@ describe(`PostsRouter`, () => {
 
   describe(`PUT /api/posts/:id`, () => {
     test(`Возвращает код 400 и ошибку, если получены некорректные данные записи`, async () => {
-      const response = await request(app.expressApplication).put(`/api/posts/Mnc-98a`).send({title: 'Кратко'});
+      const response = await request(api.express).put(`/api/posts/Mnc-98a`).send({title: 'Кратко'});
 
       expect(response.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
       expect(response.body).toEqual({
@@ -191,7 +183,7 @@ describe(`PostsRouter`, () => {
         date: '2021-10-26T13:21:21.048Z',
       };
 
-      const response = await request(app.expressApplication).put(`/api/posts/${POST_TO_UPDATE_ID}`).send(POST_DATA);
+      const response = await request(api.express).put(`/api/posts/${POST_TO_UPDATE_ID}`).send(POST_DATA);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(true);
@@ -220,7 +212,7 @@ describe(`PostsRouter`, () => {
         ],
       }];
 
-      const response = await request(app.expressApplication).delete(`/api/posts/${POST_ID}`);
+      const response = await request(api.express).delete(`/api/posts/${POST_ID}`);
 
       expect(response.status).toBe(HttpStatusCode.NOT_FOUND);
       expect(response.body).toEqual({
@@ -251,7 +243,7 @@ describe(`PostsRouter`, () => {
         ],
       }];
 
-      const response = await request(app.expressApplication).delete(`/api/posts/${POST_TO_DELETE_ID}`);
+      const response = await request(api.express).delete(`/api/posts/${POST_TO_DELETE_ID}`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(true);

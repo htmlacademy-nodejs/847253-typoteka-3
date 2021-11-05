@@ -2,20 +2,12 @@ const request = require(`supertest`);
 
 const {HttpStatusCode} = require(`@root/src/constants`);
 
-const App = require(`@api/app`);
+const Api = require(`@api/api`);
 
 const {UsersRepository} = require(`../users.repository`);
 
 describe(`UsersRouter`, () => {
-  const app = new App();
-
-  beforeAll(() => {
-    app.start();
-  });
-
-  afterAll(() => {
-    app.stop();
-  });
+  const api = new Api();
 
   describe(`GET /api/users`, () => {
     test(`Возвращает код 200 и пустую коллекцию пользователей`, async () => {
@@ -25,7 +17,7 @@ describe(`UsersRouter`, () => {
 
       usersRepository.users = EXPECTED_USERS;
 
-      const response = await request(app.expressApplication).get(`/api/users`);
+      const response = await request(api.express).get(`/api/users`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_USERS);
@@ -53,7 +45,7 @@ describe(`UsersRouter`, () => {
 
       usersRepository.users = EXPECTED_USERS;
 
-      const response = await request(app.expressApplication).get(`/api/users`);
+      const response = await request(api.express).get(`/api/users`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_USERS);
@@ -74,7 +66,7 @@ describe(`UsersRouter`, () => {
         role: `Администратор`,
       }];
 
-      const response = await request(app.expressApplication).get(`/api/users/${USER_ID}`);
+      const response = await request(api.express).get(`/api/users/${USER_ID}`);
 
       expect(response.statusCode).toBe(HttpStatusCode.NOT_FOUND);
       expect(response.body).toEqual({
@@ -98,7 +90,7 @@ describe(`UsersRouter`, () => {
 
       usersRepository.users = [EXPECTED_USER];
 
-      const response = await request(app.expressApplication).get(`/api/users/${EXPECTED_USER_ID}`);
+      const response = await request(api.express).get(`/api/users/${EXPECTED_USER_ID}`);
 
       expect(response.statusCode).toBe(HttpStatusCode.OK);
       expect(response.body).toEqual(EXPECTED_USER);
