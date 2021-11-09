@@ -1,6 +1,6 @@
 const chalk = require(`chalk`);
 
-const mocksCommandHandler = require(`./mocks`);
+const fixturesCommandHandler = require(`./fixtures`);
 const versionCommandHandler = require(`./version`);
 
 
@@ -25,9 +25,9 @@ const commandHandler = {
     Использование: node index.js --<command>
 
     Где <command> это один из вариантов:
-    ${[mocksCommandHandler.name, versionCommandHandler.name, this.name].join(`, `)}
+    ${[fixturesCommandHandler.name, versionCommandHandler.name, this.name].join(`, `)}
 
-    ${[mocksCommandHandler.help, versionCommandHandler.help, this.help].join(`\n    `)}`;
+    ${[fixturesCommandHandler.help, versionCommandHandler.help, this.help].join(`\n    `)}`;
 
     console.info(
         chalk.hex(OUTPUT_COLOR_HEX)(text)

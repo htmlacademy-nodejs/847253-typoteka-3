@@ -1,8 +1,6 @@
 const fs = require(`fs`);
 const path = require(`path`);
 
-const LoggedError = require(`@root/src/utils/logged-error`);
-
 /**
  * Категория
  *
@@ -13,13 +11,13 @@ const LoggedError = require(`@root/src/utils/logged-error`);
  * @property {string} name Имя
  */
 
-class CategoriesRepositoryReadFileError extends LoggedError {}
+class CategoriesRepositoryReadFileError extends Error {}
 
 /**
  * @readonly
  * @type {string}
  */
-const MOCKS_PATH = path.resolve(__dirname, `./categories.mocks.json`);
+const FIXTURES_PATH = path.resolve(__dirname, `./categories.repository.fixtures.json`);
 
 class CategoriesRepository {
   /**
@@ -60,15 +58,23 @@ class CategoriesRepository {
   get categories() {
     if (this._categories === null) {
       try {
-        const buffer = fs.readFileSync(MOCKS_PATH);
+        const buffer = fs.readFileSync(FIXTURES_PATH);
 
         this._categories = JSON.parse(buffer.toString());
       } catch {
-        throw new CategoriesRepositoryReadFileError(`Failed to read file with test data`);
+        throw new CategoriesRepositoryReadFileError(`Failed to read file with fixtures`);
       }
     }
 
     return this._categories;
+  }
+
+  /**
+   * @param {Category[] | null} categories
+   * @return {void}
+   */
+  set categories(categories) {
+    this._categories = categories;
   }
 }
 

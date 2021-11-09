@@ -1,8 +1,6 @@
 const fs = require(`fs`);
 const path = require(`path`);
 
-const LoggedError = require(`@root/src/utils/logged-error`);
-
 /**
  * Пользователь
  *
@@ -15,14 +13,14 @@ const LoggedError = require(`@root/src/utils/logged-error`);
  * @property {string} role Роль
  */
 
-class UsersRepositoryReadFileError extends LoggedError {}
-class UsersRepositoryUserNotFoundError extends LoggedError {}
+class UsersRepositoryReadFileError extends Error {}
+class UsersRepositoryUserNotFoundError extends Error {}
 
 /**
  * @readonly
  * @type {string}
  */
-const MOCKS_PATH = path.resolve(__dirname, `./users.mocks.json`);
+const FIXTURES_PATH = path.resolve(__dirname, `./users.repository.fixtures.json`);
 
 class UsersRepository {
   /**
@@ -89,11 +87,11 @@ class UsersRepository {
   get users() {
     if (this._users === null) {
       try {
-        const buffer = fs.readFileSync(MOCKS_PATH);
+        const buffer = fs.readFileSync(FIXTURES_PATH);
 
         this._users = JSON.parse(buffer.toString());
       } catch {
-        throw new UsersRepositoryReadFileError(`Failed to read file with test data`);
+        throw new UsersRepositoryReadFileError(`Failed to read file with fixtures`);
       }
     }
 

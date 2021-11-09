@@ -1,9 +1,7 @@
 const Ajv = require(`ajv`);
 
-const LoggedError = require(`@root/src/utils/logged-error`);
-
-class JsonSchemaValidatorValidationError extends LoggedError {}
-class JsonSchemaValidatorSchemaCompilationError extends LoggedError {}
+class JsonSchemaValidatorValidationError extends Error {}
+class JsonSchemaValidatorSchemaCompilationError extends Error {}
 
 /**
  * @typedef AjvValidationError

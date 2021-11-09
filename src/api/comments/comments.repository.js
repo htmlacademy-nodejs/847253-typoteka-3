@@ -1,8 +1,6 @@
 const fs = require(`fs`);
 const path = require(`path`);
 
-const LoggedError = require(`@root/src/utils/logged-error`);
-
 /**
  * Комментарий
  *
@@ -15,14 +13,14 @@ const LoggedError = require(`@root/src/utils/logged-error`);
  * @property {string} text Текст
  */
 
-class CommentsRepositoryReadFileError extends LoggedError {}
-class CommentsRepositoryCommentNotFoundError extends LoggedError {}
+class CommentsRepositoryReadFileError extends Error {}
+class CommentsRepositoryCommentNotFoundError extends Error {}
 
 /**
  * @readonly
  * @type {string}
  */
-const MOCKS_PATH = path.resolve(__dirname, `./comments.mocks.json`);
+const FIXTURES_PATH = path.resolve(__dirname, `./comments.repository.fixtures.json`);
 
 class CommentsRepository {
   /**
@@ -49,6 +47,14 @@ class CommentsRepository {
 
   /**
    * @public
+   * @return {PostComment[]}
+   */
+  readComments = () => {
+    return this.comments;
+  }
+
+  /**
+   * @public
    * @param {string} commentId
    * @return {boolean}
    * @throws {CommentsRepositoryCommentNotFoundError}
@@ -69,15 +75,15 @@ class CommentsRepository {
       throw new CommentsRepositoryCommentNotFoundError(`Comment with ID '${commentId}' not found`);
     }
 
-    return true;
-  }
+    this.comments = this.comments.filter(
+        /**
+         * @param {PostComment} comment
+        * @return {boolean}
+         */
+        ({id: currentCommentId}) => currentCommentId !== commentId
+    );
 
-  /**
-   * @public
-   * @return {PostComment[]}
-   */
-  readComments = () => {
-    return this.comments;
+    return true;
   }
 
   /**
@@ -88,11 +94,11 @@ class CommentsRepository {
   get comments() {
     if (this._comments === null) {
       try {
-        const buffer = fs.readFileSync(MOCKS_PATH);
+        const buffer = fs.readFileSync(FIXTURES_PATH);
 
         this._comments = JSON.parse(buffer.toString());
       } catch {
-        throw new CommentsRepositoryReadFileError(`Failed to read file with test data`);
+        throw new CommentsRepositoryReadFileError(`Failed to read file with fixtures`);
       }
     }
 

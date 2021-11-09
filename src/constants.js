@@ -78,6 +78,7 @@ const HttpStatusCode = {
  */
 const Environment = {
   DEVELOPMENT: `development`,
+  TESTING: `testing`,
   PRODUCTION: `production`,
 };
 

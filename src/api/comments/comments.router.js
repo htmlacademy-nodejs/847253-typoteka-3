@@ -1,9 +1,13 @@
 const {Router} = require(`express`);
+const pino = require(`pino`);
 
-const {HttpStatusCode} = require(`@root/src/constants`);
+const {HttpStatusCode, Environment} = require(`@root/src/constants`);
 const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);
-const {JsonSchemaValidator, JsonSchemaValidatorValidationError} = require(`@root/src/utils/json-schema-validator`);
+const {JsonSchemaValidator} = require(`@root/src/utils/json-schema-validator`);
 
+const CONFIG = require(`@api/config`);
+
+const {CommentsRepositoryCommentNotFoundError} = require(`./comments.repository`);
 const CommentsService = require(`./comments.service`);
 
 /**
@@ -48,6 +52,16 @@ class CommentsRouter extends Router {
      */
     this.commentsService = new CommentsService();
 
+    /**
+     * @private
+     * @type {pino.Logger}
+     */
+    this.logger = pino({
+      name: `Api/CommentsRouter`,
+      level: CONFIG.LOG_LEVEL,
+      prettyPrint: true,
+    }, CONFIG.ENV === Environment.PRODUCTION ? pino.destination(CONFIG.LOGGER_OUTPUT_PATH) : process.stdout);
+
     this.get(COMMENTS_ROUTE, handleMiddlewarePromiseRejection(this.readComments));
     this.delete(COMMENT_BY_ID_ROUTE, handleMiddlewarePromiseRejection(this.deleteComment));
 
@@ -56,22 +70,12 @@ class CommentsRouter extends Router {
 
   /**
    * @private
-   * @param {ExpressRequest} req
+   * @param {ExpressRequest} _
    * @param {ExpressResponse} res
    * @return {void}
    */
-  readComments = (req, res) => {
-    try {
-      res.send(this.commentsService.readComments());
-    } catch (error) {
-      if (error instanceof JsonSchemaValidatorValidationError) {
-        res.status(HttpStatusCode.BAD_REQUEST).send({code: error.constructor.name, message: error.message});
-
-        return;
-      }
-
-      throw error;
-    }
+  readComments = (_, res) => {
+    res.send(this.commentsService.readComments());
   }
 
   /**
@@ -81,7 +85,19 @@ class CommentsRouter extends Router {
    * @return {void}
    */
   deleteComment = (req, res) => {
-    res.send(this.commentsService.deleteComment(req.params.commentId));
+    try {
+      res.send(this.commentsService.deleteComment(req.params.commentId));
+    } catch (error) {
+      if (error instanceof CommentsRepositoryCommentNotFoundError) {
+        this.logger.error(error);
+
+        res.status(HttpStatusCode.NOT_FOUND).send({code: error.constructor.name, message: error.message});
+
+        return;
+      }
+
+      throw error;
+    }
   }
 }
 

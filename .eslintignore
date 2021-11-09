@@ -1,3 +1,5 @@
 **/public/**/*.js
 **/views/**/*.js
 **/view/**/*.js
+**/__tests__/**/*.js
+**/__mocks__/**/*.js
