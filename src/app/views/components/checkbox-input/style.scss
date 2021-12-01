@@ -1,0 +1,10 @@
+@import "~@app/views/style/mixins";
+
+.checkbox-input__control {
+  @include visually-hidden;
+}
+
+.checkbox-input__button {
+  display: inline-flex;
+}
+

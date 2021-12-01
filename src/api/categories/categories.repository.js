@@ -1,60 +1,31 @@
 const fs = require(`fs`);
 const path = require(`path`);
 
-/**
- * Категория
- *
- * @typedef Category
- * @type {Object}
- *
- * @property {string} id Идентификатор
- * @property {string} name Имя
- */
-
 class CategoriesRepositoryReadFileError extends Error {}
 
-/**
- * @readonly
- * @type {string}
- */
 const FIXTURES_PATH = path.resolve(__dirname, `./categories.repository.fixtures.json`);
 
 class CategoriesRepository {
-  /**
-   * @type {CategoriesRepository | null}
-   */
   static instance = null;
 
-  /**
-   * @return {CategoriesRepository | void}
-   */
   constructor() {
     if (CategoriesRepository.instance !== null) {
       return CategoriesRepository.instance;
     }
 
-    /**
-     * @private
-     * @type {Category[] | null}
-     */
     this._categories = null;
 
     CategoriesRepository.instance = this;
   }
 
-  /**
-   * @public
-   * @return {Category[]}
-   */
-  readCategories = () => {
-    return this.categories;
+  readCategories = (categoriesIds) => {
+    if (categoriesIds === undefined) {
+      return this.categories;
+    }
+
+    return this.categories.filter(({id}) => categoriesIds.includes(id));
   }
 
-  /**
-   * @private
-   * @return {Category[]}
-   * @throws {CategoriesRepositoryReadFileError}
-   */
   get categories() {
     if (this._categories === null) {
       try {
@@ -69,10 +40,6 @@ class CategoriesRepository {
     return this._categories;
   }
 
-  /**
-   * @param {Category[] | null} categories
-   * @return {void}
-   */
   set categories(categories) {
     this._categories = categories;
   }

@@ -17,33 +17,20 @@ const {
   COMMENTS_MIN_AMOUNT,
   COMMENTS_MAX_AMOUNT,
   TITLES_PATH,
+  IMAGES_URLS_PATH,
 } = require(`./constants`);
 const {readFile} = require(`../utils`);
 
-/**
- * Предложения, из которых будет сформирован текст и текст для предпросмотра
- *
- * @readonly
- * @type {string[]}
- */
 const textSentences = readFile(TEXT_SENTENCES_PATH);
 
-/**
- * Заголовки
- *
- * @readonly
- * @type {string[]}
- */
 const titles = readFile(TITLES_PATH);
 
-/**
- * Генерирует запись
- *
- * @return {Object} Запись
- */
+const imagesUrls = readFile(IMAGES_URLS_PATH);
+
 const generatePost = () => ({
   id: nanoid(NANOID_ID_MAX_LENGTH),
   title: getRandomArrayValue(titles),
+  image: getRandomArrayValue(imagesUrls),
   date: new Date(generateRandomNumber(DATE_MIN_UNIX_TIME_STAMP, DATE_MAX_UNIX_TIME_STAMP)).toISOString(),
   previewText: generateText(textSentences, generateRandomNumber(TEXT_SENTENCES_MIN_AMOUNT, TEXT_SENTENCES_MAX_AMOUNT)),
   text: generateText(textSentences, generateRandomNumber(TEXT_SENTENCES_MIN_AMOUNT, TEXT_SENTENCES_MAX_AMOUNT)),
@@ -57,12 +44,6 @@ const generatePost = () => ({
   ),
 });
 
-/**
- * Генерирует записи в заданном количестве
- *
- * @param {number} amount Количество записей
- * @return {Object[]} Записи
- */
 const generatePosts = (amount) => createAndFillArray(
     amount,
     generatePost

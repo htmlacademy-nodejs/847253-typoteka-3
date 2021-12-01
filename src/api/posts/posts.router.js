@@ -1,11 +1,10 @@
 const {Router} = require(`express`);
-const pino = require(`pino`);
 
-const {HttpStatusCode, Environment} = require(`@root/src/constants`);
+const {HttpStatusCode} = require(`@root/src/constants`);
 const {JsonSchemaValidator, JsonSchemaValidatorValidationError} = require(`@root/src/utils/json-schema-validator`);
 const {handleMiddlewarePromiseRejection} = require(`@root/src/utils/express`);
 
-const CONFIG = require(`@api/config`);
+const Logger = require(`@api/utils/logger`);
 
 const PostsService = require(`./posts.service`);
 const {PostsRepositoryPostNotFoundError, PostsRepositoryCommentNotFoundError} = require(`./posts.repository`);
@@ -13,39 +12,15 @@ const createPostCommentRequestSchema = require(`./posts.router.create-post-comme
 const createPostRequestSchema = require(`./posts.router.create-post-request.schema.json`);
 const updatePostRequestSchema = require(`./posts.router.update-post-request.schema.json`);
 
-/**
- * @readonly
- * @type {string}
- */
 const POSTS_ROUTE = `/api/posts`;
-
-/**
- * @readonly
- * @type {string}
- */
 const POST_BY_ID_ROUTE = `/api/posts/:postId`;
-
-/**
- * @readonly
- * @type {string}
- */
-const POST_COMMENTS = `/api/posts/:postId/comments`;
-
-/**
- * @readonly
- * @type {string}
- */
-const POST_COMMENT_BY_ID = `/api/posts/:postId/comments/:commentId`;
+const POST_COMMENTS_ROUTE = `/api/posts/:postId/comments`;
+const POST_CATEGORIES_ROUTE = `/api/posts/:postId/categories`;
+const POST_COMMENT_BY_ID_ROUTE = `/api/posts/:postId/comments/:commentId`;
 
 class PostsRouter extends Router {
-  /**
-   * @type {PostsRouter | null}
-   */
   static instance = null;
 
-  /**
-   * @return {PostsRouter | void}
-   */
   constructor() {
     if (PostsRouter.instance !== null) {
       return PostsRouter.instance;
@@ -53,48 +28,33 @@ class PostsRouter extends Router {
 
     super();
 
-    /**
-     * @private
-     * @readonly
-     * @type {JsonSchemaValidator}
-     */
     this.jsonSchemaValidator = new JsonSchemaValidator();
 
-    /**
-     * @private
-     * @readonly
-     * @type {PostsService}
-     */
     this.postsService = new PostsService();
 
-    /**
-     * @private
-     * @type {pino.Logger}
-     */
-    this.logger = pino({
-      name: `Api/PostsRouter`,
-      level: CONFIG.LOG_LEVEL,
-      prettyPrint: true,
-    }, CONFIG.ENV === Environment.PRODUCTION ? pino.destination(CONFIG.LOGGER_OUTPUT_PATH) : process.stdout);
+    this.logger = new Logger({
+      name: `API`,
+    });
 
     this.post(POSTS_ROUTE, handleMiddlewarePromiseRejection(this.createPost));
-    this.post(POST_COMMENTS, handleMiddlewarePromiseRejection(this.createPostComment));
+    this.post(POST_COMMENTS_ROUTE, handleMiddlewarePromiseRejection(this.createPostComment));
     this.get(POSTS_ROUTE, handleMiddlewarePromiseRejection(this.readPosts));
     this.get(POST_BY_ID_ROUTE, handleMiddlewarePromiseRejection(this.readPost));
-    this.get(POST_COMMENTS, handleMiddlewarePromiseRejection(this.readPostComments));
+    /*
+     * TODO: Автотесты
+     */
+    this.get(POST_COMMENTS_ROUTE, handleMiddlewarePromiseRejection(this.readPostComments));
+    /*
+     * TODO: Автотесты
+     */
+    this.get(POST_CATEGORIES_ROUTE, handleMiddlewarePromiseRejection(this.readPostCategories));
     this.put(POST_BY_ID_ROUTE, handleMiddlewarePromiseRejection(this.updatePost));
     this.delete(POST_BY_ID_ROUTE, handleMiddlewarePromiseRejection(this.deletePost));
-    this.delete(POST_COMMENT_BY_ID, handleMiddlewarePromiseRejection(this.deletePostComment));
+    this.delete(POST_COMMENT_BY_ID_ROUTE, handleMiddlewarePromiseRejection(this.deletePostComment));
 
     PostsRouter.instance = this;
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} req
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
   createPost = (req, res) => {
     try {
       this.jsonSchemaValidator.validate(createPostRequestSchema, req);
@@ -113,12 +73,6 @@ class PostsRouter extends Router {
     }
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} req
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
   createPostComment = (req, res) => {
     try {
       this.jsonSchemaValidator.validate(createPostCommentRequestSchema, req);
@@ -146,22 +100,10 @@ class PostsRouter extends Router {
     }
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} _
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
   readPosts = (_, res) => {
     res.send(this.postsService.readPosts());
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} req
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
   readPost = (req, res) => {
     try {
       res.send(this.postsService.readPost(req.params.postId));
@@ -178,12 +120,6 @@ class PostsRouter extends Router {
     }
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} req
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
   readPostComments = (req, res) => {
     try {
       res.send(this.postsService.readPostComments(req.params.postId));
@@ -200,12 +136,22 @@ class PostsRouter extends Router {
     }
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} req
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
+  readPostCategories = (req, res) => {
+    try {
+      res.send(this.postsService.readPostCategories(req.params.postId));
+    } catch (error) {
+      if (error instanceof PostsRepositoryPostNotFoundError) {
+        this.logger.error(error);
+
+        res.status(HttpStatusCode.NOT_FOUND).send({code: error.constructor.name, message: error.message});
+
+        return;
+      }
+
+      throw error;
+    }
+  }
+
   updatePost = (req, res) => {
     try {
       this.jsonSchemaValidator.validate(updatePostRequestSchema, req);
@@ -233,12 +179,6 @@ class PostsRouter extends Router {
     }
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} req
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
   deletePost = (req, res) => {
     try {
       res.send(this.postsService.deletePost(req.params.postId));
@@ -255,12 +195,6 @@ class PostsRouter extends Router {
     }
   }
 
-  /**
-   * @private
-   * @param {ExpressRequest} req
-   * @param {ExpressResponse} res
-   * @return {void}
-   */
   deletePostComment = (req, res) => {
     try {
       res.send(this.postsService.deletePostComment(req.params.postId, req.params.commentId));

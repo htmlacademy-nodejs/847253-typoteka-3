@@ -23,7 +23,7 @@ html(class=['page', isNoBackgroundPage  && 'page_no-background-image'])
       style
         block style
   body
-    +Title(tag='h1', visuallyHidden=true) #{page.title}
+    h1.visually-hidden #{page.title}
     div.page__wrapper()
       +PageHeader.page__header(error=error)
       main.page__main

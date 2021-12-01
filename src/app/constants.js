@@ -1,7 +1,3 @@
-/**
- * @readonly
- * @type {Object<string, string>}
- */
 const PageId = {
   ERROR: `ERROR`,
   MAIN: `MAIN`,

@@ -3,19 +3,8 @@ const chalk = require(`chalk`);
 const fixturesCommandHandler = require(`./fixtures`);
 const versionCommandHandler = require(`./version`);
 
-
-/**
- * @readonly
- * @type {string}
- */
 const OUTPUT_COLOR_HEX = `#969696`;
 
-/**
- * Обработчик команды help
- *
- * @readonly
- * @type {CommandHandler}
- */
 const commandHandler = {
   name: `help`,
   help: `node index.js --help - показывает это сообщение`,

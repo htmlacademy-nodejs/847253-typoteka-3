@@ -1,0 +1,17 @@
+include ../../../../../views/components/icon/icon
+include ../../../../../views/components/link/index
+include ../../../../../views/components/title/title
+
+append style
+  include:sass style.scss
+
+mixin Post
+  -
+    const {class: className, post} = attributes;
+    const {date, id, title} = post;
+  div(class=['post', className])
+    +Icon.post__icon(color='silver', name='document', size='900')
+    div.post__wrapper
+      time.post__post-date(datetime=date) #{getUserFriendlyDateString(date, {withTime: false})}
+      +LinkContainer.post__post-link(href=`/my/posts/${id}`, underlined=true)
+        +Title.post__post-title(size='50', tag='h3', weight='regular') #{title}

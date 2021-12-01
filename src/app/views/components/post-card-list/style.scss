@@ -1,7 +1,7 @@
 @import "~@app/views/style/vars";
 
 .post-card-list__list {
-  margin: 0 0 -#{$indent-5};
+  margin: 0;
   padding: 0;
 
   list-style: none;
@@ -12,4 +12,5 @@
 
 .post-card-list__list-item {
   margin-bottom: $indent-5;
+  break-inside: avoid;
 }

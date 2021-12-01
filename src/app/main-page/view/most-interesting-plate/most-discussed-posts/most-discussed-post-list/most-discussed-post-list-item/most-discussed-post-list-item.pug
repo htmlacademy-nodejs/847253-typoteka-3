@@ -1,0 +1,13 @@
+include ../../../../../../views/components/link/index
+
+append style
+  include:sass style.scss
+
+mixin MostDiscussedPostListItem
+  -
+    const {class: className, mostDiscussedPost} = attributes;
+    const {commentsAmount, id, title} = mostDiscussedPost;
+
+  span(class=['most-discussed-post-list-item', className])
+    +LinkContainer.most-discussed-post-list-item__link(href=`/posts/${id}`, size='200' theme='royal-blue') #{title}
+      sup.most-discussed-post-list-item__comments-amount  #{commentsAmount}

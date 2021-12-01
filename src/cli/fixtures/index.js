@@ -11,10 +11,6 @@ const generateComments = require(`./comments`);
 const generatePosts = require(`./posts`);
 const generateUsers = require(`./users`);
 
-/**
- * @readonly
- * @type {Object<string, function(number): Object>}
- */
 const generatorByType = {
   categories: generateCategories,
   comments: generateComments,
@@ -22,34 +18,20 @@ const generatorByType = {
   users: generateUsers,
 };
 
-/**
- * Обработчик команды mocks
- *
- * @readonly
- * @type {CommandHandler}
- */
 const commandHandler = {
   name: `fixtures`,
   help: `node index.js --fixtures <type> <amount> <savePath>  - создает массив с фикстурами вида <type> в количестве <amount> и сохраняет их в <savePath>`,
 
-  /**
-   * @param {[string, string, string]} args
-   * @return {Promise<void>}
-   */
   async run(args) {
     let [type, amount, savePath] = args;
 
     if (type === undefined) {
       console.error(
-          chalk.red(`Параметр "type" обязательный`)
+          chalk.red(`Параметр 'type' обязательный`)
       );
       process.exit(ExitCode.ERROR);
     }
 
-    /**
-     * @readonly
-     * @type {function(number): Object}
-     */
     const generator = generatorByType[type];
 
 
@@ -60,26 +42,23 @@ const commandHandler = {
       process.exit(ExitCode.ERROR);
     }
 
-    /**
-     * @type {number}
-     */
     amount = Number.parseInt(amount, 10);
 
     if (Number.isNaN(amount)) {
       console.error(
-          chalk.red(`Параметр "amount" обязательный`)
+          chalk.red(`Параметр 'amount' обязательный`)
       );
       process.exit(ExitCode.ERROR);
     } else if (amount > MOCKS_MAX_AMOUNT || amount < MOCKS_MIN_AMOUNT) {
       console.error(
-          chalk.red(`Параметр "amount" не может быть меньше ${MOCKS_MIN_AMOUNT} или больше ${MOCKS_MAX_AMOUNT}`)
+          chalk.red(`Параметр 'amount' не может быть меньше ${MOCKS_MIN_AMOUNT} или больше ${MOCKS_MAX_AMOUNT}`)
       );
       process.exit(ExitCode.ERROR);
     }
 
     if (savePath === undefined) {
       console.error(
-          chalk.red(`Параметр "savePath" обязательный`)
+          chalk.red(`Параметр 'savePath' обязательный`)
       );
       process.exit(ExitCode.ERROR);
     }

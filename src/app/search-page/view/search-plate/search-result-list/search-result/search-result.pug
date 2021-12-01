@@ -1,0 +1,15 @@
+include ../../../../../views/components/link/index
+include ../../../../../views/components/title/title
+
+append style
+  include:sass style.scss
+
+mixin SearchResult
+  -
+    const {class: className, searchResult} = attributes;
+    const {date, id, title} = searchResult;
+
+  div(class=['search-result', className])
+    time.search-result__post-date(datetime=date) #{getUserFriendlyDateString(date, {withTime: false})}
+    +LinkContainer.search-result__post-link(href=`/posts/${id}`, underlined=true)
+      +Title.search-result__post-title(size='50', tag='h3', weight='regular') #{title}

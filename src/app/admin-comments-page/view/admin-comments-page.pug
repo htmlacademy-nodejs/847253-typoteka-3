@@ -1,0 +1,7 @@
+extends ../../views/components/page/page
+
+include comments-plate/comments-plate
+
+block main
+  div.admin-comments-page
+    +CommentsPlate.admin-comments-page__comments-plate(comments=comments)

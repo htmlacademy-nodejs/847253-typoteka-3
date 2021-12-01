@@ -21,6 +21,6 @@ block main
           +Slot('title')
             +Title(size='350', weight='medium') #{error.title}
         if error.code === '404'
-          +LinkContainer.error__link(href='/', size='400') Вернуться на главную
+          +LinkContainer.error-page__link(href='/', size='400') Вернуться на главную
         else if error.code === '500'
-          +Link.error__link(href=router.href, size='400') Обновить
+          +Link.error-page__link(href=router.href, size='400') Обновить

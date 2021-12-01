@@ -9,79 +9,21 @@ class PostsRepositoryReadFileError extends Error {}
 class PostsRepositoryPostNotFoundError extends Error {}
 class PostsRepositoryCommentNotFoundError extends Error {}
 
-/**
- * Пользователь
- *
- * @typedef User
- * @type Object
- * @property {string} id Идентификатор
- * @property {string} name Имя
- * @property {string} surname Фамилия
- * @property {string} avatar Аватар
- * @property {string} role Роль
- */
-
-
-/**
- * Комментарий
- *
- * @typedef Comment
- * @type Object
- * @property {string} id Идентификатор
- * @property {User} user Пользователь
- * @property {ISODateString} date Дата публикации
- * @property {string} text Текст
- */
-
-/**
- * Запись
- *
- * @typedef Post
- * @type Object
- * @property {string} id Идентификатор
- * @property {string[]} categories Категории
- * @property {string} image Изображение
- * @property {ISODateString} date Дата публикации
- * @property {string} title Заголовок
- * @property {string} previewText Текст для предпросмотра
- * @property {string} text Текст
- * @property {PostComment[]} comments Комментарии
- */
-
-/**
- * @readonly
- * @type {string}
- */
 const FIXTURES_PATH = path.resolve(__dirname, `./posts.repository.fixtures.json`);
 
 class PostsRepository {
-  /**
-   * @type {PostsRepository | null}
-   */
   static instance = null;
 
-  /**
-   * @return {PostsRepository | void}
-   */
   constructor() {
     if (PostsRepository.instance !== null) {
       return PostsRepository.instance;
     }
 
-    /**
-     * @private
-     * @type {Post[] | null}
-     */
     this._posts = null;
 
     PostsRepository.instance = this;
   }
 
-  /**
-   * @public
-   * @param {{categories: string[], image: string, date: string, title: string, previewText: string, text: string}} data
-   * @return {Post}
-   */
   createPost({
     categories,
     image,
@@ -90,10 +32,6 @@ class PostsRepository {
     previewText,
     text,
   }) {
-    /**
-     * @readonly
-     * @type {Post}
-     */
     const post = {
       id: nanoid(NANOID_ID_MAX_LENGTH),
       categories,
@@ -110,18 +48,9 @@ class PostsRepository {
     return true;
   }
 
-  /**
-   * @param {string} postId
-   * @param {{user: string, text: string}} commentData
-   * @return {Comment}
-   */
   createPostComment(postId, {user, text}) {
     const post = this.readPost(postId);
 
-    /**
-     * @readonly
-     * @type {Comment}
-     */
     const comment = {
       text,
       id: nanoid(NANOID_ID_MAX_LENGTH),
@@ -134,30 +63,12 @@ class PostsRepository {
     return comment;
   }
 
-  /**
-   * @public
-   * @return {Post[]}
-   */
   readPosts = () => {
     return this.posts;
   }
 
-  /**
-   * @public
-   * @param {string} postId
-   * @return {Post}
-   * @throws {PostsRepositoryPostNotFoundError}
-   */
   readPost = (postId) => {
-    /**
-     * @readonly
-     * @type {Post}
-     */
     const post = this.posts.find(
-        /**
-         * @param {Post} post
-         * @return {boolean}
-         */
         ({id: currentPostId}) => currentPostId === postId
     );
 
@@ -168,13 +79,6 @@ class PostsRepository {
     return post;
   }
 
-  // eslint-disable-next-line valid-jsdoc
-  /**
-   * @public
-   * @param {string} postId
-   * @param {{[categories]: string[], [image]: string, [date]: string, [title]: string, [previewText]: string, [text]: string}} postData
-   * @return {boolean}
-   */
   updatePost = (postId, {
     categories,
     image,
@@ -195,40 +99,22 @@ class PostsRepository {
     return true;
   }
 
-
-  /**
-   * @public
-   * @param {string} postId
-   * @return {boolean}
-   */
   deletePost = (postId) => {
-    /**
-     * @type {Post[]}
-     */
     const posts = [];
-    /**
-     * @readonly
-     * @type {Post | null}
-     */
+
     let postToDelete = null;
 
-    this.posts.forEach(
-        /**
-         * @param {Post} post
-         * @return {void}
-         */
-        (post) => {
-          const {id: currentPostId} = post;
+    this.posts.forEach((post) => {
+      const {id: currentPostId} = post;
 
-          if (currentPostId === postId) {
-            postToDelete = post;
+      if (currentPostId === postId) {
+        postToDelete = post;
 
-            return;
-          }
+        return;
+      }
 
-          posts.push(post);
-        }
-    );
+      posts.push(post);
+    });
 
     if (postToDelete === null) {
       throw new PostsRepositoryPostNotFoundError(`Post with ID '${postId}' not found`);
@@ -239,46 +125,24 @@ class PostsRepository {
     return true;
   }
 
-  /**
-   * @public
-   * @param {string} postId
-   * @param {string} commentId
-   * @return {boolean}
-   */
   deletePostComment = (postId, commentId) => {
-    /**
-     * @type {Post}
-     */
     const post = this.readPost(postId);
 
-    /**
-     * @type {Comment[]}
-     */
     const comments = [];
 
-    /**
-     * @readonly
-     * @type {Comment | null}
-     */
     let commentToDelete = null;
 
-    post.comments.forEach(
-        /**
-         * @param {Comment} comment
-         * @return {void}
-         */
-        (comment) => {
-          const {id: currentCommentId} = comment;
+    post.comments.forEach((comment) => {
+      const {id: currentCommentId} = comment;
 
-          if (currentCommentId === commentId) {
-            commentToDelete = comment;
+      if (currentCommentId === commentId) {
+        commentToDelete = comment;
 
-            return;
-          }
+        return;
+      }
 
-          comments.push(comment);
-        }
-    );
+      comments.push(comment);
+    });
 
     if (commentToDelete === null) {
       throw new PostsRepositoryCommentNotFoundError(`Comment with ID '${commentId}' not found`);
@@ -289,33 +153,16 @@ class PostsRepository {
     return true;
   }
 
-  /**
-   * @param {string} query
-   * @return {Post[]}
-   */
   searchPostsByTitle = (query) => {
     const words = query.split(` `).map((word) => word.toLowerCase());
 
     return this.posts.filter(
-        /**
-         * @param {Post} post
-         * @return {boolean}
-         */
         ({title}) => words.some(
-            /**
-             * @param {string} word
-             * @return {boolean}
-             */
             (word) => title.toLowerCase().includes(word)
         )
     );
   }
 
-  /**
-   * @private
-   * @return {Post[]}
-   * @throws {PostsRepositoryReadFileError}
-   */
   get posts() {
     if (this._posts === null) {
       try {
@@ -330,11 +177,6 @@ class PostsRepository {
     return this._posts;
   }
 
-  /**
-   * @private
-   * @param {Post[] | null} posts
-   * @return {void}
-   */
   set posts(posts) {
     this._posts = posts;
   }

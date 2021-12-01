@@ -17,7 +17,6 @@ rules:
 
 extends:
   - htmlacademy/node
-  - plugin:jsdoc/recommended
 
 settings:
   jsdoc:
