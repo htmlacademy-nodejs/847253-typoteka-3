@@ -1,0 +1,28 @@
+extends ../../views/components/page/page
+
+include ../../views/components/button/button
+include ../../views/components/categories-navigation/categories-navigation
+include ../../views/components/link/link
+include ../../views/components/paginator/index
+include ../../views/components/plate/plate
+include ../../views/components/post-card-list/post-card-list
+include ../../views/components/text/text
+include ../../views/components/title/title
+
+include most-interesting-plate/most-interesting-plate
+include no-posts-stub-plate/no-posts-stub-plate
+
+append style
+  include:sass style.scss
+
+block main
+  div.main-page
+    +Text.main-page__welcome-text(size='800', weight='medium', width='710px') #{helloText}
+    if posts.length
+      if categories.length
+        +CategoriesNavigation.main-page__categories-menu(categories=categories)
+      +MostInterestingPlate.main-page__comments-plate(mostDiscussedPosts=mostDiscussedPosts, lastComments=lastComments)
+      +PostCardList(posts=posts)
+      +PaginatorContainer.main-page__paginator(page=1, pagesAmount=10)
+    else
+      +NoPostsStubPlate

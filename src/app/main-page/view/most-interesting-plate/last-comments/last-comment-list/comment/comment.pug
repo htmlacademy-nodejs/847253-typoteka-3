@@ -1,0 +1,14 @@
+append style
+  include:sass style.scss
+
+mixin Comment
+  -
+    const {class: className, comment} = attributes;
+    const {id, post, text, user} = comment;
+
+  div(class=['comment', className])
+    div.comment__user
+      +Avatar.comment__user-avatar(size='100', alt=`${user.name} ${user.surname}`, src=user.avatar)
+      +Title.comment__user-full-name(size='50') #{user.name} #{user.surname}
+
+    +Link(size='200', href=`/posts/${post}#comment-${id}`, theme='royal-blue') #{text}

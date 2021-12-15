@@ -1,24 +1,13 @@
 const {UsersRepository} = require(`./users.repository`);
 
 class UsersService {
-  /**
-   * @type {UsersService | null}
-   */
   static instance = null;
 
-  /**
-   * @return {UsersService | void}
-   */
   constructor() {
     if (UsersService.instance !== null) {
       return UsersService.instance;
     }
 
-    /**
-     * @private
-     * @readonly
-     * @type {UsersRepository}
-     */
     this.usersRepository = new UsersRepository();
 
     UsersService.instance = this;
@@ -26,19 +15,10 @@ class UsersService {
     return UsersService.instance;
   }
 
-  /**
-   * @public
-   * @return {User[]}
-   */
   readUsers = () => {
     return this.usersRepository.readUsers();
   }
 
-  /**
-   * @public
-   * @param {string} userId
-   * @return {User}
-   */
   readUser = (userId) => {
     return this.usersRepository.readUser(userId);
   }

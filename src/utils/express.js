@@ -1,9 +1,3 @@
-/**
- * Обрабатывает ошибку отклонённого обещания, возникающую в передаваемой функции промежуточном ПО
- *
- * @param {function} middleware
- * @return {function}
- */
 const handleMiddlewarePromiseRejection = (middleware) => (
   function (...args) {
     const middlewareReturn = middleware(...args);

@@ -1,7 +1,3 @@
-/**
- * @readonly
- * @type {Object<string, number>}
- */
 const HttpStatusCode = {
   CONTINUE: 100,
   SWITCHING_PROTOCOLS: 101,
@@ -72,22 +68,20 @@ const HttpStatusCode = {
   NETWORK_CONNECT_TIMEOUT_ERROR: 599,
 };
 
-/**
- * @readonly
- * @type {Object<string, string>}
- */
 const Environment = {
   DEVELOPMENT: `development`,
   TESTING: `testing`,
   PRODUCTION: `production`,
 };
 
-/**
+const NodeErrorCode = {
+  ENOENT: `ENOENT`,
+  EEXIST: `EEXIST`,
+};
+
+/*
  * Максимальная длина идентификатора, генерируемого модулем nanoid
- *
- * @readonly
- * @type {number}
  */
 const NANOID_ID_MAX_LENGTH = 6;
 
-module.exports = {HttpStatusCode, Environment, NANOID_ID_MAX_LENGTH};
+module.exports = {HttpStatusCode, Environment, NodeErrorCode, NANOID_ID_MAX_LENGTH};

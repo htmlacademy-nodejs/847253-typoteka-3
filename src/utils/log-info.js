@@ -1,31 +1,12 @@
 class LogInfoError extends Error {}
 
 class LogInfo {
-  /**
-   * @param {Object<string, *>} [data]
-   * @param {string} [template]
-   * @return {void}
-   */
   constructor(data, template) {
-    /**
-     * @private
-     * @type {Object<string, *> | undefined}
-     */
     this._data = data;
 
-    /**
-     * @private
-     * @type {string | undefined}
-     */
     this._template = template;
   }
 
-  /**
-   * @public
-   * @param {string} key
-   * @param {*} value
-   * @return {void}
-   */
   set = (key, value) => {
     if (this._data === undefined) {
       this._data = {};
@@ -34,19 +15,10 @@ class LogInfo {
     this._data[key] = value;
   }
 
-  /**
-   * @public
-   * @return {string}
-   */
   toString() {
     return this.compileTemplate();
   }
 
-  /**
-   * @private
-   * @return {string}
-   * @throws {LogInfoError}
-   */
   compileTemplate() {
     if (this._template === undefined) {
       throw new LogInfoError(`No template`);
@@ -69,18 +41,10 @@ class LogInfo {
     });
   }
 
-  /**
-   * @param {string} template
-   * @return {void}
-   */
   set template(template) {
     this._template = template;
   }
 
-  /**
-   * @param {Object<string, *>} data
-   * @return {void}
-   */
   set data(data) {
     this._data = data;
   }

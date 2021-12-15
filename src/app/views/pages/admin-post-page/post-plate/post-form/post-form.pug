@@ -1,0 +1,123 @@
+include ../../../../../views/components/button/button
+include ../../../../../views/components/button/index
+include ../../../../../views/components/checkbox-input/checkbox-input
+include ../../../../../views/components/input/input
+include ../../../../../views/components/title/title
+
+include date-input/date-input
+
+append style
+  include:sass style.scss
+
+mixin PostForm
+  -
+    const DEFAULT_FORM_DATA = {
+      categories: {value: [], options: []},
+      date: {value: ''},
+      title: {value: ''},
+      previewText: {value: ''},
+      text: {value: ''},
+      image: {value: ''},
+    };
+
+    // TODO: Сделать универсальную утилитарную функцию
+    const getSafeFormData = (formData) => {
+      const safeFormData = JSON.parse(JSON.stringify(DEFAULT_FORM_DATA));
+
+      if (formData === undefined) {
+        return safeFormData;
+      }
+
+      safeFormData.categories.value = (formData.categories && formData.categories.value) || safeFormData.categories.value
+      safeFormData.categories.options = (formData.categories && formData.categories.options) || safeFormData.categories.options
+      safeFormData.date.value = (formData.date && formData.date.value) || safeFormData.date.value
+      safeFormData.title.value = (formData.title && formData.title.value) || safeFormData.title.value
+      safeFormData.previewText.value = (formData.previewText && formData.previewText.value) || safeFormData.previewText.value
+      safeFormData.text.value = (formData.text && formData.text.value) || safeFormData.text.value
+      safeFormData.image.value = (formData.image && formData.image.value) || safeFormData.image.value
+
+      return safeFormData;
+    }
+
+    const {class: className, formData = {}, action, method} = attributes;
+    const {
+      categories,
+      date,
+      title,
+      previewText,
+      text,
+      image,
+    } = getSafeFormData(formData);
+
+  form(class=['post-form', className], action=action, method='post')
+    div.post-form__header
+      +Title.post-form__title(size='150', tag='h2')
+        if title.value
+          | #{title.value}
+        else
+          | Новая запись
+      +DateInput.post-form__date-input(
+        label='Дата публикации',
+        name='date',
+        value=date.value
+      )
+      +Button.post-form__submit-button(
+        theme='gradient-blue-ribbon',
+        type='submit',
+        view='filled',
+        width='160px',
+      ) #{title.value ? 'Обновить' : 'Опубликовать'}
+    +Input.post-form__input(
+      label='Заголовок',
+      name='title',
+      size='350',
+      value=title.value,
+      view='underlined',
+      width='100%',
+    )
+    +Input.post-form__input(
+      label='Фотография',
+      name='image',
+      size='350',
+      value=image.value,
+      view='underlined',
+      width='100%',
+    )
+    if categories
+      ul.post-form__category-list
+        each categoryOption in categories.options
+          li.post-form__category-list-item
+            +CheckboxInput(checked=categories.value.includes(categoryOption.id), name='categories', value=categoryOption.id)
+              +Slot('button')
+                +Button(
+                  shape='sausage',
+                  size='250',
+                  tag='span',
+                  theme='black-50',
+                  view='outlined',
+                ) #{categoryOption.name}
+        li.post-form__category-list-item
+          +ButtonContainer.post-form__add-category-button(
+            href='/my/categories',
+            shape='sausage',
+            size='250',
+            tag='a',
+            theme='black-50',
+            view='outlined'
+          ) Добавить категорию
+    +Input.post-form__input(
+      label='Анонс записи',
+      name='preview-text',
+      size='350',
+      value=previewText.value,
+      view='underlined',
+      width='100%',
+    )
+    +Input.post-form__input(
+      label='Полный текст записи',
+      name='text',
+      size='350',
+      value=text.value,
+      view='underlined',
+      width='100%',
+    )

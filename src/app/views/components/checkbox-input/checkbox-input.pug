@@ -1,0 +1,30 @@
+mixin CheckboxInput
+  -
+    const {
+      class: className,
+      checked = false,
+      name,
+      id = Math.random().toString(32).slice(2),
+      value,
+    } = attributes;
+
+    const slots = {children: []};
+
+  mixin Slot(name)
+    -
+      if (name === 'children') {
+        slots[name].push(block);
+
+        return;
+      }
+
+      slots[name] = block;
+
+  - block();
+
+  span(class=['checkbox-input', className])
+    input.checkbox-input__control(type='checkbox', id=id, name=name, value=value, checked=checked)
+    label.checkbox-input__button(for=id)
+      - slots.button();
+    script
+      include script.js

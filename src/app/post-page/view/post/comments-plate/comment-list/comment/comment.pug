@@ -1,0 +1,28 @@
+include ../../../../../../views/components/avatar/avatar
+include ../../../../../../views/components/text/text
+include ../../../../../../views/components/title/title
+
+append style
+  include:sass style.scss
+
+mixin Comment
+  -
+    const {class: className, comment = {
+      user: {
+        name: 'Даниэль',
+        surname: 'Голодный',
+        avatar: 'https://thispersondoesnotexist.com/image'
+      },
+      date: '2021-08-16T14:45:39.700Z',
+      text: 'AirPods весьма популярны у покупателей и занимают первые позиции в рейтинге брендов по продажам за 2019 год. Однако, как показала статистика, в мире всего лишь 5% владельцев наушников используют AirPods постоянно. Это означает, что большинство покупателей просто приобретают наушники, а использовать их начинают только спустя несколько месяцев после покупки. К чему это приводит? За время пользования AirPods они часто выходят из строя.',
+    }} = attributes;
+    const {user, date, text} = comment;
+
+  div(class=['comment', className])
+    +Avatar.comment__user-avatar(src=user.avatar, alt=`${user.name} ${user.surname}`)
+    div.comment__wrapper
+      div.comment__header
+        span.comment__user-full-name-wrapper
+          +Title.comment__user-full-name(size='50') #{`${user.name} ${user.surname}`}
+        time.comment__date(datetime=date) #{getUserFriendlyDateString(date)}
+      +Text.comment__text #{text}
